@@ -170,7 +170,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="30" max="32767" attributes="0"/>
-                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelThongBaoNhapKhongThanhCong" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -184,7 +184,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelThongBaoNhapKhongThanhCong" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnThoatDialogChuaNhapThongTinSinhVien" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="55" max="32767" attributes="0"/>
@@ -193,7 +193,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel13">
+            <Component class="javax.swing.JLabel" name="labelThongBaoNhapKhongThanhCong">
               <Properties>
                 <Property name="text" type="java.lang.String" value="B&#x1ea1;n ch&#x1b0;a nh&#x1ead;p th&#xf4;ng tin sinh vi&#xea;n"/>
               </Properties>
@@ -207,6 +207,8 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupGioiTinh">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -330,19 +332,25 @@
                                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="textMaHocVien" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="textHoTen" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textMaHocVienMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textMaLop" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="radioButtonNam" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <Component id="radioButtonNu" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="textHo" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Component id="textTen" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Component id="textNgaySinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Component id="textGioiTinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Component id="textNoiSinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  <Component id="textMaLopDeChinhSuaThongTin" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="1" attributes="0">
+                                                      <Component id="textMaHocVien" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="textHoTen" min="-2" pref="137" max="-2" attributes="0"/>
+                                                          <Component id="textMaHocVienMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
+                                                          <Component id="textMaLop" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Component id="textHo" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      <Component id="textTen" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      <Component id="textNgaySinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      <Component id="textNoiSinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                      <Component id="textMaLopDeChinhSuaThongTin" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -355,7 +363,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnXoa" min="-2" pref="94" max="-2" attributes="0"/>
+                                          <Component id="btnXoaHocVien" min="-2" pref="94" max="-2" attributes="0"/>
                                           <Component id="btnNhapHocVien" min="-2" pref="94" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -412,7 +420,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textGioiTinh" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="radioButtonNam" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="radioButtonNu" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -424,9 +433,9 @@
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="textMaLopDeChinhSuaThongTin" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnXoaHocVien" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -448,7 +457,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="popupThongBaoTimKiemHocvien">
+                <Component class="javax.swing.JTable" name="labelThongBaoCoVanDe">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="29">
@@ -549,13 +558,11 @@
             </Component>
             <Component class="javax.swing.JTextField" name="textNgaySinh">
             </Component>
-            <Component class="javax.swing.JTextField" name="textGioiTinh">
-            </Component>
             <Component class="javax.swing.JTextField" name="textNoiSinh">
             </Component>
             <Component class="javax.swing.JTextField" name="textMaLopDeChinhSuaThongTin">
             </Component>
-            <Component class="javax.swing.JButton" name="btnXoa">
+            <Component class="javax.swing.JButton" name="btnXoaHocVien">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
               </Properties>
@@ -573,6 +580,22 @@
             <Component class="javax.swing.JButton" name="btnSua">
               <Properties>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="radioButtonNam">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroupGioiTinh"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Nam"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="radioButtonNu">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroupGioiTinh"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -69,21 +69,83 @@ public class TruongHocModel {
         return this.danhSachHocVien;
     }
 
+    private void vietHoaHoHocVien(HocVien hocVienDuocThemVao) {
+        char chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getHo().charAt(0));
+        String replace = hocVienDuocThemVao.getHo().replace(hocVienDuocThemVao.getHo().charAt(0), chuCaiDau);
+        hocVienDuocThemVao.setHo(replace);
+        for (int i = 0; i <= hocVienDuocThemVao.getHo().length() - 2; i++) {
+            if (hocVienDuocThemVao.getHo().charAt(i) == ' ') {
+                chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getHo().charAt(i + 1));
+                replace = hocVienDuocThemVao.getHo().replace(hocVienDuocThemVao.getHo().charAt(i + 1), chuCaiDau);
+                hocVienDuocThemVao.setHo(replace);
+            }
+        }
+    }
+
+    private void vietHoaNoiSinhHocVien(HocVien hocVienDuocThemVao) {
+        char chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getNoiSinh().charAt(0));
+        String replace = hocVienDuocThemVao.getNoiSinh().replace(hocVienDuocThemVao.getNoiSinh().charAt(0), chuCaiDau);
+        hocVienDuocThemVao.setNoiSinh(replace);
+        for (int i = 0; i <= hocVienDuocThemVao.getNoiSinh().length() - 2; i++) {
+            if (hocVienDuocThemVao.getNoiSinh().charAt(i) == ' ') {
+                chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getNoiSinh().charAt(i + 1));
+                replace = hocVienDuocThemVao.getNoiSinh().replace(hocVienDuocThemVao.getNoiSinh().charAt(i + 1), chuCaiDau);
+                hocVienDuocThemVao.setNoiSinh(replace);
+            }
+        }
+    }
+
+    private void vietHoaTenHocVien(HocVien hocVienDuocThemVao) {
+        char chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getTen().charAt(0));
+        String replace = hocVienDuocThemVao.getTen().replace(hocVienDuocThemVao.getTen().charAt(0), chuCaiDau);
+        hocVienDuocThemVao.setTen(replace);
+
+    }
+
+    private void vietMaHocVien(HocVien hocVienDuocThemVao) {
+        char chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getMaHocVien().charAt(0));
+        String replace = hocVienDuocThemVao.getMaHocVien().replace(hocVienDuocThemVao.getMaHocVien().charAt(0), chuCaiDau);
+        hocVienDuocThemVao.setMaHocVien(replace);
+
+    }
+
+    private void vietMaLop(HocVien hocVienDuocThemVao) {
+        char chuCaiDau = Character.toUpperCase(hocVienDuocThemVao.getMaLop().charAt(0));
+        String replace = hocVienDuocThemVao.getMaLop().replace(hocVienDuocThemVao.getMaLop().charAt(0), chuCaiDau);
+        hocVienDuocThemVao.setMaLop(replace);
+
+    }
+
     public Object[][] themHocVienVaoDanhSach(HocVien hocVienDuocThemVao) throws SQLException, ParseException {
 
-        for (HocVien hocVien : this.danhSachHocVien) {
-            if (hocVien.getMaHocVien().equalsIgnoreCase(hocVienDuocThemVao.getMaHocVien())) {
-                return null;
-            }
+        if (!(hocVienDuocThemVao.getHo().charAt(0) >= 'Z' && hocVienDuocThemVao.getHo().charAt(0) <= 'A')) {
+            vietHoaHoHocVien(hocVienDuocThemVao);
+        }
+        if (!(hocVienDuocThemVao.getMaLop().charAt(0) >= 'Z' && hocVienDuocThemVao.getMaLop().charAt(0) <= 'A')) {
+            vietHoaNoiSinhHocVien(hocVienDuocThemVao);
+        }
+        if (!(hocVienDuocThemVao.getTen().charAt(0) >= 'Z' && hocVienDuocThemVao.getTen().charAt(0) <= 'A')) {
+            vietHoaTenHocVien(hocVienDuocThemVao);
+        }
+        if (!(hocVienDuocThemVao.getMaHocVien().charAt(0) >= 'Z' && hocVienDuocThemVao.getMaHocVien().charAt(0) <= 'A')) {
+            vietMaHocVien(hocVienDuocThemVao);
+        }
+        if (!(hocVienDuocThemVao.getMaLop().charAt(0) >= 'Z' && hocVienDuocThemVao.getMaLop().charAt(0) <= 'A')) {
+            vietMaLop(hocVienDuocThemVao);
         }
         this.danhSachHocVien = this.ds.themHocVienVaoDanhSach(hocVienDuocThemVao);
-        Object[][] data = new Object[this.danhSachHocVien.size()][7];
-        for (int i = 0; i <= this.danhSachHocVien.size() - 1; i++) {
-            for (int j = 0; j <= 6; j++) {
-                data[i][j] = this.danhSachHocVien.get(i).getDataHocVien()[j];
+        if (this.danhSachHocVien != null) {
+            Object[][] data = new Object[this.danhSachHocVien.size()][7];
+            for (int i = 0; i <= this.danhSachHocVien.size() - 1; i++) {
+                for (int j = 0; j <= 6; j++) {
+                    data[i][j] = this.danhSachHocVien.get(i).getDataHocVien()[j];
+                }
             }
+            return data;
         }
-        return data;
+
+        return null;
+
     }
 
 }

@@ -64,11 +64,17 @@ public class HocVien {
     public String getGioiTinh() {
         return this.gioiTinh;
     }
-    public String getNoiSinh(){
+
+    public String getNoiSinh() {
         return this.noiSinh;
     }
-    public String getMaLop(){
+
+    public String getMaLop() {
         return this.maLop;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
     }
 
     public HocVien timHocVienTheoMa(String thongTin) {
@@ -97,6 +103,22 @@ public class HocVien {
             return null;
         }
         return null;
+    }
+
+    public void setNoiSinh(String noiSinh) {
+        this.noiSinh = noiSinh;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public void setMaHocVien(String maHocVien) {
+        this.maHV = maHocVien;
+    }
+
+    public void setMaLop(String maLop) {
+        this.maLop = maLop;
     }
 
 }

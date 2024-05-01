@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,6 +34,7 @@ public class TruongHocController {
         view.tatPopUpThongBaoTimKiemHocVien(new CachTatThongBaoTimKiemHocVien());
         view.tatPopUpThongBaoChuaNhapThongTinSinhVien(new CachTatThongBaoChuaNhapThongTinSinhVien());
         view.themHocVien(new HocVienDuocThem());
+        view.xoaHocVien(new HocVienBiXoa());
     }
 
     private class LoadedHocVien implements ActionListener {
@@ -83,7 +86,7 @@ public class TruongHocController {
 
                 }
             } else {
-                view.hienThiThongBaoChuaNhapThongTinHocVien();
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin can tim");
             }
 
         }
@@ -94,18 +97,41 @@ public class TruongHocController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             HocVien hocVienDuocThemVao;
             try {
                 hocVienDuocThemVao = view.getHocVien();
+
+                if (hocVienDuocThemVao == null) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin");
+                    return;
+                }
+                if (!hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K11") && !hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K12") && !hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K13")) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Ban da nhap sai lop");
+                    return;
+                }
+                if (!hocVienDuocThemVao.getMaHocVien().contains(hocVienDuocThemVao.getMaLop())) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Ban da nhap sai ma hoc vien, ma hoc vien phai bat dau bang ma lop");
+                    return;
+                }
                 Object[][] data = model.themHocVienVaoDanhSach(hocVienDuocThemVao);
-                System.out.println("Hello");
                 if (data != null) {
                     view.hienThiTrenTable(data, columnHocVien);
+                } else {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Ma hoc vien bi trung");
                 }
-
             } catch (ParseException | SQLException ex) {
             }
 
+        }
+
+    }
+
+    private class HocVienBiXoa implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("hello");
         }
 
     }

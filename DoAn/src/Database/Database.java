@@ -79,6 +79,7 @@ public class Database {
             }
         } catch (SQLServerException ex) {
             System.out.println("loi:" + ex);
+            return null;
         }
         return danhSachHocVienDuocThemVao;
     }
