@@ -14,7 +14,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
@@ -82,6 +81,30 @@ public class Database {
             return null;
         }
         return danhSachHocVienDuocThemVao;
+    }
+
+    public ArrayList<HocVien> xoaHocVien(String maHocVien) throws SQLException {
+        ArrayList<HocVien> cacHocVienDuocXoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("delete from HOCVIEN where MAHV='" + maHocVien + "'" + "select * from HOCVIEN");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                cacHocVienDuocXoa.add(new HocVien(rs.getString("MAHV"), rs.getString("HO"), rs.getString("TEN"), rs.getDate("NGSINH"), rs.getString("GIOITINH"), rs.getString("NOISINH"), rs.getString("MALOP")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("loi:" + ex);
+            return null;
+        }
+
+        return cacHocVienDuocXoa;
     }
 
 }

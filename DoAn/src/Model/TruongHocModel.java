@@ -32,37 +32,46 @@ public class TruongHocModel {
         }
     }
 
-    public Object[][] getDataHocVien() throws SQLException {
-        Object[][] data = new Object[this.danhSachHocVien.size()][7];
+    private void capNhatData(Object[][] data) {
         for (int i = 0; i <= this.danhSachHocVien.size() - 1; i++) {
             for (int j = 0; j <= 6; j++) {
                 data[i][j] = this.danhSachHocVien.get(i).getDataHocVien()[j];
             }
 
         }
-
-        return data;
     }
 
-    public Object[][] timHocVienTheoThongTin(String thongTin) {
+    private void capNhatData(Object[][] data, ArrayList<HocVien> danhSachHocVien) {
+        for (int i = 0; i <= danhSachHocVien.size() - 1; i++) {
+            for (int j = 0; j <= 6; j++) {
+                data[i][j] = danhSachHocVien.get(i).getDataHocVien()[j];
+            }
+        }
+    }
 
-        ArrayList<HocVien> cacHocVienDuocTimThay = new ArrayList<>();
+    private void capNhapCacHocVienDuocTimThay(ArrayList<HocVien> cacHocVienDuocTimThay, String thongTin) {
         for (HocVien hocVien : this.danhSachHocVien) {
             if (hocVien.timHocVienTheoMa(thongTin) != null) {
                 cacHocVienDuocTimThay.add(hocVien);
             }
         }
+    }
+
+    public Object[][] getDataHocVien() throws SQLException {
+        Object[][] data = new Object[this.danhSachHocVien.size()][7];
+        capNhatData(data);
+        return data;
+    }
+
+    public Object[][] timHocVienTheoThongTin(String thongTin) {
+        ArrayList<HocVien> cacHocVienDuocTimThay = new ArrayList<>();
+        capNhapCacHocVienDuocTimThay(cacHocVienDuocTimThay, thongTin);
         if (cacHocVienDuocTimThay.size() >= 1) {
             Object[][] data = new Object[cacHocVienDuocTimThay.size()][7];
-            for (int i = 0; i <= cacHocVienDuocTimThay.size() - 1; i++) {
-                for (int j = 0; j <= 6; j++) {
-                    data[i][j] = cacHocVienDuocTimThay.get(i).getDataHocVien()[j];
-                }
-            }
+            capNhatData(data, cacHocVienDuocTimThay);
             return data;
         }
         return null;
-
     }
 
     public ArrayList getDanhSachHocVien() {
@@ -136,16 +145,35 @@ public class TruongHocModel {
         this.danhSachHocVien = this.ds.themHocVienVaoDanhSach(hocVienDuocThemVao);
         if (this.danhSachHocVien != null) {
             Object[][] data = new Object[this.danhSachHocVien.size()][7];
-            for (int i = 0; i <= this.danhSachHocVien.size() - 1; i++) {
-                for (int j = 0; j <= 6; j++) {
-                    data[i][j] = this.danhSachHocVien.get(i).getDataHocVien()[j];
-                }
-            }
+            capNhatData(data);
             return data;
         }
-
         return null;
+    }
 
+    public Object[][] xoaHocVien(int chiSoTable) throws SQLException {
+        this.danhSachHocVien = this.ds.xoaHocVien(this.danhSachHocVien.get(chiSoTable).getMaHocVien());
+        Object[][] data = new Object[this.danhSachHocVien.size()][7];
+        capNhatData(data);
+        return data;
+
+    }
+
+    public Object[][] xoaCacHocVienDuocTimThay(int chiSoTable, String thongTin) throws SQLException {
+        ArrayList<HocVien> cacHocVienDuocTimThay = new ArrayList<>();
+        capNhapCacHocVienDuocTimThay(cacHocVienDuocTimThay, thongTin);
+        if (cacHocVienDuocTimThay.size() >= 1) {
+            for (HocVien hocVien : this.danhSachHocVien) {
+                if (cacHocVienDuocTimThay.get(chiSoTable).getMaHocVien().equals(hocVien.getMaHocVien())) {
+                    this.danhSachHocVien = this.ds.xoaHocVien(hocVien.getMaHocVien());
+                }
+            }
+            cacHocVienDuocTimThay.remove(chiSoTable);
+            Object[][] data = new Object[cacHocVienDuocTimThay.size()][7];
+            capNhatData(data, cacHocVienDuocTimThay);
+            return data;
+        }
+        return null;
     }
 
 }
