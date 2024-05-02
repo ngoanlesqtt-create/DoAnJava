@@ -4,7 +4,7 @@
  */
 package Database;
 
-import Model.HocVien;
+import ModelHocVien.HocVien;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,11 +19,11 @@ import java.text.SimpleDateFormat;
  *
  * @author PC
  */
-public class Database {
+public class DatabaseHocVien {
 
     private SQLServerDataSource ds;
 
-    public Database(ArrayList<HocVien> danhSachHocVien) throws SQLException {
+    public DatabaseHocVien(ArrayList<HocVien> danhSachHocVien) throws SQLException {
         ds = new SQLServerDataSource();
         ds.setUser("sa");
         ds.setPassword("1");

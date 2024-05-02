@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package ModelHocVien;
 
-import Database.Database;
+import Database.DatabaseHocVien;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -13,17 +13,17 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class TruongHocModel {
+public class HocVienModel {
 
     private ArrayList<HocVien> danhSachHocVien;
-    private Database ds;
+    private DatabaseHocVien ds;
 
-    public TruongHocModel() {
+    public HocVienModel() {
         danhSachHocVien = new ArrayList<>();
     }
 
     public void nhap() throws SQLException {
-        ds = new Database(this.danhSachHocVien);
+        ds = new DatabaseHocVien(this.danhSachHocVien);
     }
 
     public void xuat() {
@@ -151,24 +151,30 @@ public class TruongHocModel {
         return null;
     }
 
-    public Object[][] xoaHocVien(int chiSoTable) throws SQLException {
-        this.danhSachHocVien = this.ds.xoaHocVien(this.danhSachHocVien.get(chiSoTable).getMaHocVien());
+    public Object[][] xoaHocVien(int[] nhieuChiSoTable) throws SQLException {
+        for (int i = nhieuChiSoTable.length - 1; 0 <= i; i--) {
+            this.danhSachHocVien = this.ds.xoaHocVien(this.danhSachHocVien.get(nhieuChiSoTable[i]).getMaHocVien());
+        }
         Object[][] data = new Object[this.danhSachHocVien.size()][7];
         capNhatData(data);
         return data;
 
     }
 
-    public Object[][] xoaCacHocVienDuocTimThay(int chiSoTable, String thongTin) throws SQLException {
+    public Object[][] xoaCacHocVienDuocTimThay(int[] nhieuChiSoTable, String thongTin) throws SQLException {
         ArrayList<HocVien> cacHocVienDuocTimThay = new ArrayList<>();
         capNhapCacHocVienDuocTimThay(cacHocVienDuocTimThay, thongTin);
         if (cacHocVienDuocTimThay.size() >= 1) {
             for (HocVien hocVien : this.danhSachHocVien) {
-                if (cacHocVienDuocTimThay.get(chiSoTable).getMaHocVien().equals(hocVien.getMaHocVien())) {
-                    this.danhSachHocVien = this.ds.xoaHocVien(hocVien.getMaHocVien());
+                for (int i = 0; i <= nhieuChiSoTable.length - 1; i++) {
+                    if (cacHocVienDuocTimThay.get(nhieuChiSoTable[i]).getMaHocVien().equals(hocVien.getMaHocVien())) {
+                        this.danhSachHocVien = this.ds.xoaHocVien(hocVien.getMaHocVien());
+                    }
                 }
             }
-            cacHocVienDuocTimThay.remove(chiSoTable);
+            for (int i = nhieuChiSoTable.length - 1; 0 <= i; i--) {
+                cacHocVienDuocTimThay.remove(nhieuChiSoTable[i]);
+            }
             Object[][] data = new Object[cacHocVienDuocTimThay.size()][7];
             capNhatData(data, cacHocVienDuocTimThay);
             return data;

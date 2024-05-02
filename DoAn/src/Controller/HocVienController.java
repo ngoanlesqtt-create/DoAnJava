@@ -4,13 +4,15 @@
  */
 package Controller;
 
-import Model.HocVien;
-import Model.TruongHocModel;
+import ModelHocVien.HocVien;
+import ModelHocVien.HocVienModel;
 import View.TruongHocView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -18,18 +20,17 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author PC
  */
-public class TruongHocController {
+public class HocVienController {
 
-    private TruongHocModel model;
-    private TruongHocView view;
-    private String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
-    private int chiSoTable;
+    private final HocVienModel model;
+    private final TruongHocView view;
+    private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
+    private int[] nhieuChiSoTable;
     private boolean state;
 
-    public TruongHocController() throws SQLException {
-        this.chiSoTable = -1;
+    public HocVienController() throws SQLException {
         this.state = false;
-        model = new TruongHocModel();
+        model = new HocVienModel();
         model.nhap();
         view = new TruongHocView();
         view.setVisible(true);
@@ -40,6 +41,7 @@ public class TruongHocController {
         view.themHocVien(new HocVienDuocThem());
         view.xoaHocVien(new HocVienBiXoa());
         view.layDuLieuBang(new DuLieuDuocLayTuBang());
+        view.xoaHetDuLieuBang(new DuLieuBangBiXoaHet());
     }
 
     private class LoadedHocVien implements ActionListener {
@@ -136,7 +138,8 @@ public class TruongHocController {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            chiSoTable = view.layChiSoMang();
+            nhieuChiSoTable = view.layNhieuChiSoMang();
+
         }
     }
 
@@ -148,16 +151,16 @@ public class TruongHocController {
                 if (view.getThongTinVienMuonTim() != null && state) {
                     Object[][] cacHocVienDuocTimThay = model.timHocVienTheoThongTin(view.getThongTinVienMuonTim());
                     if (cacHocVienDuocTimThay != null) {
-                        Object[][] cacHocVienDuocXoaKhiTimThay = model.xoaCacHocVienDuocTimThay(chiSoTable, view.getThongTinVienMuonTim());
+                        Object[][] cacHocVienDuocXoaKhiTimThay = model.xoaCacHocVienDuocTimThay(nhieuChiSoTable, view.getThongTinVienMuonTim());
                         view.hienThiTrenTable(cacHocVienDuocXoaKhiTimThay, columnHocVien);
                     } else {
                         view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết học viên để xóa");
                     }
                 }
-                if (!state) {
+                if (!state) {//Nếu đang ở vị trí bảng chính
                     if (model.getDataHocVien().length != 0) {
-                        if (chiSoTable != -1) {
-                            Object[][] data = model.xoaHocVien(chiSoTable);
+                        if (nhieuChiSoTable != null) {
+                            Object[][] data = model.xoaHocVien(nhieuChiSoTable);
                             view.hienThiTrenTable(data, columnHocVien);
                         } else {
                             view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua chon hoc vien can xoa");
@@ -168,6 +171,31 @@ public class TruongHocController {
                 }
             } catch (SQLException ex) {
             }
+        }
+
+    }
+
+    private class DuLieuBangBiXoaHet implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int doDaiBang = view.getDoDaiBang();
+            if (doDaiBang >= 1) {
+                //khởi tạo giá trị cho mảng nhieuChiSoTable
+                nhieuChiSoTable = new int[doDaiBang];
+                for (int i = 0; i <= doDaiBang - 1; i++) {
+                    nhieuChiSoTable[i] = i;
+                }
+
+                try {
+                    Object[][] data = model.xoaHocVien(nhieuChiSoTable);
+                    view.hienThiTrenTable(data, columnHocVien);
+                } catch (SQLException ex) {
+                }
+            } else {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết học viên để xóa");
+            }
+
         }
 
     }

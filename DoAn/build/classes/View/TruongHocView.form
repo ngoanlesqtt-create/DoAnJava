@@ -209,6 +209,11 @@
     </Container>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupGioiTinh">
     </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jButton1"/>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -355,20 +360,25 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="btnSua" min="-2" pref="94" max="-2" attributes="0"/>
                                           <Component id="btnThemHocVien" min="-2" pref="94" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnXoaHocVien" min="-2" pref="94" max="-2" attributes="0"/>
-                                          <Component id="btnNhapHocVien" min="-2" pref="94" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btnXoaHocVien" pref="94" max="32767" attributes="0"/>
+                                          <Component id="btnXoaHetDuLieuBang" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                               <EmptySpace pref="12" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnNhapHocVien" min="-2" pref="94" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -440,10 +450,12 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnNhapHocVien" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnThemHocVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnXoaHetDuLieuBang" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnNhapHocVien" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -569,7 +581,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnNhapHocVien">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nh&#x1ead;p"/>
+                <Property name="text" type="java.lang.String" value="Load"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnThemHocVien">
@@ -596,6 +608,11 @@
                   <ComponentRef name="buttonGroupGioiTinh"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnXoaHetDuLieuBang">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="X&#xf3;a h&#x1ebf;t"/>
               </Properties>
             </Component>
           </SubComponents>

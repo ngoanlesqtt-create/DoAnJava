@@ -4,7 +4,7 @@
  */
 package Main;
 
-import Controller.TruongHocController;
+import Controller.HocVienController;
 import java.sql.SQLException;
 
 /**
@@ -15,10 +15,11 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
-        TruongHocController truongHocController = new TruongHocController();
+        HocVienController truongHocController = new HocVienController();
     }
 
 }
