@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
  * @author PC
  */
 public class TruongHocView extends javax.swing.JFrame {
+    
+    private int hangNgang;
 
     /**
      * Creates new form QLGVView
@@ -24,15 +28,15 @@ public class TruongHocView extends javax.swing.JFrame {
     public TruongHocView() {
         initComponents();
     }
-
+    
     public void loadHocVien(ActionListener listen) {
         btnNhapHocVien.addActionListener(listen);
     }
-
+    
     public void timHocVien(ActionListener listen) {
         btnTimHocVien.addActionListener(listen);
     }
-
+    
     public String getThongTinVienMuonTim() {
         if (textMaHocVienMuonTim.getText().length() != 0 && textMaHocVienMuonTim.getText() != null) {
             return textMaHocVienMuonTim.getText();
@@ -48,44 +52,44 @@ public class TruongHocView extends javax.swing.JFrame {
         if (textMaLop.getText().length() != 0 && textMaLop.getText() != null) {
             return textMaLop.getText();
         }
-
+        
         return null;
     }
-
+    
     public void hienThiTrenTable(Object[][] data, String[] column) {
         DefaultTableModel table = new DefaultTableModel(data, column);
         tableHocVien.setModel(table);
     }
-
+    
     public void hienThiPopUpThongBaoTimKiemHocVien() {
         dialogThongBaoTimKiemHocVien.setVisible(true);
     }
-
+    
     public void tatPopUpThongBaoTimKiemHocVien(ActionListener listener) {
         btnThoatDialog.addActionListener(listener);
     }
-
+    
     public void tatHienThiPopUpThongBaoTimKiemHocVien() {
         dialogThongBaoTimKiemHocVien.setVisible(false);
     }
-
+    
     public void hienThiThongBaoChuaNhapThongTinHocVien(String thongBao) {
         labelThongBaoNhapKhongThanhCong.setText(thongBao);
         dialogThongBaoChuaNhapThongTinHocVien.setVisible(true);
     }
-
+    
     public void tatPopUpThongBaoChuaNhapThongTinSinhVien(ActionListener listener) {
         btnThoatDialogChuaNhapThongTinSinhVien.addActionListener(listener);
     }
-
+    
     public void tatHienThiPopUpThongBaoChuaNhapThongTinHocVien() {
         dialogThongBaoChuaNhapThongTinHocVien.setVisible(false);
     }
-
+    
     public void themHocVien(ActionListener listener) {
         btnThemHocVien.addActionListener(listener);
     }
-
+    
     public HocVien getHocVien() throws ParseException {
         String gioiTinh = "";
         if (radioButtonNam.isSelected()) {
@@ -93,7 +97,7 @@ public class TruongHocView extends javax.swing.JFrame {
         } else if (radioButtonNu.isSelected()) {
             gioiTinh = "Nu";
         }
-
+        
         if (textMaHocVien.getText().length() == 0 || textHo.getText().length() == 0 || textTen.getText().length() == 0 || gioiTinh.length() == 0 || textNgaySinh.getText().length() == 0 || textNoiSinh.getText().length() == 0 || textMaLopDeChinhSuaThongTin.getText().length() == 0) {
             return null;
         }
@@ -102,7 +106,7 @@ public class TruongHocView extends javax.swing.JFrame {
         Date date = formatter.parse(sDate);
         return new HocVien(textMaHocVien.getText(), textHo.getText(), textTen.getText(), date, gioiTinh, textNoiSinh.getText(), textMaLopDeChinhSuaThongTin.getText());
     }
-
+    
     public void xoaHocVien(ActionListener listener) {
         btnXoaHocVien.addActionListener(listener);
     }
@@ -114,8 +118,9 @@ public class TruongHocView extends javax.swing.JFrame {
     public void layDuLieuBang(ListSelectionListener listSelectionListener) {
         tableHocVien.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
-
+    
     public int[] layNhieuChiSoMang() {
+        
         int row = tableHocVien.getSelectedRow();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");//Tạo một đối tượng có giá trị khởi tạo là ngày-tháng-năm
         if (row != -1) {
@@ -140,16 +145,27 @@ public class TruongHocView extends javax.swing.JFrame {
             radioButtonNam.setSelected(false);
             radioButtonNu.setSelected(false);
         }
-
+        
         return tableHocVien.getSelectedRows();
     }
-
+    
     public void xoaHetDuLieuBang(ActionListener listener) {
         btnXoaHetDuLieuBang.addActionListener(listener);
     }
-
+    
     public int getDoDaiBang() {
         return tableHocVien.getRowCount();
+    }
+    
+    public void suaThongTinHocVien(ActionListener listener) {
+        btnSuaThongTinHocVien.addActionListener(listener);
+    }
+    
+    public void getGiaTriTungO() {
+        int row = tableHocVien.getSelectedRow();
+        int column = tableHocVien.getSelectedColumn();
+        String ketQua = (String) tableHocVien.getValueAt(row, column);
+        textMaHocVien.setText(ketQua);
     }
 
     /**
@@ -205,7 +221,7 @@ public class TruongHocView extends javax.swing.JFrame {
         btnXoaHocVien = new javax.swing.JButton();
         btnNhapHocVien = new javax.swing.JButton();
         btnThemHocVien = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
+        btnSuaThongTinHocVien = new javax.swing.JButton();
         radioButtonNam = new javax.swing.JRadioButton();
         radioButtonNu = new javax.swing.JRadioButton();
         btnXoaHetDuLieuBang = new javax.swing.JButton();
@@ -350,11 +366,11 @@ public class TruongHocView extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 828, Short.MAX_VALUE)
+            .addGap(0, 822, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 493, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("Giáo viên", jPanel3);
@@ -443,7 +459,7 @@ public class TruongHocView extends javax.swing.JFrame {
 
         btnThemHocVien.setText("Thêm");
 
-        btnSua.setText("Sửa");
+        btnSuaThongTinHocVien.setText("Sửa");
 
         buttonGroupGioiTinh.add(radioButtonNam);
         radioButtonNam.setText("Nam");
@@ -513,13 +529,13 @@ public class TruongHocView extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(60, 60, 60)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSuaThongTinHocVien, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnThemHocVien, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnXoaHocVien, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                                     .addComponent(btnXoaHetDuLieuBang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(12, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNhapHocVien, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -574,10 +590,10 @@ public class TruongHocView extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(textMaLopDeChinhSuaThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoaHocVien)
-                    .addComponent(btnSua))
+                    .addComponent(btnSuaThongTinHocVien))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemHocVien)
@@ -594,11 +610,17 @@ public class TruongHocView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -642,7 +664,7 @@ public class TruongHocView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNhapHocVien;
-    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnSuaThongTinHocVien;
     private javax.swing.JButton btnThemHocVien;
     private javax.swing.JButton btnThoatDialog;
     private javax.swing.JButton btnThoatDialogChuaNhapThongTinSinhVien;

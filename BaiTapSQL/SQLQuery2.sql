@@ -3,9 +3,15 @@
 USE BAITAP2
 SET DATEFORMAT DMY
 
-
+drop table KETQUATHI
 select * from HOCVIEN 
 delete from HOCVIEN where MAHV='K1112'
+
+update HOCVIEN
+set  TEN='a'
+where MAHV='K1101', nga
+select * from HOCVIEN 
+
 INSERT INTO HOCVIEN VALUES('K1101','Nguyen Van','A','27/1/1986','Nam','TpHCM','K11')
 INSERT INTO HOCVIEN VALUES('K1102','Tran Ngoc','Han','14/3/1986','Nu','Kien Giang','K11')
 INSERT INTO HOCVIEN VALUES('K1103','Ha Duy','Lap','18/4/1986','Nam','Nghe An','K11')

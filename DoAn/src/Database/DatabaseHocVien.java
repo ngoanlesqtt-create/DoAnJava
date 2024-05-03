@@ -14,6 +14,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -105,6 +106,43 @@ public class DatabaseHocVien {
         }
 
         return cacHocVienDuocXoa;
+    }
+
+    public ArrayList<HocVien> suaThongTinHocVien(HocVien hocVienDuocSua, String maHocVienCanSua) throws SQLException, ParseException {
+        ArrayList<HocVien> danhSachHocVienDuocSua = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            String ngaySinh = simpleDateFormat.format(hocVienDuocSua.getNgaySinh());
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("""
+                                                      update HOCVIEN
+                                                      set  TEN='"""
+                    + hocVienDuocSua.getTen() + "',"
+                    + "Ho='" + hocVienDuocSua.getHo() + "',"
+                    + "MAHV='" + hocVienDuocSua.getMaHocVien() + "',"
+                    + "NGSINH='" + ngaySinh + "',"
+                    + "NOISINH='" + hocVienDuocSua.getNoiSinh() + "',"
+                    + "MALOP='" + hocVienDuocSua.getMaLop() + "',"
+                    + "GIOITINH='" + hocVienDuocSua.getGioiTinh() + "'"
+                    + "where MAHV='" + maHocVienCanSua + "'"
+                    + "select * from HOCVIEN ");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                danhSachHocVienDuocSua.add(new HocVien(rs.getString("MAHV"), rs.getString("HO"), rs.getString("TEN"), rs.getDate("NGSINH"), rs.getString("GIOITINH"), rs.getString("NOISINH"), rs.getString("MALOP")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("loi:" + ex);
+            return null;
+        }
+
+        return danhSachHocVienDuocSua;
     }
 
 }

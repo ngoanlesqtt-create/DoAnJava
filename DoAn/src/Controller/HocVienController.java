@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,9 +25,11 @@ public class HocVienController {
     private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
     private int[] nhieuChiSoTable;
     private boolean state;
+    private boolean stateSuaThongtin;
 
     public HocVienController() throws SQLException {
         this.state = false;
+        this.stateSuaThongtin = false;
         model = new HocVienModel();
         model.nhap();
         view = new TruongHocView();
@@ -42,6 +42,7 @@ public class HocVienController {
         view.xoaHocVien(new HocVienBiXoa());
         view.layDuLieuBang(new DuLieuDuocLayTuBang());
         view.xoaHetDuLieuBang(new DuLieuBangBiXoaHet());
+        view.suaThongTinHocVien(new ThongTinHocVienDuocSua());//Sửa thông tin học viên
     }
 
     private class LoadedHocVien implements ActionListener {
@@ -50,6 +51,7 @@ public class HocVienController {
         public void actionPerformed(ActionEvent e) {
             try {
                 state = false;
+                stateSuaThongtin = false;
                 Object[][] data = model.getDataHocVien();
                 view.hienThiTrenTable(data, columnHocVien);
             } catch (SQLException ex) {
@@ -81,7 +83,9 @@ public class HocVienController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             state = true;
+            stateSuaThongtin = true;
             if (view.getThongTinVienMuonTim() != null) {//Nếu đã nhập các thông tin tìm kiếm học viên
                 Object[][] data = model.timHocVienTheoThongTin(view.getThongTinVienMuonTim());
                 if (data != null) {//nếu tìm thấy học viên theo thông tin đã nhập
@@ -139,7 +143,7 @@ public class HocVienController {
                 return;
             }
             nhieuChiSoTable = view.layNhieuChiSoMang();
-
+            view.getGiaTriTungO();
         }
     }
 
@@ -186,7 +190,6 @@ public class HocVienController {
                 for (int i = 0; i <= doDaiBang - 1; i++) {
                     nhieuChiSoTable[i] = i;
                 }
-
                 try {
                     Object[][] data = model.xoaHocVien(nhieuChiSoTable);
                     view.hienThiTrenTable(data, columnHocVien);
@@ -195,8 +198,35 @@ public class HocVienController {
             } else {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết học viên để xóa");
             }
+        }
+    }
+
+    private class ThongTinHocVienDuocSua implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                HocVien hocVienDuocSua = view.getHocVien();
+                if (nhieuChiSoTable.length == 1) {
+                    if (!stateSuaThongtin) {
+                        Object[][] data = model.suaThongTinHocVien(hocVienDuocSua, nhieuChiSoTable[0]);
+                        if (data != null) {
+                            view.hienThiTrenTable(data, columnHocVien);
+                        } else {
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai thông tin cần sửa");
+                        }
+                    } else {
+                        Object[][] hocVienDuocSuaThongTinKhiTimThay = model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocSua);
+                        view.hienThiTrenTable(hocVienDuocSuaThongTinKhiTimThay, columnHocVien);
+                    }
+                } else if (nhieuChiSoTable.length > 1) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chỉ có thể chọn 1 học viên để sửa");
+                } else if (nhieuChiSoTable.length == 0) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn sinh viên nào để sửa");
+                }
+            } catch (ParseException | SQLException ex) {
+            }
 
         }
-
     }
 }
