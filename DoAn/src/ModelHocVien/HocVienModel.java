@@ -4,7 +4,7 @@
  */
 package ModelHocVien;
 
-import Database.DatabaseHocVien;
+import Database.Database;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class HocVienModel {
 
     private ArrayList<HocVien> danhSachHocVien;
-    private DatabaseHocVien ds;
+    private Database ds;
 
     public HocVienModel() {
         danhSachHocVien = new ArrayList<>();
     }
 
     public void nhap() throws SQLException {
-        ds = new DatabaseHocVien(this.danhSachHocVien);
+        ds = new Database(this.danhSachHocVien);
     }
 
     public void xuat() {
@@ -194,8 +194,8 @@ public class HocVienModel {
             Object[][] data = new Object[this.danhSachHocVien.size()][7];
             capNhatData(data, this.danhSachHocVien);
             return data;
+        } else {
         }
-
         return null;
     }
 

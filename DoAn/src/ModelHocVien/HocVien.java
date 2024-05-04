@@ -121,4 +121,12 @@ public class HocVien {
         this.maLop = maLop;
     }
 
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
 }

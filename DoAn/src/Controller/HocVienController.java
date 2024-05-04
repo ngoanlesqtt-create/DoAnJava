@@ -6,9 +6,10 @@ package Controller;
 
 import ModelHocVien.HocVien;
 import ModelHocVien.HocVienModel;
-import View.TruongHocView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.swing.event.ListSelectionEvent;
@@ -18,10 +19,10 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author PC
  */
-public class HocVienController {
+public class HocVienController extends TruongHocController {
 
     private final HocVienModel model;
-    private final TruongHocView view;
+   // private final TruongHocView view;
     private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
     private int[] nhieuChiSoTable;
     private boolean state;
@@ -32,9 +33,8 @@ public class HocVienController {
         this.stateSuaThongtin = false;
         model = new HocVienModel();
         model.nhap();
-        view = new TruongHocView();
-        view.setVisible(true);
-        view.loadHocVien(new LoadedHocVien());
+        view.loadHocVien(new LoadedHocVien());//load học viên bằng bấm nút load
+        view.loadHocVienBangEnter(new LoadedHocVienBangEnter());
         view.timHocVien(new HocVienDuocTimThay());
         view.tatPopUpThongBaoTimKiemHocVien(new CachTatThongBaoTimKiemHocVien());
         view.tatPopUpThongBaoChuaNhapThongTinSinhVien(new CachTatThongBaoChuaNhapThongTinSinhVien());
@@ -43,6 +43,25 @@ public class HocVienController {
         view.layDuLieuBang(new DuLieuDuocLayTuBang());
         view.xoaHetDuLieuBang(new DuLieuBangBiXoaHet());
         view.suaThongTinHocVien(new ThongTinHocVienDuocSua());//Sửa thông tin học viên
+        view.capNhapDuLieuTungO(new DuLieuDuocThayDoi());//bat su kien khi bam nut enter
+
+    }
+
+    private class LoadedHocVienBangEnter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                try {
+                    state = false;
+                    stateSuaThongtin = false;
+                    Object[][] data = model.getDataHocVien();
+                    view.xoaInput();
+                    view.hienThiTrenTable(data, columnHocVien);
+                } catch (SQLException ex) {
+                }
+            }
+        }
     }
 
     private class LoadedHocVien implements ActionListener {
@@ -53,6 +72,7 @@ public class HocVienController {
                 state = false;
                 stateSuaThongtin = false;
                 Object[][] data = model.getDataHocVien();
+                view.xoaInput();
                 view.hienThiTrenTable(data, columnHocVien);
             } catch (SQLException ex) {
             }
@@ -143,7 +163,7 @@ public class HocVienController {
                 return;
             }
             nhieuChiSoTable = view.layNhieuChiSoMang();
-            view.getGiaTriTungO();
+
         }
     }
 
@@ -176,7 +196,6 @@ public class HocVienController {
             } catch (SQLException ex) {
             }
         }
-
     }
 
     private class DuLieuBangBiXoaHet implements ActionListener {
@@ -228,5 +247,146 @@ public class HocVienController {
             }
 
         }
+    }
+
+    private class DuLieuDuocThayDoi extends KeyAdapter {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                try {
+                    int hang = view.getRow();
+                    int cot = view.getColumn();
+                    HocVien hocVienDuocChon = view.getHocVien();
+                    if (view.getThongTinVienMuonTim() == null) {
+                        switch (cot) {
+                            case 0 -> {
+                                if (!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")) {
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
+                                    view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                } else if (!((String) view.getGiaTriTungO(hang, 0)).contains((String) (view.getGiaTriTungO(hang, 6)))) {
+                                    view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn phải sửa mã lớp trước");
+                                } else {
+                                    hocVienDuocChon.setMaHocVien((String) view.getGiaTriTungO(hang, 0));
+                                    hocVienDuocChon.setMaLop((String) view.getGiaTriTungO(hang, 6));
+                                    Object[][] hocVienSauKhiDuocSuaBangEnter = model.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
+                                    if (hocVienSauKhiDuocSuaBangEnter != null) {
+                                        view.hienThiTrenTable(hocVienSauKhiDuocSuaBangEnter, columnHocVien);
+                                    } else {
+                                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập trùng mã số sinh viên");
+                                        view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                    }
+                                }
+                                view.setLaiGiaTriInput();
+
+                                break;
+                            }
+                            case 1 -> {
+                                hocVienDuocChon.setHo((String) view.getGiaTriTungO(hang, 1));
+                                model.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 2 -> {
+                                hocVienDuocChon.setTen((String) view.getGiaTriTungO(hang, 2));
+                                model.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+
+                            case 4 -> {
+
+                                hocVienDuocChon.setGioiTinh((String) view.getGiaTriTungO(hang, 4));
+                                model.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
+                                view.setLaiGiaTriInput();
+                            }
+                            case 5 -> {
+                                hocVienDuocChon.setNoiSinh((String) view.getGiaTriTungO(hang, 5));
+                                model.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 6 -> {
+                                if (!((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K13")) {
+                                    view.setGiaTriTungO(hocVienDuocChon.getMaLop(), hang, 6);
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Mã lớp bạn nhập không tồn tại");
+                                    break;
+                                }
+                                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn nhớ sửa mã học viên nhé");
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.println("Hello dong 125 controller");
+                        switch (cot) {
+
+                            case 0 -> {
+                                if (!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")) {
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
+                                    view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                } else if (!((String) view.getGiaTriTungO(hang, 0)).contains((String) (view.getGiaTriTungO(hang, 6)))) {
+                                    view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn phải sửa mã lớp trước");
+                                } else {
+                                    hocVienDuocChon.setMaHocVien((String) view.getGiaTriTungO(hang, 0));
+                                    hocVienDuocChon.setMaLop((String) view.getGiaTriTungO(hang, 6));
+                                    view.setLaiGiaTriInput();
+                                    Object[][] hocVienDuocSuaThongTinKhiTimThay = model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                    if (hocVienDuocSuaThongTinKhiTimThay == null) {
+                                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập trùng mã số sinh viên");
+                                        view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
+                                    } else {
+                                        view.hienThiTrenTable(hocVienDuocSuaThongTinKhiTimThay, columnHocVien);
+                                    }
+                                    break;
+                                }
+                            }
+
+                            case 1 -> {
+                                hocVienDuocChon.setHo((String) view.getGiaTriTungO(hang, 1));
+                                model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 2 -> {
+                                hocVienDuocChon.setTen((String) view.getGiaTriTungO(hang, 2));
+                                model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 4 -> {
+                                hocVienDuocChon.setTen((String) view.getGiaTriTungO(hang, 4));
+                                model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 5 -> {
+                                hocVienDuocChon.setNoiSinh((String) view.getGiaTriTungO(hang, 5));
+                                model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                view.setLaiGiaTriInput();
+                                break;
+                            }
+                            case 6 -> {
+                                if (!((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("k13")) {
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Lớp học bạn sửa không tồn tại");
+                                    break;
+                                } else {
+                                    hocVienDuocChon.setMaLop((String) view.getGiaTriTungO(hang, 6));
+                                    model.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
+                                    view.setLaiGiaTriInput();
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn nhớ sửa mã lớp nhé");
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                } catch (ParseException | SQLException ex) {
+                }
+
+            }
+        }
+
     }
 }
