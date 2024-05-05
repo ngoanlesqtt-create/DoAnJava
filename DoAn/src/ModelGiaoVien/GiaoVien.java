@@ -40,4 +40,40 @@ public class GiaoVien implements InterfaceGiaoVien {
         return 0;
     }
 
+    Object getMaGv() {
+        return this.MaGV;
+    }
+
+    Object getHoTen() {
+        return this.hoTen;
+    }
+
+    Object getHocVi() {
+        return this.hocVi;
+    }
+
+    Object getGioiTinh() {
+        return this.gioiTinh;
+    }
+
+    Object getNgaySinh() {
+        return this.ngaySinh;
+    }
+
+    Object getLuongCoBan() {
+        return this.luongCB;
+    }
+
+    Object getHeSo() {
+        return this.heSo;
+    }
+
+    Object getMucLuong() {
+        return this.luong;
+    }
+
+    Object getMaKhoa() {
+        return this.maKhoa;
+    }
+
 }

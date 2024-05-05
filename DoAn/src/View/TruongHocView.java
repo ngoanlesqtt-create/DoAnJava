@@ -239,10 +239,6 @@ public class TruongHocView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jMenu1 = new javax.swing.JMenu();
-        jFrame1 = new javax.swing.JFrame();
         dialogThongBaoTimKiemHocVien = new javax.swing.JDialog();
         panelThongBaoTimKiemHocVien = new javax.swing.JPanel();
         labelThongBaoTimKiem = new javax.swing.JLabel();
@@ -252,11 +248,6 @@ public class TruongHocView extends javax.swing.JFrame {
         labelThongBaoNhapKhongThanhCong = new javax.swing.JLabel();
         btnThoatDialogChuaNhapThongTinSinhVien = new javax.swing.JButton();
         buttonGroupGioiTinh = new javax.swing.ButtonGroup();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
         jTabbedPanelHocVien = new javax.swing.JTabbedPane();
         jPanelGiaoVien = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -294,41 +285,6 @@ public class TruongHocView extends javax.swing.JFrame {
         radioButtonNam = new javax.swing.JRadioButton();
         radioButtonNu = new javax.swing.JRadioButton();
         btnXoaHetDuLieuBang = new javax.swing.JButton();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jMenu1.setText("jMenu1");
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         dialogThongBaoTimKiemHocVien.setTitle("Thong bao tim kiem");
         dialogThongBaoTimKiemHocVien.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -427,27 +383,22 @@ public class TruongHocView extends javax.swing.JFrame {
                 .addGap(43, 43, 43))
         );
 
-        jButton1.setText("jButton1");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        jScrollPane3.setViewportView(jTree1);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tableGiaoVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -479,8 +430,8 @@ public class TruongHocView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGiaoVienLayout.createSequentialGroup()
                 .addContainerGap(132, Short.MAX_VALUE)
                 .addComponent(btnLoadGiaoVien)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -754,8 +705,6 @@ public class TruongHocView extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupGioiTinh;
     private javax.swing.JDialog dialogThongBaoChuaNhapThongTinHocVien;
     private javax.swing.JDialog dialogThongBaoTimKiemHocVien;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -768,19 +717,12 @@ public class TruongHocView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelGiaoVien;
     private javax.swing.JPanel jPanelHocSinh;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPanelHocVien;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTree jTree1;
     private javax.swing.JLabel labelThongBaoNhapKhongThanhCong;
     private javax.swing.JLabel labelThongBaoTimKiem;
     private javax.swing.JPanel panelThongBaoTimKiemHocVien;

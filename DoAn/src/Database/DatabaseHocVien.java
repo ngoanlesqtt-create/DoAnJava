@@ -20,11 +20,11 @@ import java.text.SimpleDateFormat;
  *
  * @author PC
  */
-public class Database {
+public class DatabaseHocVien {
 
     private SQLServerDataSource ds;
 
-    public Database(ArrayList<HocVien> danhSachHocVien) throws SQLException {
+    public DatabaseHocVien(ArrayList<HocVien> danhSachHocVien) throws SQLException {
         ds = new SQLServerDataSource();
         ds.setUser("sa");
         ds.setPassword("1");
@@ -145,25 +145,5 @@ public class Database {
         return danhSachHocVienDuocSua;
     }
 
-    public ArrayList loadDataGiaoVien() throws SQLException {
-        ArrayList<GiaoVien> danhSachGiaoVien = new ArrayList<>();
-        ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("1");
-        ds.setServerName("localhost");
-        ds.setPortNumber(Integer.parseInt("1433"));
-        ds.setDatabaseName("BAITAP2");
-        try {
-            Connection con = ds.getConnection();
-            CallableStatement cstmt = con.prepareCall("select * from GIAOVIEN");
-            ResultSet rs = cstmt.executeQuery();
-            while (rs.next()) {
-                danhSachGiaoVien.add(new GiaoVien(rs.getString("MAGV"), rs.getString("HOTEN"), rs.getString("HOCVI"), rs.getString("GIOITINh"),
-                        rs.getDate("NGSINh"), rs.getFloat("LuongCB"), rs.getFloat("HESO"), rs.getFloat("MUCLUONG"), rs.getString("MAKHOA")));
-            }
-        } catch (SQLServerException ex) {
-        }
-        return danhSachGiaoVien;
-    }
 
 }

@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 public class GiaoVienModel extends AbstractTableModel {
 
     private final ArrayList<GiaoVien> danhSachGiaoVien;
-    private final String[] column = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Lương cơ bản", "Mức lương", "Khoa"};
+    private final String[] columnNames = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
 
     public GiaoVienModel(ArrayList<GiaoVien> danhSachGiaoVien) {
         this.danhSachGiaoVien = danhSachGiaoVien;
@@ -27,12 +27,54 @@ public class GiaoVienModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return column.length;
+        return columnNames.length;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return columnNames[column]; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex != 0;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        GiaoVien giaoVien = this.danhSachGiaoVien.get(rowIndex);
+        switch (columnIndex) {
+            case 0 -> {
+                return giaoVien.getMaGv();
+            }
+            case 1 -> {
+                return giaoVien.getHoTen();
+            }
+            case 2 -> {
+                return giaoVien.getHocVi();
+            }
+            case 3 -> {
+                return giaoVien.getGioiTinh();
+            }
+            case 4 -> {
+                return giaoVien.getNgaySinh();
+            }
+            case 5 -> {
+                return giaoVien.getLuongCoBan();
+            }
+            case 6 -> {
+                return giaoVien.getHeSo();
+            }
+            case 7 -> {
+                return giaoVien.getMucLuong();
+            }
+            case 8 -> {
+                return giaoVien.getMaKhoa();
+            }
+            default -> {
+                return null;
+            }
+        }
     }
 
 }
