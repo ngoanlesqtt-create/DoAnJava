@@ -15,15 +15,21 @@ import java.util.ArrayList;
  */
 public class DataGiaoVien {
 
-    private DatabaseGiaoVien databaseGiaoVien;
+    private final DatabaseGiaoVien databaseGiaoVien;
     private ArrayList<GiaoVien> danhSachGiaoVien;
 
     public DataGiaoVien() throws SQLException {
         this.danhSachGiaoVien = new ArrayList<>();
         this.databaseGiaoVien = new DatabaseGiaoVien(this.danhSachGiaoVien);
+
     }
 
     public ArrayList getDataGiaoVien() {
         return this.danhSachGiaoVien;
+    }
+
+    public ArrayList<GiaoVien> themGiaoVien(ArrayList<Object> thongTinInputGiaoVien) throws SQLException {
+        this.danhSachGiaoVien = this.databaseGiaoVien.themGiaoVien(thongTinInputGiaoVien);
+        return danhSachGiaoVien;
     }
 }

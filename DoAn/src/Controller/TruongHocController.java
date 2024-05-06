@@ -5,6 +5,8 @@
 package Controller;
 
 import Data.DataGiaoVien;
+import InputThongTin.InputThongTin;
+import ModelGiaoVien.GiaoVien;
 import ModelGiaoVien.GiaoVienModel;
 import ModelHocVien.HocVien;
 import ModelHocVien.HocVienModel;
@@ -15,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -23,7 +26,7 @@ import javax.swing.event.ListSelectionListener;
  * @author PC
  */
 public class TruongHocController {
-
+    
     private final HocVienModel modelHocVien;
     private final TruongHocView view;
     private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
@@ -32,7 +35,7 @@ public class TruongHocController {
     private boolean stateSuaThongtin;
     private GiaoVienModel modelGiaoVien;
     private DataGiaoVien dataGiaoVien;
-
+    
     public TruongHocController() throws SQLException {
         this.view = new TruongHocView();
         this.state = false;
@@ -41,6 +44,7 @@ public class TruongHocController {
         this.dataGiaoVien = new DataGiaoVien();
         this.modelGiaoVien = new GiaoVienModel(this.dataGiaoVien.getDataGiaoVien());
         view.loadGiaoVienBangClickButton(new DataGiaoVienDuocLoad());
+        view.themGiaoVien(new GiaoVienDuocThem());
         //Thêm học viên
         modelHocVien = new HocVienModel();
         modelHocVien.nhap();
@@ -57,18 +61,36 @@ public class TruongHocController {
         view.capNhapDuLieuTungO(new DuLieuDuocThayDoi());//bat su kien khi bam nut enter
         view.setVisible(true);
     }
-
+    
     private class DataGiaoVienDuocLoad implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             view.loadGiaoVien(modelGiaoVien);
         }
-
     }
-
+    
+    private class GiaoVienDuocThem implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Object> thongTinInputGiaoVien = view.getThongTinInputGiaoVien();
+            if (!InputThongTin.kiemTraInputRong(thongTinInputGiaoVien)) {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin cua giao vien");
+            } else {
+                if (!InputThongTin.kiemTraToanBoThongTinInput(thongTinInputGiaoVien)) {//xac thuc cac input cua giao vien
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Ban nhap sai thong tin");
+                } else {
+                    System.out.println("test dong 82 TruongHocController");
+                    ArrayList<GiaoVien> giaoVienDuocThemVao=dataGiaoVien.themGiaoVien(thongTinInputGiaoVien);
+                }
+            }
+        }
+        
+    }
+    
     private class LoadedHocVienBangEnter extends KeyAdapter {
-
+        
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -83,9 +105,9 @@ public class TruongHocController {
             }
         }
     }
-
+    
     private class LoadedHocVien implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -96,34 +118,34 @@ public class TruongHocController {
                 view.hienThiTrenTable(data, columnHocVien);
             } catch (SQLException ex) {
             }
-
+            
         }
-
+        
     }
-
+    
     private class CachTatThongBaoTimKiemHocVien implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             view.tatHienThiPopUpThongBaoTimKiemHocVien();
         }
-
+        
     }
-
+    
     private class CachTatThongBaoChuaNhapThongTinSinhVien implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             view.tatHienThiPopUpThongBaoChuaNhapThongTinHocVien();
         }
-
+        
     }
-
+    
     private class HocVienDuocTimThay implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
             state = true;
             stateSuaThongtin = true;
             if (view.getThongTinVienMuonTim() != null) {//Nếu đã nhập các thông tin tìm kiếm học viên
@@ -136,19 +158,19 @@ public class TruongHocController {
             } else {//Chưa nhập thông tin tìm kiếm học viên
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin can tim");
             }
-
+            
         }
-
+        
     }
-
+    
     private class HocVienDuocThem implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             HocVien hocVienDuocThemVao;
             try {
                 hocVienDuocThemVao = view.getHocVien();
-
+                
                 if (hocVienDuocThemVao == null) {
                     view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin");
                     return;
@@ -169,13 +191,13 @@ public class TruongHocController {
                 }
             } catch (ParseException | SQLException ex) {
             }
-
+            
         }
-
+        
     }
-
+    
     private class DuLieuDuocLayTuBang implements ListSelectionListener {
-
+        
         @Override
         public void valueChanged(ListSelectionEvent e) {
             //khi click vào 1 row thì sẽ có 2 sự kiện đó là MousePressed và MouseRealesed 
@@ -183,12 +205,12 @@ public class TruongHocController {
                 return;
             }
             nhieuChiSoTable = view.layNhieuChiSoMang();
-
+            
         }
     }
-
+    
     private class HocVienBiXoa implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -217,9 +239,9 @@ public class TruongHocController {
             }
         }
     }
-
+    
     private class DuLieuBangBiXoaHet implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             int doDaiBang = view.getDoDaiBang();
@@ -239,9 +261,9 @@ public class TruongHocController {
             }
         }
     }
-
+    
     private class ThongTinHocVienDuocSua implements ActionListener {
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -265,12 +287,12 @@ public class TruongHocController {
                 }
             } catch (ParseException | SQLException ex) {
             }
-
+            
         }
     }
-
+    
     private class DuLieuDuocThayDoi extends KeyAdapter {
-
+        
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -299,7 +321,7 @@ public class TruongHocController {
                                     }
                                 }
                                 view.setLaiGiaTriInput();
-
+                                
                                 break;
                             }
                             case 1 -> {
@@ -314,9 +336,9 @@ public class TruongHocController {
                                 view.setLaiGiaTriInput();
                                 break;
                             }
-
+                            
                             case 4 -> {
-
+                                
                                 hocVienDuocChon.setGioiTinh((String) view.getGiaTriTungO(hang, 4));
                                 modelHocVien.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
                                 view.setLaiGiaTriInput();
@@ -341,7 +363,7 @@ public class TruongHocController {
                     } else {
                         System.out.println("Hello dong 125 controller");
                         switch (cot) {
-
+                            
                             case 0 -> {
                                 if (!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
@@ -363,7 +385,7 @@ public class TruongHocController {
                                     break;
                                 }
                             }
-
+                            
                             case 1 -> {
                                 hocVienDuocChon.setHo((String) view.getGiaTriTungO(hang, 1));
                                 modelHocVien.suaThongTinHocVienKhiDuocTimKiem(nhieuChiSoTable[0], view.getThongTinVienMuonTim(), hocVienDuocChon);
@@ -400,14 +422,14 @@ public class TruongHocController {
                                     break;
                                 }
                             }
-
+                            
                         }
                     }
                 } catch (ParseException | SQLException ex) {
                 }
-
+                
             }
         }
-
+        
     }
 }
