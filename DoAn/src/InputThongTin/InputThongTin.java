@@ -18,11 +18,11 @@ public class InputThongTin {
                 return false;
             }
         }
-        int i = 0;
-        for (Object input : cacInput) {
-            System.out.println("intput[" + i + "]=" + input);
-            i++;
-        }
+//        int i = 0;
+//        for (Object input : cacInput) {
+//            System.out.println("intput[" + i + "]=" + input);
+//            i++;
+//        }
         return true;
     }
 
@@ -50,16 +50,6 @@ public class InputThongTin {
         String heSo = (String) cacInput.get(8);
         for (int i = 0; i <= heSo.length() - 1; i++) {
             if (heSo.charAt(i) <= 'z' && heSo.charAt(i) >= 'a') {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean kiemTraLuongMucLuong(ArrayList<Object> cacInput) {
-        String luong = (String) cacInput.get(9);
-        for (int i = 0; i <= luong.length() - 1; i++) {
-            if (luong.charAt(i) <= 'z' && luong.charAt(i) >= 'a') {
                 return false;
             }
         }
@@ -96,13 +86,9 @@ public class InputThongTin {
     }
 
     public static boolean kiemTraToanBoThongTinInput(ArrayList<Object> thongTinInputGiaoVien) {
-        if (!InputThongTin.kiemTraNgayThangNam(thongTinInputGiaoVien)
+        return !(!InputThongTin.kiemTraNgayThangNam(thongTinInputGiaoVien)
                 || !InputThongTin.kiemTraHoTen(thongTinInputGiaoVien)
                 || !InputThongTin.kiemTraLuongCoBan(thongTinInputGiaoVien)
-                || !InputThongTin.kiemTraLuongHeSo(thongTinInputGiaoVien)
-                || !InputThongTin.kiemTraLuongMucLuong(thongTinInputGiaoVien)) {
-            return false;
-        }
-        return true;
+                || !InputThongTin.kiemTraLuongHeSo(thongTinInputGiaoVien));
     }
 }

@@ -4,7 +4,6 @@
  */
 package Database;
 
-import ModelGiaoVien.GiaoVien;
 import ModelHocVien.HocVien;
 import java.sql.CallableStatement;
 import java.sql.Connection;

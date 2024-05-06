@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,10 +21,11 @@ import javax.swing.table.DefaultTableModel;
  * @author PC
  */
 public class TruongHocView extends javax.swing.JFrame {
-
+    
     private int hangNgang;
     private ArrayList<String> gioiTinh;
     private ArrayList<Number> ngaySinh;
+    private ArrayList<String> maKhoa;
 
     /**
      * Creates new form QLGVView
@@ -33,20 +35,22 @@ public class TruongHocView extends javax.swing.JFrame {
         showGioiTinhGiaoVien();
         showNgaySinhGiaoVien();
         showNamSinhGiaoVien();
+        showMaKhoaGiaoVien();
+        showHocViGiaoVien();
     }
-
+    
     public void loadHocVien(ActionListener listen) {
         btnNhapHocVien.addActionListener(listen);
     }
-
+    
     public void loadHocVienBangEnter(KeyAdapter listener) {
         jTabbedPanelHocVien.addKeyListener(listener);
     }
-
+    
     public void timHocVien(ActionListener listen) {
         btnTimHocVien.addActionListener(listen);
     }
-
+    
     public String getThongTinVienMuonTim() {
         if (textMaHocVienMuonTim.getText().length() != 0 && textMaHocVienMuonTim.getText() != null) {
             return textMaHocVienMuonTim.getText();
@@ -62,45 +66,45 @@ public class TruongHocView extends javax.swing.JFrame {
         if (textMaLop.getText().length() != 0 && textMaLop.getText() != null) {
             return textMaLop.getText();
         }
-
+        
         return null;
     }
-
+    
     public void hienThiTrenTable(Object[][] data, String[] column) {
         DefaultTableModel table = new DefaultTableModel(data, column);
         tableHocVien.setModel(table);
-
+        
     }
-
+    
     public void hienThiPopUpThongBaoTimKiemHocVien() {
         dialogThongBaoTimKiemHocVien.setVisible(true);
     }
-
+    
     public void tatPopUpThongBaoTimKiemHocVien(ActionListener listener) {
         btnThoatDialog.addActionListener(listener);
     }
-
+    
     public void tatHienThiPopUpThongBaoTimKiemHocVien() {
         dialogThongBaoTimKiemHocVien.setVisible(false);
     }
-
+    
     public void hienThiThongBaoChuaNhapThongTinHocVien(String thongBao) {
         labelThongBaoNhapKhongThanhCong.setText(thongBao);
         dialogThongBaoChuaNhapThongTinHocVien.setVisible(true);
     }
-
+    
     public void tatPopUpThongBaoChuaNhapThongTinSinhVien(ActionListener listener) {
         btnThoatDialogChuaNhapThongTinSinhVien.addActionListener(listener);
     }
-
+    
     public void tatHienThiPopUpThongBaoChuaNhapThongTinHocVien() {
         dialogThongBaoChuaNhapThongTinHocVien.setVisible(false);
     }
-
+    
     public void themHocVien(ActionListener listener) {
         btnThemHocVien.addActionListener(listener);
     }
-
+    
     public HocVien getHocVien() throws ParseException {
         String gioiTinh = "";
         if (radioButtonNam.isSelected()) {
@@ -116,7 +120,7 @@ public class TruongHocView extends javax.swing.JFrame {
         Date date = formatter.parse(sDate);
         return new HocVien(textMaHocVien.getText(), textHo.getText(), textTen.getText(), date, gioiTinh, textNoiSinh.getText(), textMaLopDeChinhSuaThongTin.getText());
     }
-
+    
     public void xoaHocVien(ActionListener listener) {
         btnXoaHocVien.addActionListener(listener);
     }
@@ -128,13 +132,13 @@ public class TruongHocView extends javax.swing.JFrame {
     public void layDuLieuBang(ListSelectionListener listSelectionListener) {
         tableHocVien.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
-
+    
     public void capNhapDuLieuTungO(KeyAdapter listener) {
         tableHocVien.addKeyListener(listener);
     }
-
+    
     public int[] layNhieuChiSoMang() {
-
+        
         int row = tableHocVien.getSelectedRow();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");//Tạo một đối tượng có giá trị khởi tạo là ngày-tháng-năm
         if (row != -1) {
@@ -161,39 +165,39 @@ public class TruongHocView extends javax.swing.JFrame {
         }
         return tableHocVien.getSelectedRows();
     }
-
+    
     public void xoaHetDuLieuBang(ActionListener listener) {
         btnXoaHetDuLieuBang.addActionListener(listener);
     }
-
+    
     public int getDoDaiBang() {
         return tableHocVien.getRowCount();
     }
-
+    
     public void suaThongTinHocVien(ActionListener listener) {
         btnSuaThongTinHocVien.addActionListener(listener);
     }
-
+    
     public int getRow() {
-
+        
         return tableHocVien.getSelectedRow();
     }
-
+    
     public int getColumn() {
         return tableHocVien.getSelectedColumn();
     }
-
+    
     public Object getGiaTriTungO(int row, int column) {
-
+        
         return tableHocVien.getValueAt(row, column);
     }
-
+    
     public void setGiaTriTungO(Object value, int row, int column) {
         tableHocVien.setValueAt(value, row, column);
-
+        
     }
-
-    public void xoaInput() {
+    
+    public void xoaInputHocVien() {
         textMaHocVien.requestFocus();
         textMaHocVienMuonTim.setText(null);
         textHoTenMuonTim.setText(null);
@@ -207,7 +211,7 @@ public class TruongHocView extends javax.swing.JFrame {
         radioButtonNam.setSelected(false);
         radioButtonNu.setSelected(false);
     }
-
+    
     public void setLaiGiaTriInput() {
         int row = tableHocVien.getSelectedRow();
         if (row != -1) {
@@ -224,39 +228,37 @@ public class TruongHocView extends javax.swing.JFrame {
                 radioButtonNu.setSelected(true);//cho radiobutton được click bằng cách dùng hàm setSelected(true)
             }
         }
-
+        
     }
 
     //Giáo viên
     public void loadGiaoVienBangClickButton(ActionListener listener) {
         btnLoadGiaoVien.addActionListener(listener);
     }
-
+    
     public void loadGiaoVien(GiaoVienModel modelGiaoVien) {
         tableGiaoVien.setModel(modelGiaoVien);
     }
-
+    
     public void themGiaoVien(ActionListener listener) {
         btnThemGiaoVien.addActionListener(listener);
     }
-
+    
     public ArrayList getThongTinInputGiaoVien() {
         ArrayList<Object> thongTinInputGiaovien = new ArrayList<>();
         thongTinInputGiaovien.add(textMaGiaovien.getText());
         thongTinInputGiaovien.add(textHoTenGiaoVien.getText());
-        thongTinInputGiaovien.add(textHocVi.getText());
+        thongTinInputGiaovien.add(comboboxHocViGiaoVien.getSelectedItem());
         thongTinInputGiaovien.add(comboboxGioiTinhGiaoVien.getSelectedItem());
         thongTinInputGiaovien.add(comboboxNgaySinhGiaoVien.getSelectedItem());
         thongTinInputGiaovien.add(comboboxThangSinhGiaoVien.getSelectedItem());
         thongTinInputGiaovien.add(textNamSinhGiaoVien.getText());
         thongTinInputGiaovien.add(textLuongCoBanGiaoVien.getText());
         thongTinInputGiaovien.add(textHeSoLuongGiaoVien.getText());
-        thongTinInputGiaovien.add(textMucLuongGiaoVien.getText());
-        thongTinInputGiaovien.add(textHeSoLuongGiaoVien.getText());
-        thongTinInputGiaovien.add(textMaKhoaGiaoVien.getText());
+        thongTinInputGiaovien.add(comboboxMaKhoaGiaoVien.getSelectedItem());
         return thongTinInputGiaovien;
     }
-
+    
     public final void showGioiTinhGiaoVien() {
         this.gioiTinh = new ArrayList<>();
         this.gioiTinh.add("Nam");
@@ -265,17 +267,48 @@ public class TruongHocView extends javax.swing.JFrame {
             comboboxGioiTinhGiaoVien.addItem(gioiTinh);
         }
     }
-
+    
     public final void showNgaySinhGiaoVien() {
         for (int i = 1; i <= 31; i++) {
             comboboxNgaySinhGiaoVien.addItem(i);
         }
     }
-
+    
     public final void showNamSinhGiaoVien() {
         for (int i = 1; i <= 12; i++) {
             comboboxThangSinhGiaoVien.addItem(i);
         }
+    }
+    
+    public final void showMaKhoaGiaoVien() {
+        this.maKhoa = new ArrayList<>();
+        this.maKhoa.add("KHMT");
+        this.maKhoa.add("HTTT");
+        this.maKhoa.add("CNPM");
+        this.maKhoa.add("KTMT");
+        this.maKhoa.add("MTT");
+        for (String maKhoaGiaoVien : this.maKhoa) {
+            comboboxMaKhoaGiaoVien.addItem(maKhoaGiaoVien);
+        }
+    }
+    
+    public final void showHocViGiaoVien() {
+        comboboxHocViGiaoVien.addItem("Ths");
+        comboboxHocViGiaoVien.addItem("TS");
+        comboboxHocViGiaoVien.addItem("CN");
+    }
+    
+    public void xoaGiaoVien(ListSelectionListener listener) {
+        ListSelectionModel listSelectionModel = tableGiaoVien.getSelectionModel();
+        listSelectionModel.addListSelectionListener(listener);
+    }
+    
+    public int[] getRowsGiaoVien() {
+        return tableGiaoVien.getSelectedRows();
+    }
+
+    public void nhanNutXoaGiaoVien(ActionListener listener) {
+        btnXoaGiaoVien.addActionListener(listener);
     }
 
     /**
@@ -342,13 +375,9 @@ public class TruongHocView extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        textHocVi = new javax.swing.JTextField();
-        textLuongCoBanGiaoVien = new javax.swing.JTextField();
         textHeSoLuongGiaoVien = new javax.swing.JTextField();
-        textMucLuongGiaoVien = new javax.swing.JTextField();
-        textMaKhoaGiaoVien = new javax.swing.JTextField();
+        textLuongCoBanGiaoVien = new javax.swing.JTextField();
         btnThemGiaoVien = new javax.swing.JButton();
         comboboxGioiTinhGiaoVien = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
@@ -357,6 +386,9 @@ public class TruongHocView extends javax.swing.JFrame {
         comboboxNgaySinhGiaoVien = new javax.swing.JComboBox();
         comboboxThangSinhGiaoVien = new javax.swing.JComboBox<>();
         textNamSinhGiaoVien = new javax.swing.JTextField();
+        comboboxMaKhoaGiaoVien = new javax.swing.JComboBox<>();
+        comboboxHocViGiaoVien = new javax.swing.JComboBox<>();
+        btnXoaGiaoVien = new javax.swing.JButton();
 
         dialogThongBaoTimKiemHocVien.setTitle("Thong bao tim kiem");
         dialogThongBaoTimKiemHocVien.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -730,8 +762,6 @@ public class TruongHocView extends javax.swing.JFrame {
 
         jLabel19.setText("Hệ số");
 
-        jLabel20.setText("Mức lương");
-
         jLabel21.setText("Mã khoa");
 
         btnThemGiaoVien.setText("Thêm");
@@ -743,6 +773,8 @@ public class TruongHocView extends javax.swing.JFrame {
         jLabel24.setText("Năm");
 
         textNamSinhGiaoVien.setPreferredSize(new java.awt.Dimension(72, 22));
+
+        btnXoaGiaoVien.setText("Xóa");
 
         javax.swing.GroupLayout jPanelGiaoVienLayout = new javax.swing.GroupLayout(jPanelGiaoVien);
         jPanelGiaoVien.setLayout(jPanelGiaoVienLayout);
@@ -758,21 +790,23 @@ public class TruongHocView extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
-                                .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelGiaoVienLayout.createSequentialGroup()
-                                        .addComponent(jLabel24)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textNamSinhGiaoVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelGiaoVienLayout.createSequentialGroup()
-                                        .addComponent(jLabel23)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboboxThangSinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                                 .addComponent(jLabel22)
                                 .addGap(18, 18, 18)
-                                .addComponent(comboboxNgaySinhGiaoVien, 0, 75, Short.MAX_VALUE)
-                                .addGap(520, 520, 520)))
+                                .addComponent(comboboxNgaySinhGiaoVien, 0, 78, Short.MAX_VALUE)
+                                .addGap(416, 416, 416))
+                            .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
+                                .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
+                                        .addComponent(jLabel23)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(comboboxThangSinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(textNamSinhGiaoVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnXoaGiaoVien)
+                        .addGap(29, 29, 29)
                         .addComponent(btnLoadGiaoVien)
                         .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGiaoVienLayout.createSequentialGroup()
@@ -787,31 +821,26 @@ public class TruongHocView extends javax.swing.JFrame {
                                             .addComponent(jLabel15))
                                         .addGap(29, 29, 29)
                                         .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(textHocVi)
                                             .addComponent(textHoTenGiaoVien, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(textMaGiaovien)))
                                     .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                                         .addGap(97, 97, 97)
-                                        .addComponent(comboboxGioiTinhGiaoVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(comboboxGioiTinhGiaoVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(comboboxHocViGiaoVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel18)
+                                    .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
+                                        .addComponent(jLabel19)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(textHeSoLuongGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                                         .addComponent(jLabel21)
-                                        .addGap(45, 45, 45)
-                                        .addComponent(textMaKhoaGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
-                                            .addComponent(jLabel20)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(textMucLuongGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
-                                            .addComponent(jLabel18)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(textLuongCoBanGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
-                                            .addComponent(jLabel19)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(textHeSoLuongGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                        .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(textLuongCoBanGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(comboboxMaKhoaGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(324, 324, 324)
                                 .addComponent(btnThemGiaoVien)))
                         .addGap(23, 23, 23))))
@@ -825,8 +854,7 @@ public class TruongHocView extends javax.swing.JFrame {
                         .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(textMaGiaovien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)
-                            .addComponent(textLuongCoBanGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel18))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
@@ -836,24 +864,27 @@ public class TruongHocView extends javax.swing.JFrame {
                                 .addComponent(textHeSoLuongGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(btnThemGiaoVien)))
+                        .addComponent(btnThemGiaoVien))
+                    .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(textLuongCoBanGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(textHocVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel20)
-                        .addComponent(textMucLuongGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel21)
+                        .addComponent(comboboxMaKhoaGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboboxHocViGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel21)
-                    .addComponent(comboboxGioiTinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textMaKhoaGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboboxGioiTinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                        .addComponent(btnLoadGiaoVien)
+                        .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLoadGiaoVien)
+                            .addComponent(btnXoaGiaoVien))
                         .addGap(131, 131, 131))
                     .addGroup(jPanelGiaoVienLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -862,10 +893,10 @@ public class TruongHocView extends javax.swing.JFrame {
                             .addComponent(jLabel17)
                             .addComponent(comboboxNgaySinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
                             .addComponent(comboboxThangSinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(9, 9, 9)
                         .addGroup(jPanelGiaoVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
                             .addComponent(textNamSinhGiaoVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -905,10 +936,13 @@ public class TruongHocView extends javax.swing.JFrame {
     private javax.swing.JButton btnThoatDialog;
     private javax.swing.JButton btnThoatDialogChuaNhapThongTinSinhVien;
     private javax.swing.JButton btnTimHocVien;
+    private javax.swing.JButton btnXoaGiaoVien;
     private javax.swing.JButton btnXoaHetDuLieuBang;
     private javax.swing.JButton btnXoaHocVien;
     private javax.swing.ButtonGroup buttonGroupGioiTinh;
     private javax.swing.JComboBox<String> comboboxGioiTinhGiaoVien;
+    private javax.swing.JComboBox<String> comboboxHocViGiaoVien;
+    private javax.swing.JComboBox<String> comboboxMaKhoaGiaoVien;
     private javax.swing.JComboBox comboboxNgaySinhGiaoVien;
     private javax.swing.JComboBox<Integer> comboboxThangSinhGiaoVien;
     private javax.swing.JDialog dialogThongBaoChuaNhapThongTinHocVien;
@@ -925,7 +959,6 @@ public class TruongHocView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -954,15 +987,12 @@ public class TruongHocView extends javax.swing.JFrame {
     private javax.swing.JTextField textHo;
     private javax.swing.JTextField textHoTenGiaoVien;
     private javax.swing.JTextField textHoTenMuonTim;
-    private javax.swing.JTextField textHocVi;
     private javax.swing.JTextField textLuongCoBanGiaoVien;
     private javax.swing.JTextField textMaGiaovien;
     private javax.swing.JTextField textMaHocVien;
     private javax.swing.JTextField textMaHocVienMuonTim;
-    private javax.swing.JTextField textMaKhoaGiaoVien;
     private javax.swing.JTextField textMaLop;
     private javax.swing.JTextField textMaLopDeChinhSuaThongTin;
-    private javax.swing.JTextField textMucLuongGiaoVien;
     private javax.swing.JTextField textNamSinhGiaoVien;
     private javax.swing.JTextField textNgaySinh;
     private javax.swing.JTextField textNoiSinh;

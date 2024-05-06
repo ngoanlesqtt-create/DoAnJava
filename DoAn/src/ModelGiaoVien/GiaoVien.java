@@ -76,4 +76,8 @@ public class GiaoVien implements InterfaceGiaoVien {
         return this.maKhoa;
     }
 
+    public String getMaGiaoVien() {
+        return this.MaGV;
+    }
+
 }

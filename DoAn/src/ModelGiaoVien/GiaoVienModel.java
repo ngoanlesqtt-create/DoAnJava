@@ -13,11 +13,15 @@ import javax.swing.table.AbstractTableModel;
  */
 public class GiaoVienModel extends AbstractTableModel {
 
-    private final ArrayList<GiaoVien> danhSachGiaoVien;
+    private ArrayList<GiaoVien> danhSachGiaoVien;
     private final String[] columnNames = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
 
     public GiaoVienModel(ArrayList<GiaoVien> danhSachGiaoVien) {
         this.danhSachGiaoVien = danhSachGiaoVien;
+    }
+
+    public void setDanhSachGiaoVien(ArrayList<GiaoVien> giaoVien) {
+        this.danhSachGiaoVien = giaoVien;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class GiaoVienModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        return columnNames[column]; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return columnNames[column];
     }
 
     @Override

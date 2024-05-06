@@ -58,12 +58,23 @@ public class DatabaseGiaoVien {
         ds.setServerName("localhost");
         ds.setPortNumber(Integer.parseInt("1433"));
         ds.setDatabaseName("BAITAP2");
-        String ngayThangNamSinh = (String) thongTinInputGiaoVien.get(0) + "/"
-                + (String) thongTinInputGiaoVien.get(0) + "/"
-                + (String) thongTinInputGiaoVien.get(0);
+
         try {
             Connection con = ds.getConnection();
-            CallableStatement cstmt = con.prepareCall("select * from GIAOVIEN");
+            CallableStatement cstmt = con.prepareCall("INSERT INTO GIAOVIEN VALUES('"
+                    + thongTinInputGiaoVien.get(0) + "','"
+                    + thongTinInputGiaoVien.get(1) + "','"
+                    + thongTinInputGiaoVien.get(2) + "','"
+                    + thongTinInputGiaoVien.get(3) + "','"
+                    + thongTinInputGiaoVien.get(5) + "/"
+                    + thongTinInputGiaoVien.get(4) + "/"
+                    + thongTinInputGiaoVien.get(6) + "','"
+                    + thongTinInputGiaoVien.get(7) + "','"
+                    + thongTinInputGiaoVien.get(8) + "','"
+                    + "0','"
+                    + thongTinInputGiaoVien.get(9) + "')"
+                    + "select * from GIAOVIEN"
+            );
             ResultSet rs = cstmt.executeQuery();
             while (rs.next()) {
                 cacGiaoVienDuocThemVao.add(new GiaoVien(
@@ -79,7 +90,42 @@ public class DatabaseGiaoVien {
             }
         } catch (SQLServerException ex) {
             System.out.println("loi:" + ex);
+            return null;
         }
         return cacGiaoVienDuocThemVao;
     }
+
+    public ArrayList<GiaoVien> xoaGiaoVien(GiaoVien giaoVien) throws SQLException {
+        ArrayList<GiaoVien> cacGiaoVienDuocXoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("delete from GIAOVIEN where MAGV='" + giaoVien.getMaGiaoVien() + "'"
+                    + "select * from GIAOVIEN");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                cacGiaoVienDuocXoa.add(new GiaoVien(
+                        rs.getString("MAGV"),
+                        rs.getString("HOTEN"),
+                        rs.getString("HOCVI"),
+                        rs.getString("GIOITINh"),
+                        rs.getDate("NGSINH"),
+                        rs.getFloat("LuongCB"),
+                        rs.getFloat("HESO"),
+                        rs.getFloat("MUCLUONG"),
+                        rs.getString("MAKHOA")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("loi:" + ex);
+            return null;
+        }
+        return cacGiaoVienDuocXoa;
+
+    }
+
 }
