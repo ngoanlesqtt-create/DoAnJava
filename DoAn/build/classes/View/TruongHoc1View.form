@@ -178,7 +178,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPanelHocVien" alignment="0" max="32767" attributes="0"/>
+          <Component id="jTabbedPanelHocVien" alignment="0" pref="845" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -219,8 +219,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="549" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -244,66 +243,62 @@
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="radioButtonNam" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="radioButtonNu" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="textMaHocVien" min="-2" pref="137" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="radioButtonNam" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      <Component id="radioButtonNu" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Component id="textMaHocVien" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="textHoTenMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
-                                                          <Component id="textMaHocVienMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
-                                                          <Component id="textMaLop" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="textHo" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textTen" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textNgaySinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textNoiSinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                      <Component id="textMaLopDeChinhSuaThongTin" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="textHoTenMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
+                                                  <Component id="textMaHocVienMuonTim" min="-2" pref="137" max="-2" attributes="0"/>
+                                                  <Component id="textMaLop" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                                               </Group>
+                                              <Component id="textHo" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Component id="textTen" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Component id="textNgaySinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Component id="textNoiSinh" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Component id="textMaLopDeChinhSuaThongTin" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="btnSuaThongTinHocVien" min="-2" pref="94" max="-2" attributes="0"/>
-                                          <Component id="btnThemHocVien" min="-2" pref="94" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="btnXoaHocVien" pref="94" max="32767" attributes="0"/>
-                                          <Component id="btnXoaHetDuLieuBang" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="btnSuaThongTinHocVien" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="btnThemHocVien" min="-2" pref="94" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnXoaHocVien" pref="94" max="32767" attributes="0"/>
+                                  <Component id="btnXoaHetDuLieuBang" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnNhapHocVien" min="-2" pref="94" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace pref="845" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -558,129 +553,131 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="comboboxNgaySinhGiaoVien" pref="78" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="416" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="comboboxThangSinhGiaoVien" min="-2" pref="75" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="textNamSinhGiaoVien" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="btnXoaGiaoVien" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="btnLoadGiaoVien" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane4" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="textHoTenGiaoVien" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="textHoTenGiaoVien" pref="72" max="32767" attributes="0"/>
                                                   <Component id="textMaGiaovien" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="comboboxGioiTinhGiaoVien" max="32767" attributes="0"/>
                                                   <Component id="comboboxHocViGiaoVien" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="textHeSoLuongGiaoVien" min="-2" pref="100" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace pref="45" max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="textLuongCoBanGiaoVien" min="-2" pref="100" max="-2" attributes="0"/>
-                                                  <Component id="comboboxMaKhoaGiaoVien" min="-2" pref="100" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="324" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="btnThemGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnXoaGiaoVien" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="comboboxMaKhoaGiaoVien" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="textHeSoLuongGiaoVien" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="textNamSinhGiaoVien" min="-2" pref="50" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="comboboxThangSinhGiaoVien" min="-2" pref="49" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="textLuongCoBanGiaoVien" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="comboboxNgaySinhGiaoVien" min="-2" pref="48" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnXoaHetGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnSuaThongTinGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnTimKiemGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnTinhLuongGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnLoadGiaoVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnDieuHuong" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
+                  <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textMaGiaovien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textLuongCoBanGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboboxNgaySinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textMaGiaovien" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                      <Component id="textHoTenGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textHeSoLuongGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textHoTenGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                              <Component id="btnThemGiaoVien" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textLuongCoBanGiaoVien" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="textHeSoLuongGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboboxThangSinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                              <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboboxMaKhoaGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboboxHocViGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textNamSinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -688,35 +685,18 @@
                           <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboboxGioiTinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace pref="17" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnLoadGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnXoaGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboboxNgaySinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboboxThangSinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textNamSinhGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
+                      <EmptySpace pref="165" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnLoadGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnXoaGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnThemGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnXoaHetGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSuaThongTinGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnTimKiemGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnTinhLuongGiaoVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDieuHuong" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane4" min="-2" pref="207" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -888,6 +868,31 @@
             <Component class="javax.swing.JButton" name="btnXoaGiaoVien">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnXoaHetGiaoVien">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="X&#xf3;a h&#x1ebf;t"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSuaThongTinGiaoVien">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnTimKiemGiaoVien">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnTinhLuongGiaoVien">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="T&#xed;nh l&#x1b0;&#x1a1;ng"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnDieuHuong">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#x110;i&#x1ec1;u h&#x1b0;&#x1edb;ng"/>
               </Properties>
             </Component>
           </SubComponents>

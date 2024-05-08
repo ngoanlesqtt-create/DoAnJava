@@ -4,6 +4,8 @@
  */
 package ModelGiaoVien;
 
+import Data.DataGiaoVien;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,10 +15,12 @@ import javax.swing.table.AbstractTableModel;
  */
 public class GiaoVienModel extends AbstractTableModel {
 
-    private ArrayList<GiaoVien> danhSachGiaoVien;
+    private ArrayList<GiaoVien> danhSachGiaoVien = new ArrayList<>();
     private final String[] columnNames = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
+    private final DataGiaoVien dataGiaoVien;
 
-    public GiaoVienModel(ArrayList<GiaoVien> danhSachGiaoVien) {
+    public GiaoVienModel(ArrayList<GiaoVien> danhSachGiaoVien) throws SQLException {
+        this.dataGiaoVien = new DataGiaoVien();
         this.danhSachGiaoVien = danhSachGiaoVien;
     }
 
@@ -41,7 +45,16 @@ public class GiaoVienModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex != 0;
+        if (columnIndex == 0) {
+            return false;
+        }
+        if (columnIndex == 4) {
+            return false;
+        }
+        if (columnIndex == 7) {
+            return false;
+        }
+        return columnIndex != 8;
     }
 
     @Override
@@ -52,6 +65,7 @@ public class GiaoVienModel extends AbstractTableModel {
                 return giaoVien.getMaGv();
             }
             case 1 -> {
+
                 return giaoVien.getHoTen();
             }
             case 2 -> {
@@ -64,13 +78,13 @@ public class GiaoVienModel extends AbstractTableModel {
                 return giaoVien.getNgaySinh();
             }
             case 5 -> {
-                return giaoVien.getLuongCoBan();
-            }
-            case 6 -> {
                 return giaoVien.getHeSo();
             }
+            case 6 -> {
+                return giaoVien.getLuongCoBan();
+            }
             case 7 -> {
-                return giaoVien.getMucLuong();
+                return giaoVien.getLuong();
             }
             case 8 -> {
                 return giaoVien.getMaKhoa();
@@ -78,6 +92,58 @@ public class GiaoVienModel extends AbstractTableModel {
             default -> {
                 return null;
             }
+        }
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        GiaoVien giaoVien = this.danhSachGiaoVien.get(rowIndex);
+        switch (columnIndex) {
+            case 1 -> {
+                try {
+                    giaoVien.setHoTen((String) aValue);
+                    this.danhSachGiaoVien = this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
+
+                } catch (SQLException ex) {
+                }
+                break;
+            }
+            case 2 -> {
+                try {
+                    giaoVien.setHocVi((String) aValue);
+                    this.danhSachGiaoVien = this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
+                } catch (SQLException ex) {
+                }
+                break;
+            }
+            case 3 -> {
+                try {
+                    giaoVien.setGioiTinh((String) aValue);
+                    this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
+                } catch (SQLException ex) {
+                }
+                break;
+            }
+
+            case 5 -> {
+                try {
+                    giaoVien.setHeSo(Float.parseFloat((String) aValue));
+                    System.out.println("Hello dong 131 GiaoVienModel,rowIndex: " + rowIndex);
+                    this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
+                } catch (SQLException ex) {
+                }
+                break;
+            }
+            case 6 -> {
+                try {
+                    giaoVien.setLuongCoBan(Float.parseFloat((String) aValue));
+                    this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
+                } catch (SQLException ex) {
+                }
+
+                break;
+            }
+
         }
     }
 

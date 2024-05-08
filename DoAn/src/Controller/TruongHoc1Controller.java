@@ -10,7 +10,7 @@ import ModelGiaoVien.GiaoVien;
 import ModelGiaoVien.GiaoVienModel;
 import ModelHocVien.HocVien;
 import ModelHocVien.HocVienModel;
-import View.TruongHocView;
+import View.TruongHoc1View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,8 +18,6 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,20 +25,22 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author PC
  */
-public class TruongHocController {
+public class TruongHoc1Controller {
 
     private final HocVienModel modelHocVien;
-    private final TruongHocView view;
+    private final TruongHoc1View view;
     private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
+    private final String[] columnGiaoVien = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
     private int[] nhieuChiSoTable;
     private boolean state;
     private boolean stateSuaThongtin;
-    private GiaoVienModel modelGiaoVien;
-    private DataGiaoVien dataGiaoVien;
+    private final GiaoVienModel modelGiaoVien;
+    private final DataGiaoVien dataGiaoVien;
     private int[] cacChiSoBangGiaoVienDuocChon;
+    private ArrayList<GiaoVien> giaoVienDuocTimThay;
 
-    public TruongHocController() throws SQLException {
-        this.view = new TruongHocView();
+    public TruongHoc1Controller() throws SQLException {
+        this.view = new TruongHoc1View();
         this.state = false;
         this.stateSuaThongtin = false;
         //them giao vien
@@ -50,6 +50,13 @@ public class TruongHocController {
         view.themGiaoVien(new GiaoVienDuocThem());
         view.xoaGiaoVien(new CacGiaoVienDuocXoa());
         view.nhanNutXoaGiaoVien(new CacGiaoVienDuocNhanNutXoa());
+        view.xoaHetGiaoVien(new GiaoVienDuocXoaHet());
+        view.suaThongTinGiaoVien(new CacGiaoVienDuocSuaThongTin());
+        view.xuLySuKienEnterChoTableGiaoVien(new CacThongTinGiaoVienDuocSuaKhinhanEnter());
+        view.timKiemGiaoVien(new GiaoVienDuocTimKiem());
+        this.giaoVienDuocTimThay = new ArrayList<>();
+        view.tinhLuongGiaoVien(new GiaoVienDuocTinhLuong());
+        view.dieuHuong(new TrangDieuHuong());
         //Thêm học viên
         modelHocVien = new HocVienModel();
         modelHocVien.nhap();
@@ -71,7 +78,13 @@ public class TruongHocController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+            view.hienThiTableGiaoVien(data, columnGiaoVien);
+            modelGiaoVien.setDanhSachGiaoVien(dataGiaoVien.getDataGiaoVien());
             view.loadGiaoVien(modelGiaoVien);
+            state = false;
+            view.xoaInputTableGiaoVien();
+
         }
     }
 
@@ -88,13 +101,14 @@ public class TruongHocController {
                 } else {
                     try {
                         ArrayList<GiaoVien> giaoVienDuocThemVao = dataGiaoVien.themGiaoVien(thongTinInputGiaoVien);
+                        System.out.println("test dong 102 TruongHocController");
                         if (giaoVienDuocThemVao == null) {
                             view.hienThiThongBaoChuaNhapThongTinHocVien("Ban nhap trung ma giao vien");
                         } else {
                             modelGiaoVien.setDanhSachGiaoVien(giaoVienDuocThemVao);
-                            view.loadGiaoVien(modelGiaoVien);
+                            Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+                            view.hienThiTableGiaoVien(data, columnGiaoVien);
                         }
-
                     } catch (SQLException ex) {
                     }
                 }
@@ -111,26 +125,206 @@ public class TruongHocController {
                 return;
             }
             cacChiSoBangGiaoVienDuocChon = view.getRowsGiaoVien();
+            view.setLaiGiaTriInputGiaoVien();
         }
-
     }
 
     private class CacGiaoVienDuocNhanNutXoa implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (cacChiSoBangGiaoVienDuocChon == null) {
-                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn giáo viên để xóa");
+            if (!dataGiaoVien.getDataGiaoVien().isEmpty()) {
+                if (cacChiSoBangGiaoVienDuocChon == null) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn giáo viên để xóa");
+                } else {
+                    try {
+                        if (!state) {
+                            ArrayList<GiaoVien> cacGiaoVienDuocXoa = dataGiaoVien.xoaGiaoVien(cacChiSoBangGiaoVienDuocChon);
+                            modelGiaoVien.setDanhSachGiaoVien(cacGiaoVienDuocXoa);
+                            Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+                            view.hienThiTableGiaoVien(data, columnGiaoVien);
+                        } else {
+                            String maHocVienCanXoa = view.getMaGiaoVien();
+                            ArrayList<GiaoVien> giaoVienDuocXoa = dataGiaoVien.xoaGiaoVienDuocTimKiem(maHocVienCanXoa);
+                            Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien(giaoVienDuocXoa);
+                            view.hienThiTableGiaoVien(data, columnHocVien);
+                        }
+
+                    } catch (SQLException ex) {
+                    }
+
+                }
             } else {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết giáo viên để xóa");
+            }
+
+        }
+
+    }
+
+    private class GiaoVienDuocXoaHet implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int soLuongGiaoVienTrongbang = view.getColumnCountGiaoVien();
+            if (soLuongGiaoVienTrongbang >= 1) {
+                cacChiSoBangGiaoVienDuocChon = new int[soLuongGiaoVienTrongbang];
+                for (int i = 0; i <= soLuongGiaoVienTrongbang - 1; i++) {
+                    cacChiSoBangGiaoVienDuocChon[i] = i;
+                }
+                ArrayList<GiaoVien> cacGiaoVienDuocXoa;
                 try {
-                    ArrayList<GiaoVien> cacGiaoVienDuocXoa = dataGiaoVien.xoaGiaoVien(cacChiSoBangGiaoVienDuocChon);
+                    cacGiaoVienDuocXoa = dataGiaoVien.xoaGiaoVien(cacChiSoBangGiaoVienDuocChon);
                     modelGiaoVien.setDanhSachGiaoVien(cacGiaoVienDuocXoa);
-                    view.loadGiaoVien(modelGiaoVien);
+                    Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+                    view.hienThiTableGiaoVien(data, columnGiaoVien);
+                } catch (SQLException ex) {
+                }
+            } else {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết giáo viên để xóa");
+            }
+
+        }
+
+    }
+
+    private class CacGiaoVienDuocSuaThongTin implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (cacChiSoBangGiaoVienDuocChon != null) {
+                if (cacChiSoBangGiaoVienDuocChon.length == 0) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn giáo viên để sửa");
+                } else if (cacChiSoBangGiaoVienDuocChon.length > 1) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chỉ được chọn một giáo viên để sửa");
+                } else {
+                    ArrayList<Object> thongTinInputGiaoVien = view.getThongTinInputGiaoVien();
+                    if (!InputThongTin.kiemTraInputRong(thongTinInputGiaoVien)) {
+                        view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin cua giao vien");
+                    } else {
+                        if (!InputThongTin.kiemTraToanBoThongTinInput(thongTinInputGiaoVien)) {//xac thuc cac input cua giao vien
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Ban nhap sai thong tin");
+                        } else {
+                            try {
+
+                                if (!state) {
+                                    ArrayList<GiaoVien> cacGiaoVienDuocSuaThongTin = dataGiaoVien.suaThongTinGiaoVien(thongTinInputGiaoVien, cacChiSoBangGiaoVienDuocChon[0]);
+                                    if (cacGiaoVienDuocSuaThongTin != null) {
+                                        Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+                                        view.hienThiTableGiaoVien(data, columnGiaoVien);
+                                    } else {
+                                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập trùng mã giáo viên");
+                                    }
+                                } else {
+                                    ArrayList<GiaoVien> giaoVienDuocThayDoiThongTin = dataGiaoVien.suaThongTinGiaoVienKhiTimKiemBangInput(thongTinInputGiaoVien, giaoVienDuocTimThay.get(0).getMaGiaoVien());
+                                    Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien(giaoVienDuocThayDoiThongTin);
+                                    view.hienThiTableGiaoVien(data, columnGiaoVien);
+                                }
+                                view.setLaiGiaTriInputGiaoVien();
+                            } catch (SQLException ex) {
+                            }
+
+                        }
+                    }
+                }
+            } else {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn giáo viên để sửa");
+            }
+
+        }
+
+    }
+
+    private class CacThongTinGiaoVienDuocSuaKhinhanEnter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                try {
+                    if (state) {
+                        String maGiaoVienDuocTim = view.getMaGiaoVien();
+                        giaoVienDuocTimThay = dataGiaoVien.timGiaoVienTheoMa(maGiaoVienDuocTim);
+                        int coulmnTableGiaoVien = view.getColumGiaoVien();
+                        switch (coulmnTableGiaoVien) {
+                            case 1 -> {
+                                dataGiaoVien.setDataGiaoVien(dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay.get(0)));
+                                break;
+                            }
+                            case 2 -> {
+                                dataGiaoVien.setDataGiaoVien(dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay.get(0)));
+                                break;
+                            }
+                            case 3 -> {
+                                dataGiaoVien.setDataGiaoVien(dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay.get(0)));
+                                break;
+                            }
+                            case 5 -> {
+
+                                dataGiaoVien.setDataGiaoVien(dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay.get(0)));
+                                break;
+                            }
+                            case 6 -> {
+                                dataGiaoVien.setDataGiaoVien(dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay.get(0)));
+                                break;
+                            }
+                        }
+                    }
+                    view.setLaiGiaTriInputGiaoVien();
                 } catch (SQLException ex) {
                 }
 
             }
+        }
 
+    }
+
+    private class GiaoVienDuocTimKiem implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            state = true;
+            String maGiaoVienDuocTim = view.getMaGiaoVien();
+            if (maGiaoVienDuocTim == null || maGiaoVienDuocTim.length() == 0) {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa nhập thông tin giáo viên muốn tìm");
+            } else {
+                try {
+                    giaoVienDuocTimThay = dataGiaoVien.timGiaoVienTheoMa(maGiaoVienDuocTim);
+                    if (giaoVienDuocTimThay.isEmpty()) {
+                        view.hienThiThongBaoChuaNhapThongTinHocVien("Không tìm thấy giáo viên bạn muốn tìm");
+                    } else {
+                        Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien(giaoVienDuocTimThay);
+                        view.hienThiTableGiaoVien(data, columnGiaoVien);
+                        view.setLaiGiaTriInputGiaoVien();
+                        modelGiaoVien.setDanhSachGiaoVien(giaoVienDuocTimThay);
+                        view.loadGiaoVien(modelGiaoVien);
+                    }
+
+                } catch (SQLException ex) {
+                }
+
+            }
+        }
+
+    }
+
+    private class GiaoVienDuocTinhLuong implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Object[][] data = dataGiaoVien.tinhLuongGiaoVien();
+                view.hienThiTrenTable(data, columnGiaoVien);
+            } catch (SQLException ex) {
+            }
+        }
+
+    }
+
+    private class TrangDieuHuong implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.hienThiTruongHoc2View();
         }
 
     }

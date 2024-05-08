@@ -5,6 +5,7 @@
 package ModelGiaoVien;
 
 import Interface.InterfaceGiaoVien;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -40,44 +41,77 @@ public class GiaoVien implements InterfaceGiaoVien {
         return 0;
     }
 
-    Object getMaGv() {
+    public String getMaGv() {
         return this.MaGV;
     }
 
-    Object getHoTen() {
+    public Object getHoTen() {
         return this.hoTen;
     }
 
-    Object getHocVi() {
+    public Object getHocVi() {
         return this.hocVi;
     }
 
-    Object getGioiTinh() {
+    public String getGioiTinh() {
         return this.gioiTinh;
     }
 
-    Object getNgaySinh() {
+    public Object getNgaySinh() {
         return this.ngaySinh;
     }
 
-    Object getLuongCoBan() {
+    public float getLuongCoBan() {
         return this.luongCB;
     }
 
-    Object getHeSo() {
+    public float getHeSo() {
         return this.heSo;
     }
 
-    Object getMucLuong() {
+    public float getLuong() {
         return this.luong;
     }
 
-    Object getMaKhoa() {
+    public Object getMaKhoa() {
         return this.maKhoa;
     }
 
     public String getMaGiaoVien() {
         return this.MaGV;
+    }
+
+    public Object[] getData() {
+        Object data[] = {this.MaGV, this.hoTen, this.hocVi, this.gioiTinh, this.ngaySinh, this.heSo, this.luongCB, this.luong, this.maKhoa};
+        return data;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public void setHocVi(String hocVi) {
+        this.hocVi = hocVi;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public void setLuongCoBan(float luongCoBan) {
+        this.luongCB = luongCoBan;
+    }
+
+    public void setHeSo(float heSo) {
+        this.heSo = heSo;
+    }
+
+    public void setMaKhoa(String maKhoa) {
+        this.maKhoa = maKhoa;
     }
 
 }
