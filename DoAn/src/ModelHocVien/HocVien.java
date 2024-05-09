@@ -129,4 +129,8 @@ public class HocVien {
         this.ngaySinh = ngaySinh;
     }
 
+    public void setMalop(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

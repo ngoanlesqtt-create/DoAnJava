@@ -12,7 +12,7 @@ public class LopHoc {
 
     private final String maLop;
     private final String tenLop;
-    private final String truongLop;
+    private String truongLop;
     private final int siSo;
     private final String maGiaoVienChuNhiem;
 
@@ -47,5 +47,9 @@ public class LopHoc {
     public Object[] getDataLopHoc() {
         Object[] data = {this.maLop, this.tenLop, this.truongLop, this.siSo, this.maGiaoVienChuNhiem};
         return data;
+    }
+
+    void setMaLopTruong(String maLopTruongDuocThayThe) {
+        this.truongLop = maLopTruongDuocThayThe;
     }
 }

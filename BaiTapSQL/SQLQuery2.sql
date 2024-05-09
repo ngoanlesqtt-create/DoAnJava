@@ -1,7 +1,8 @@
 ﻿CREATE DATABASE BAITAP2
 USE BAITAP2
 SET DATEFORMAT DMY
-
+select * from HOCVIEN
+update HOCVIEN set MALOP='K11' where MALOP='K14'
 INSERT INTO HOCVIEN VALUES('K1101','Nguyen Van','An','27/1/1986','Nam','TpHCM','K11')
 INSERT INTO HOCVIEN VALUES('K1102','Tran Ngoc','Han','14/3/1986','Nu','Kien Giang','K11')
 INSERT INTO HOCVIEN VALUES('K1103','Ha Duy','Lap','18/4/1986','Nam','Nghe An','K11')
@@ -33,10 +34,9 @@ INSERT INTO HOCVIEN VALUES('K1311','Tran Minh','Thuc','4/4/1986','Nam','TpHCM','
 INSERT INTO HOCVIEN VALUES('K1312','Nguyen Thi Kim','Yen','7/9/1986','Nu','TpHCM','K13')
 INSERT INTO HOCVIEN VALUES('K1313','Nguyen Thi Truc','Thanh','1/2/1997','Nu','DakLak','K13')
 
-INSERT INTO LOP VALUES('K11','Lop 1 khoa 1','K1108',0,'GV07')
-INSERT INTO LOP VALUES('K12','Lop 2 khoa 1','K1205',0,'GV09')
-INSERT INTO LOP VALUES('K13','Lop 3 khoa 1','K1305',0,'GV14')
-
+INSERT INTO LOP VALUES('K11','Lop 1 khoa 1','',0,'GV07')
+INSERT INTO LOP VALUES('K12','Lop 2 khoa 1','',0,'GV09')
+INSERT INTO LOP VALUES('K13','Lop 3 khoa 1','',0,'GV14')
 CREATE TABLE LOP(
 MALOP CHAR(3) PRIMARY KEY,
 TENLOP VARCHAR(50),
@@ -44,9 +44,17 @@ TRGLOP VARCHAR(50),
 SISO INT,
 MAGVCN VARCHAR(50)
 )
-select * from LOP
-INSERT INTO LOP VALUES('K14','Lop 4 khoa 1','',0,'GV01')
-delete from LOP where MALOP='k14'
+select * from HOCVIEN
+update LOP set MALOP='K12'  where MALOP='K11'
+create table CacGiaTriDeCapNhapBangHocVien(
+dong int, 
+maLopHocBanDau varchar(50),
+maLopHocDeSua varchar(50)
+)
+select * from CacGiaTriDeCapNhapBangHocVien
+INSERT INTO CacGiaTriDeCapNhapBangHocVien VALUES(0,'','')
+
+delete from CacGiaTriDeCapNhapBangHocVien
 
 INSERT INTO KHOA VALUES('KHMT','Khoa hoc may tinh','7/6/2005','GV01')
 INSERT INTO KHOA VALUES('HTTT','He thong thong tin','7/6/2005','GV02')

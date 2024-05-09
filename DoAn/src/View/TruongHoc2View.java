@@ -8,6 +8,8 @@ import ModelGiaoVien.GiaoVien;
 import ModelHocVien.HocVien;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -73,6 +75,45 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         return inputLopHoc;
     }
 
+    public String getMaSoLopTruong() {
+        return (String) comboboxLopTruongLopHoc.getSelectedItem();
+    }
+
+    public void capNhapLopTruong(ActionListener listener) {
+        btnCapNhapLopTruong.addActionListener(listener);
+    }
+
+    public void layDongTrenBangLopHocDeXuLy(ListSelectionListener listener) {
+        ListSelectionModel listSelectionModel = tableLopHoc.getSelectionModel();
+        listSelectionModel.addListSelectionListener(listener);
+    }
+
+    public int getRowLopHoc() {
+        return tableLopHoc.getSelectedRow();
+    }
+
+    public void setInputKhiDuocChonVaoTrenBangLopHoc(int row) {
+        if (row != -1) {
+            textMaLopHoc.setText((String) tableLopHoc.getValueAt(row, 0));
+            textTenLopHoc.setText((String) tableLopHoc.getValueAt(row, 1));
+            comboboxLopTruongLopHoc.setSelectedItem((String) tableLopHoc.getValueAt(row, 2));
+            comboboxmaGiaoVienChuNhiem.setSelectedItem((String) tableLopHoc.getValueAt(row, 4));
+        }
+
+    }
+
+    public void xoaLopHoc(ActionListener listener) {
+        btnXoaLopHoc.addActionListener(listener);
+    }
+
+    public void capNhapSiSoLopHoc(ActionListener listener) {
+        btnCapNhapSiSoLopHoc.addActionListener(listener);
+    }
+
+    public void suaLopHoc(ActionListener listener) {
+        btnSuaLopHoc.addActionListener(listener);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +139,10 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         comboboxLopTruongLopHoc = new javax.swing.JComboBox<>();
         comboboxmaGiaoVienChuNhiem = new javax.swing.JComboBox<>();
+        btnCapNhapLopTruong = new javax.swing.JButton();
+        btnXoaLopHoc = new javax.swing.JButton();
+        btnCapNhapSiSoLopHoc = new javax.swing.JButton();
+        btnSuaLopHoc = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         jTextField1.setText("jTextField1");
@@ -133,42 +178,57 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         jLabel4.setText("Mã giáo viên chủ nhiệm");
 
+        btnCapNhapLopTruong.setText("Cập nhập lớp trưởng");
+
+        btnXoaLopHoc.setText("Xóa");
+
+        btnCapNhapSiSoLopHoc.setText("Cập nhập sĩ số");
+
+        btnSuaLopHoc.setText("Sửa");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textTenLopHoc))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(textMaLopHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboboxLopTruongLopHoc, 0, 100, Short.MAX_VALUE)
-                            .addComponent(comboboxmaGiaoVienChuNhiem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(btnThemGiaoVien)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLoadLopHoc)))
-                .addGap(167, 167, 167))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(textTenLopHoc))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(textMaLopHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboboxLopTruongLopHoc, 0, 100, Short.MAX_VALUE)
+                                    .addComponent(comboboxmaGiaoVienChuNhiem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnThemGiaoVien)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCapNhapLopTruong)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnXoaLopHoc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnLoadLopHoc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCapNhapSiSoLopHoc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSuaLopHoc)))
+                        .addGap(28, 28, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +248,11 @@ public final class TruongHoc2View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLoadLopHoc)
-                    .addComponent(btnThemGiaoVien))
+                    .addComponent(btnThemGiaoVien)
+                    .addComponent(btnCapNhapLopTruong)
+                    .addComponent(btnXoaLopHoc)
+                    .addComponent(btnCapNhapSiSoLopHoc)
+                    .addComponent(btnSuaLopHoc))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -200,7 +264,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addGap(0, 629, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,8 +279,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,8 +297,12 @@ public final class TruongHoc2View extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCapNhapLopTruong;
+    private javax.swing.JButton btnCapNhapSiSoLopHoc;
     private javax.swing.JButton btnLoadLopHoc;
+    private javax.swing.JButton btnSuaLopHoc;
     private javax.swing.JButton btnThemGiaoVien;
+    private javax.swing.JButton btnXoaLopHoc;
     private javax.swing.JComboBox<String> comboboxLopTruongLopHoc;
     private javax.swing.JComboBox<String> comboboxmaGiaoVienChuNhiem;
     private javax.swing.JLabel jLabel1;
@@ -252,4 +319,9 @@ public final class TruongHoc2View extends javax.swing.JFrame {
     private javax.swing.JTextField textMaLopHoc;
     private javax.swing.JTextField textTenLopHoc;
     // End of variables declaration//GEN-END:variables
+
+    public void anTruongHoc2View() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

@@ -18,8 +18,6 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,7 +29,7 @@ public class TruongHoc1Controller {
 
     protected final HocVienModel modelHocVien;
     protected final TruongHoc1View view;
-    private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
+    protected final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
     private final String[] columnGiaoVien = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
     private int[] nhieuChiSoTable;
     private boolean state;
@@ -41,6 +39,8 @@ public class TruongHoc1Controller {
     private int[] cacChiSoBangGiaoVienDuocChon;
     private ArrayList<GiaoVien> giaoVienDuocTimThay;
     private TruongHoc2Controller truongHoc2;
+    protected Object[][] dataHocVien;
+    protected int dongDuocChonTrenBangLopHoc;
 
     public TruongHoc1Controller() throws SQLException {
         this.view = new TruongHoc1View();
@@ -62,7 +62,6 @@ public class TruongHoc1Controller {
         view.dieuHuong(new TrangDieuHuong());
         //Thêm học viên
         modelHocVien = new HocVienModel();
-        modelHocVien.nhap();
         view.loadHocVien(new LoadedHocVien());//load học viên bằng bấm nút load
         view.loadHocVienBangEnter(new LoadedHocVienBangEnter());
         view.timHocVien(new HocVienDuocTimThay());
@@ -74,6 +73,7 @@ public class TruongHoc1Controller {
         view.xoaHetDuLieuBang(new DuLieuBangBiXoaHet());
         view.suaThongTinHocVien(new ThongTinHocVienDuocSua());//Sửa thông tin học viên
         view.capNhapDuLieuTungO(new DuLieuDuocThayDoi());//bat su kien khi bam nut enter
+        view.capNhapHocVienKhiSuaTrenLopHoc(new HocVienDuocCapNhapKhiSuaTrenLopHoc());
         view.setVisible(true);
 
     }
@@ -550,8 +550,9 @@ public class TruongHoc1Controller {
                     HocVien hocVienDuocChon = view.getHocVien();
                     if (view.getThongTinVienMuonTim() == null) {
                         switch (cot) {
+                            //((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")
                             case 0 -> {
-                                if (!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")) {
+                                if (!modelHocVien.kiemTraMaLopKhiThemHocVien1(((String) view.getGiaTriTungO(hang, 0)))) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
                                     view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
                                 } else if (!((String) view.getGiaTriTungO(hang, 0)).contains((String) (view.getGiaTriTungO(hang, 6)))) {
@@ -569,7 +570,6 @@ public class TruongHoc1Controller {
                                     }
                                 }
                                 view.setLaiGiaTriInput();
-
                                 break;
                             }
                             case 1 -> {
@@ -597,8 +597,9 @@ public class TruongHoc1Controller {
                                 view.setLaiGiaTriInput();
                                 break;
                             }
+                            //((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K13")
                             case 6 -> {
-                                if (!((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K13")) {
+                                if (!modelHocVien.kiemTraMaLopKhiThemHocVien1(((String) view.getGiaTriTungO(hang, 6)))) {
                                     view.setGiaTriTungO(hocVienDuocChon.getMaLop(), hang, 6);
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Mã lớp bạn nhập không tồn tại");
                                     break;
@@ -611,9 +612,9 @@ public class TruongHoc1Controller {
                     } else {
                         System.out.println("Hello dong 125 controller");
                         switch (cot) {
-
+//!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")
                             case 0 -> {
-                                if (!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")) {
+                                if (!modelHocVien.kiemTraMaLopKhiThemHocVien2(((String) view.getGiaTriTungO(hang, 0)))) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
                                     view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
                                 } else if (!((String) view.getGiaTriTungO(hang, 0)).contains((String) (view.getGiaTriTungO(hang, 6)))) {
@@ -658,8 +659,9 @@ public class TruongHoc1Controller {
                                 view.setLaiGiaTriInput();
                                 break;
                             }
+                            //((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("k13")
                             case 6 -> {
-                                if (!((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("k13")) {
+                                if (!modelHocVien.kiemTraMaLopKhiThemHocVien1(((String) view.getGiaTriTungO(hang, 6)))) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Lớp học bạn sửa không tồn tại");
                                     break;
                                 } else {
@@ -676,6 +678,20 @@ public class TruongHoc1Controller {
                 } catch (ParseException | SQLException ex) {
                 }
 
+            }
+        }
+
+    }
+
+    private class HocVienDuocCapNhapKhiSuaTrenLopHoc implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ArrayList<Object> cacGiaTriCanThayDoi = modelHocVien.layCacGiaTriCanSuaTuLopHoc();
+                Object[][] data = modelHocVien.setMaLopCuaHocVien((String) cacGiaTriCanThayDoi.get(1), (String) cacGiaTriCanThayDoi.get(2));
+                view.hienThiTableGiaoVien(data, columnHocVien);
+            } catch (SQLException ex) {
             }
         }
 

@@ -153,4 +153,140 @@ public class DatabaseLopHoc {
         }
         return lopHocDuocThem;
     }
+
+    public ArrayList<LopHoc> capNhapMaLopTruong(String maLopHoc, String maLopTruong) throws SQLException {
+        ArrayList<LopHoc> danhSachLopHocDuocCapNhapLopTruong = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update LOP set TRGLOP='"
+                    + maLopTruong + "'"
+                    + "where MALOP='" + maLopHoc
+                    + "'"
+                    + "select * from Lop");
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                danhSachLopHocDuocCapNhapLopTruong.add(new LopHoc(rs.getString("MALOP"), rs.getString("TENLOP"), rs.getString("TRGLOP"), rs.getInt("SISO"), rs.getString("MAGVCN")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 178 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return danhSachLopHocDuocCapNhapLopTruong;
+    }
+
+    public ArrayList<LopHoc> xoaLopHoc(String maLop) throws SQLException {
+        ArrayList<LopHoc> lopHocDuocXoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("delete from LOP where MALOP='" + maLop + "'"
+                    + "select * from Lop");
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                lopHocDuocXoa.add(new LopHoc(rs.getString("MALOP"), rs.getString("TENLOP"), rs.getString("TRGLOP"), rs.getInt("SISO"), rs.getString("MAGVCN")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 178 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return lopHocDuocXoa;
+    }
+
+    public ArrayList<LopHoc> capNhapSiSoLop(String maLop, int count) throws SQLException {
+        ArrayList<LopHoc> lopHocDuocCapNhapSiSo = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update LOP set SISO=" + count + "where MALOP='" + maLop + "'"
+                    + "select * from Lop");
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                lopHocDuocCapNhapSiSo.add(new LopHoc(rs.getString("MALOP"), rs.getString("TENLOP"), rs.getString("TRGLOP"), rs.getInt("SISO"), rs.getString("MAGVCN")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 178 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return lopHocDuocCapNhapSiSo;
+    }
+
+    public ArrayList<LopHoc> suaThongTinLopHoc(ArrayList<Object> inputLopHoc, String maLop, String maLopTruong) throws SQLException {
+        ArrayList<LopHoc> lopHocDuocSua = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+
+        try {
+            System.out.println("test dong 241 DatabaseLopHoc:");
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update LOP set MALOP='"
+                    + inputLopHoc.get(0)
+                    + "', TENLOP='" + inputLopHoc.get(1)
+                    + "', MAGVCN='" + inputLopHoc.get(3)
+                    + "', TRGLOP='" + maLopTruong + "'"
+                    + "where MALOP='" + maLop + "'"
+                    + "select * from Lop");
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                lopHocDuocSua.add(new LopHoc(rs.getString("MALOP"), rs.getString("TENLOP"), rs.getString("TRGLOP"), rs.getInt("SISO"), rs.getString("MAGVCN")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 250 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return lopHocDuocSua;
+    }
+
+    public ArrayList setGiaTriDeSuaChuabangHocVien(String maLopHocCanSua, int row, String maLopHocBanDau) throws SQLException {
+        ArrayList<Object> data = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            System.out.println("test dong 241 DatabaseLopHoc:");
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update CacGiaTriDeCapNhapBangHocVien set " + "dong=" + row
+                    + "," + "maLopHocDeSua='"
+                    + maLopHocCanSua + "', maLopHocBanDau='" + maLopHocBanDau + "'"
+                    + "select * from CacGiaTriDeCapNhapBangHocVien"
+            );
+
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                data.add(rs.getInt("dong"));
+                data.add(rs.getString("maLopHocDeSua"));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 282 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return data;
+    }
 }
