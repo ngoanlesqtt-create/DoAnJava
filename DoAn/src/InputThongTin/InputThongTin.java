@@ -4,6 +4,7 @@
  */
 package InputThongTin;
 
+import ModelLop.LopHoc;
 import java.util.ArrayList;
 
 /**
@@ -91,4 +92,5 @@ public class InputThongTin {
                 || !InputThongTin.kiemTraLuongCoBan(thongTinInputGiaoVien)
                 || !InputThongTin.kiemTraLuongHeSo(thongTinInputGiaoVien));
     }
+
 }

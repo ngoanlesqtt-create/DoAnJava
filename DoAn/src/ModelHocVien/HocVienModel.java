@@ -5,6 +5,7 @@
 package ModelHocVien;
 
 import Database.DatabaseHocVien;
+import ModelLop.LopHoc;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public class HocVienModel {
 
     private ArrayList<HocVien> danhSachHocVien;
+    private ArrayList<LopHoc> danhSachLopHoc;
     private DatabaseHocVien ds;
 
     public HocVienModel() {
         danhSachHocVien = new ArrayList<>();
+        this.danhSachLopHoc = new ArrayList<>();
     }
 
     public void nhap() throws SQLException {
@@ -186,7 +189,7 @@ public class HocVienModel {
         if (!hocVienDuocSua.getMaHocVien().contains(hocVienDuocSua.getMaLop())) {
             return null;
         }
-        if (!hocVienDuocSua.getMaLop().equalsIgnoreCase("K11") && !hocVienDuocSua.getMaLop().equalsIgnoreCase("K12") && !hocVienDuocSua.getMaLop().equalsIgnoreCase("K13")) {
+        if (this.kiemTraMaLopKhiThemHocVien(hocVienDuocSua)) {
             return null;
         }
         this.danhSachHocVien = this.ds.suaThongTinHocVien(hocVienDuocSua, this.danhSachHocVien.get(chiSoBang).getMaHocVien());
@@ -215,4 +218,14 @@ public class HocVienModel {
         return data;
     }
 
+    public boolean kiemTraMaLopKhiThemHocVien(HocVien hocVienDuocThemVao) throws SQLException {
+        this.danhSachLopHoc = this.ds.loadLopHoc();
+        for (LopHoc lopHoc : this.danhSachLopHoc) {
+            System.out.println("ma lop:" + lopHoc.getMaLop());
+            if (hocVienDuocThemVao.getMaLop().equalsIgnoreCase(lopHoc.getMaLop())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

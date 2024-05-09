@@ -18,6 +18,8 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,17 +29,18 @@ import javax.swing.event.ListSelectionListener;
  */
 public class TruongHoc1Controller {
 
-    private final HocVienModel modelHocVien;
-    private final TruongHoc1View view;
+    protected final HocVienModel modelHocVien;
+    protected final TruongHoc1View view;
     private final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
     private final String[] columnGiaoVien = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
     private int[] nhieuChiSoTable;
     private boolean state;
     private boolean stateSuaThongtin;
     private final GiaoVienModel modelGiaoVien;
-    private final DataGiaoVien dataGiaoVien;
+    protected final DataGiaoVien dataGiaoVien;
     private int[] cacChiSoBangGiaoVienDuocChon;
     private ArrayList<GiaoVien> giaoVienDuocTimThay;
+    private TruongHoc2Controller truongHoc2;
 
     public TruongHoc1Controller() throws SQLException {
         this.view = new TruongHoc1View();
@@ -72,6 +75,7 @@ public class TruongHoc1Controller {
         view.suaThongTinHocVien(new ThongTinHocVienDuocSua());//Sửa thông tin học viên
         view.capNhapDuLieuTungO(new DuLieuDuocThayDoi());//bat su kien khi bam nut enter
         view.setVisible(true);
+
     }
 
     private class DataGiaoVienDuocLoad implements ActionListener {
@@ -324,7 +328,10 @@ public class TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.hienThiTruongHoc2View();
+            try {
+                truongHoc2 = new TruongHoc2Controller();
+            } catch (SQLException ex) {
+            }
         }
 
     }
@@ -416,7 +423,7 @@ public class TruongHoc1Controller {
                     view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua nhap thong tin");
                     return;
                 }
-                if (!hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K11") && !hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K12") && !hocVienDuocThemVao.getMaLop().equalsIgnoreCase("K13")) {
+                if (!modelHocVien.kiemTraMaLopKhiThemHocVien(hocVienDuocThemVao)) {
                     view.hienThiThongBaoChuaNhapThongTinHocVien("Ban da nhap sai lop");
                     return;
                 }

@@ -27,7 +27,6 @@ public class TruongHoc1View extends javax.swing.JFrame {
     private ArrayList<String> gioiTinh;
     private ArrayList<Number> ngaySinh;
     private ArrayList<String> maKhoa;
-    private TruongHoc2View truongHoc2View;
 
     /**
      * Creates new form QLGVView
@@ -39,7 +38,6 @@ public class TruongHoc1View extends javax.swing.JFrame {
         showNamSinhGiaoVien();
         showMaKhoaGiaoVien();
         showHocViGiaoVien();
-        this.truongHoc2View = new TruongHoc2View();
     }
     
     public void loadHocVien(ActionListener listen) {
@@ -424,9 +422,7 @@ public class TruongHoc1View extends javax.swing.JFrame {
         btnDieuHuong.addActionListener(listener);
     }
 
-    public void hienThiTruongHoc2View() {
-        this.truongHoc2View.setVisible(true);
-    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

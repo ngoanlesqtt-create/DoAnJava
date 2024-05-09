@@ -12,6 +12,7 @@
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Interface/InterfaceGiaoVien.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/TruongHoc2Controller.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelGiaoVien/GiaoVienModel.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelLop/LopHocModel.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelGiaoVien/ThacSy.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/TruongHoc1View.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelGiaoVien/GiaoVien.java</file>
@@ -19,7 +20,9 @@
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelHocVien/HocVienModel.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/TruongHoc2View.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/TruongHoc1Controller.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelLop/LopHoc.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Main/Main.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseLopHoc.java</file>
         </group>
     </open-files>
 </project-private>
