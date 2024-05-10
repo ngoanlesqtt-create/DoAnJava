@@ -6,10 +6,14 @@ package Controller;
 
 import InputThongTin.InputThongTin;
 import ModelHocVien.HocVien;
+import ModelKhoa.KhoaModel;
 import ModelLop.LopHocModel;
 import View.TruongHoc2View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -26,11 +30,16 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
     private final LopHocModel modelLopHoc;
     private final TruongHoc2View view2;
     private ArrayList<Object> inputLopHoc;
+    private KhoaModel modelKhoa;
+    private ArrayList<String> maGiaoVienDangLaChuNhiemKhoa;
 
     public TruongHoc2Controller() throws SQLException {
+        //Khoa
+        this.modelKhoa = new KhoaModel();
         this.inputLopHoc = new ArrayList<>();
         this.modelLopHoc = new LopHocModel();
-        this.view2 = new TruongHoc2View(this.modelHocVien.getDanhSachHocVien(), this.dataGiaoVien.getDataGiaoVien());
+        this.maGiaoVienDangLaChuNhiemKhoa = this.modelKhoa.getMaGiaoVienDangLaChuNhiemKhoa();
+        this.view2 = new TruongHoc2View(this.modelHocVien.getDanhSachHocVien(), this.dataGiaoVien.getDataGiaoVien(), this.modelKhoa.getMaGiaoVien(), maGiaoVienDangLaChuNhiemKhoa);
         this.dongDuocChonTrenBangLopHoc = -1;
         view2.setVisible(true);
         view.setVisible(false);
@@ -41,6 +50,9 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         view2.xoaLopHoc(new LopHocDuocXoa());
         view2.capNhapSiSoLopHoc(new LopHocDuocCapNhapSiSo());
         view2.suaLopHoc(new LopHocDuocSuaThongTin());
+        //Khoa
+        view2.loadKhoa(new KhoaDuocLoad());
+        view2.renderNamThanhLapKhoa(new ComboBoxNam());
     }
 
     private class LopHocDuocLoad implements ActionListener {
@@ -49,7 +61,7 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         public void actionPerformed(ActionEvent e) {
             view2.hienThiLopHocTrenTable(modelLopHoc.loadDanhSachLopHoc(), modelLopHoc.getColumnLopHoc());
             try {
-                view2.xoaCombobox(modelHocVien.getDanhSachHocVien());
+                view2.xoaCombobox();
                 view2.showMaLopTruong(modelLopHoc.getDanhSachHocVien());
                 view2.showMaGiaoVienChuNhiem(modelLopHoc.getDanhSachGiaoVien());
             } catch (SQLException ex) {
@@ -166,18 +178,18 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn lớp để sửa");
             } else {
                 inputLopHoc = view2.getInputLopHoc();
-                String maLopHocString = (String) inputLopHoc.get(0);
-                String maLopTruongDuocThayThe = modelLopHoc.thayTheMaLopTruong(maLopHocString, dongDuocChonTrenBangLopHoc);
                 try {
+                    String maLopHocString = (String) inputLopHoc.get(0);
+                    String maLopTruongDuocThayThe = modelLopHoc.thayTheMaLopTruong(maLopHocString, dongDuocChonTrenBangLopHoc);
                     modelLopHoc.setGiaTriDeCapNhapLaiBangHocVien(inputLopHoc, dongDuocChonTrenBangLopHoc, modelLopHoc.getDanhSachLop());
                     modelLopHoc.setMaLopTruong(maLopTruongDuocThayThe, dongDuocChonTrenBangLopHoc);
-                    Object[][] data = modelLopHoc.suaThongTinLopHoc(inputLopHoc, dongDuocChonTrenBangLopHoc);
                     ArrayList<Object> cacGiaTriCanThayDoi = modelHocVien.layCacGiaTriCanSuaTuLopHoc();
                     ArrayList<HocVien> hocVienDuocCapNhapGiaTriTheoLop = modelHocVien.setMaLopCuaHocVien((String) cacGiaTriCanThayDoi.get(1), (String) cacGiaTriCanThayDoi.get(2), dongDuocChonTrenBangLopHoc);
-                    view2.xoaCombobox(modelHocVien.getDanhSachHocVien());
-                    view2.showMaLopTruong(hocVienDuocCapNhapGiaTriTheoLop);
-                    view2.showMaGiaoVienChuNhiem(modelLopHoc.getDanhSachGiaoVien());
+                    Object[][] data = modelLopHoc.suaThongTinLopHoc(inputLopHoc, dongDuocChonTrenBangLopHoc);
                     if (data != null) {
+                        view2.xoaCombobox();
+                        view2.showMaLopTruong(hocVienDuocCapNhapGiaTriTheoLop);
+                        view2.showMaGiaoVienChuNhiem(modelLopHoc.getDanhSachGiaoVien());
                         view2.hienThiLopHocTrenTable(data, modelLopHoc.getColumnLopHoc());
                     } else {
                         view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập trùng thông tin");
@@ -188,5 +200,32 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
                 view2.setInputKhiDuocChonVaoTrenBangLopHoc(dongDuocChonTrenBangLopHoc);
             }
         }
+    }
+
+    //Khoa 
+    private class KhoaDuocLoad implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object[][] data = modelKhoa.loadData();
+            try {
+                ArrayList<String> danhSachMaGiaoVien = modelKhoa.getMaGiaoVien();
+                view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
+                view2.setComboBoxChoBangKhoa(danhSachMaGiaoVien, maGiaoVienDangLaChuNhiemKhoa);
+            } catch (SQLException ex) {
+            }
+
+        }
+
+    }
+
+    private class ComboBoxNam extends MouseAdapter {
+
+ 
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            System.out.println("Hello");
+        }
+
     }
 }

@@ -164,6 +164,8 @@ public class LopHocModel {
     }
 
     public String thayTheMaLopTruong(String maLopHocString, int row) {
+        System.out.println("test dong 167 LopHocModel ,maLopHocString:" + maLopHocString);
+        System.out.println("test dong 168 LopHocModel, row:" + row);
         String ketQua = this.danhSachLop.get(row).getTruongLop().replaceFirst(this.danhSachLop.get(row).getMaLop(), maLopHocString);
         return ketQua;
     }
