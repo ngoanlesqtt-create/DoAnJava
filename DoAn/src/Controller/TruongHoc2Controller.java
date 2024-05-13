@@ -7,7 +7,9 @@ package Controller;
 import InputThongTin.InputThongTin;
 import ModelGiaoVien.GiaoVien;
 import ModelHocVien.HocVien;
+import ModelKetQuaThi.KetQuaThi;
 import ModelKetQuaThi.KetQuaThiModel;
+import ModelKetQuaThi.SubKetQuaThiModel;
 import ModelKhoa.Khoa;
 import ModelKhoa.KhoaModel;
 import ModelLop.LopHocModel;
@@ -42,6 +44,7 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
     private ArrayList<String> maGiaoVienDangLaChuNhiemKhoa;
     private ArrayList<Object> inputKhoa;
     private int rowTableKhoa;
+    private int[] rows;
 
     public TruongHoc2Controller() throws SQLException {
         this.modelKetQuaThi = new KetQuaThiModel();
@@ -76,6 +79,12 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         view2.loadKetQuaThi(new KetQuaThiDuocLoad());
         view2.capNhapMaHocVienTheoKhoa(new KetQuaThiCapNhapMaHocVienTheoKhoa());
         view2.timKetQuaThi(new KetQuaThiDuocTim());
+        view2.themKetQuaThi(new KetQuaThiDuocThem());
+        view2.xoaKetQuaThi(new KetQuaThiDuocXoa());
+        view2.xuLiSuKienKhiClickTungDongBangKetQuaThi(new KetQuaThiDuocChonTungDong());
+        view2.xoaHetKetQuaThi(new KetQuaThiDuocXoaHet());
+        view2.capNhapKetQuaTrenBangKetQuaThi(new KetQuaThiDuocCapNhapKetQua());
+        view2.tinhDiemTrungBinhKetQuaThi(new KetQuaThiDuocTinhDiemTrungBinh());
     }
 
     private class LopHocDuocLoad implements ActionListener {
@@ -423,15 +432,134 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            ArrayList<KetQuaThi> ketQuaThiDuocTimThay = new ArrayList<>();
             ArrayList<Object> inputBangKetQuaThi = view2.getInputBangKetQuaThi();
-            Object[][] data = modelKetQuaThi.ketQuaThiDuocTimKiem(inputBangKetQuaThi);
+            Object[][] data = modelKetQuaThi.timKiemketQuaThi(inputBangKetQuaThi, ketQuaThiDuocTimThay);
             if (data == null) {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Không tìm thấy học viên");
             } else {
                 view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
                 state = true;
+                SubKetQuaThiModel subKetQuaThiModel = new SubKetQuaThiModel();
+                subKetQuaThiModel.setDanhSachKetQuaThi(ketQuaThiDuocTimThay);
+                view2.hienThiBangKetQuaThiBangAbstractModel(subKetQuaThiModel);
             }
 
+        }
+
+    }
+
+    private class KetQuaThiDuocThem implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Object> ketQuaInputDeThemKetQuaThi = view2.getInputKetQuaThiDeThem();
+            if (!state) {
+                try {
+                    Object[][] data = modelKetQuaThi.themKetQuaThi(ketQuaInputDeThemKetQuaThi);
+                    if (data == null) {
+                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai thông tin");
+                    } else {
+                        view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                    }
+                } catch (SQLException ex) {
+                }
+
+            } else if (state) {
+                ArrayList<Object> inputBangKetQuaThi = view2.getInputBangKetQuaThi();
+                try {
+                    Object[][] data = modelKetQuaThi.themKetQuaThiKhiTimKiem(inputBangKetQuaThi, ketQuaInputDeThemKetQuaThi);
+                    view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                } catch (SQLException | ParseException ex) {
+                }
+            }
+        }
+
+    }
+
+    private class KetQuaThiDuocChonTungDong implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+            rows = view2.getNhieuChiSoDongBangKetQuaThi();
+        }
+
+    }
+
+    private class KetQuaThiDuocXoa implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (rows.length >= 1) {
+                if (!state) {
+                    try {
+                        Object[][] data = modelKetQuaThi.xoaKetQuaThi(rows);
+                        view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                    } catch (SQLException ex) {
+                    }
+
+                } else if (state) {
+                    ArrayList<Object> inputBangKetQuaThi = view2.getInputBangKetQuaThi();
+                    try {
+                        Object[][] data = modelKetQuaThi.xoaKetQuaThiDuocTimThay(inputBangKetQuaThi, rows);
+                        view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                    } catch (SQLException ex) {
+                    }
+                }
+            } else {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn kết quả thi nào để xóa");
+            }
+
+        }
+
+    }
+
+    private class KetQuaThiDuocXoaHet implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!state) {
+                Object[][] data;
+                try {
+                    data = modelKetQuaThi.xoaHetKetQuaThi();
+                    view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                } catch (SQLException ex) {
+                }
+            } else if (state) {
+                ArrayList<Object> inputBangKetQuaThi = view2.getInputBangKetQuaThi();
+                try {
+                    Object[][] data = modelKetQuaThi.xoaHetKetQuaThiDuocTimKiem(inputBangKetQuaThi);
+                    view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
+
+    private class KetQuaThiDuocCapNhapKetQua implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object[][] data;
+            try {
+                data = modelKetQuaThi.capNhapKetQua();
+                view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+            } catch (SQLException ex) {
+            }
+        }
+
+    }
+
+    private class KetQuaThiDuocTinhDiemTrungBinh implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String[] columnTinhDiemTrungBinh = {"Mã học viên", "Điểm trung bình", "Xếp loại"};
+            Object[][] data = modelKetQuaThi.tinhDiemTrungbinh();
+            view2.hienThiBangKetQuaThi(data, columnTinhDiemTrungBinh);
         }
 
     }

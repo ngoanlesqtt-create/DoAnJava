@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  * @author PC
  */
 public final class TruongHoc2View extends javax.swing.JFrame {
-
+    
     private ArrayList<String> maLopTruong;
     private final JComboBox jComboBox;
     private int namThanhLapKhoa;
@@ -49,6 +49,9 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         this.resetComboBoxNamThanhLapKhoa();
         this.showComboBoxMaHocVienTrenBangKetQuaThi(danhSachHocVien);
         this.showComboBoxMaMonHocTrenBangKetQuaThi(danhSachMaMonHoc);
+        this.showLanThi();
+        this.showDiemThi();
+        this.showNgayThangNamKetQuaThi();
     }
 
     /**
@@ -60,31 +63,31 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             comboboxLopTruongLopHoc.addItem(hocVien.getMaHocVien());
         }
     }
-
+    
     public void xoaCombobox() {
         comboboxLopTruongLopHoc.removeAllItems();
         comboboxmaGiaoVienChuNhiem.removeAllItems();
     }
-
+    
     public void showMaGiaoVienChuNhiem(ArrayList<GiaoVien> danhSachGiaoVien) {
         for (GiaoVien giaoVien : danhSachGiaoVien) {
             comboboxmaGiaoVienChuNhiem.addItem(giaoVien.getMaGiaoVien());
         }
     }
-
+    
     public void loadLopHoc(ActionListener listener) {
         btnLoadLopHoc.addActionListener(listener);
     }
-
+    
     public void hienThiLopHocTrenTable(Object[][] data, String[] column) {
         DefaultTableModel defaultTableModel = new DefaultTableModel(data, column);
         tableLopHoc.setModel(defaultTableModel);
     }
-
+    
     public void themLopHoc(ActionListener listener) {
         btnThemGiaoVien.addActionListener(listener);
     }
-
+    
     public ArrayList getInputLopHoc() {
         ArrayList<Object> inputLopHoc = new ArrayList<>();
         inputLopHoc.add(textMaLopHoc.getText());
@@ -93,24 +96,24 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         inputLopHoc.add(comboboxmaGiaoVienChuNhiem.getSelectedItem());
         return inputLopHoc;
     }
-
+    
     public String getMaSoLopTruong() {
         return (String) comboboxLopTruongLopHoc.getSelectedItem();
     }
-
+    
     public void capNhapLopTruong(ActionListener listener) {
         btnCapNhapLopTruong.addActionListener(listener);
     }
-
+    
     public void layDongTrenBangLopHocDeXuLy(ListSelectionListener listener) {
         ListSelectionModel listSelectionModel = tableLopHoc.getSelectionModel();
         listSelectionModel.addListSelectionListener(listener);
     }
-
+    
     public int getRowLopHoc() {
         return tableLopHoc.getSelectedRow();
     }
-
+    
     public void setInputKhiDuocChonVaoTrenBangLopHoc(int row) {
         if (row != -1) {
             textMaLopHoc.setText((String) tableLopHoc.getValueAt(row, 0));
@@ -118,17 +121,17 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             comboboxLopTruongLopHoc.setSelectedItem((String) tableLopHoc.getValueAt(row, 2));
             comboboxmaGiaoVienChuNhiem.setSelectedItem((String) tableLopHoc.getValueAt(row, 4));
         }
-
+        
     }
-
+    
     public void xoaLopHoc(ActionListener listener) {
         btnXoaLopHoc.addActionListener(listener);
     }
-
+    
     public void capNhapSiSoLopHoc(ActionListener listener) {
         btnCapNhapSiSoLopHoc.addActionListener(listener);
     }
-
+    
     public void suaLopHoc(ActionListener listener) {
         btnSuaLopHoc.addActionListener(listener);
     }
@@ -137,17 +140,17 @@ public final class TruongHoc2View extends javax.swing.JFrame {
     public void loadKhoa(ActionListener listener) {
         btnLoadKhoa.addActionListener(listener);
     }
-
+    
     public void hienThiTrenTableKhoa(Object[][] data, String[] column) {
         DefaultTableModel defaultTableModel = new DefaultTableModel(data, column);
         tableKhoa.setModel(defaultTableModel);
     }
-
+    
     public void setComboBoxChoBangKhoa(ArrayList<String> danhSachMaGiaoVien, ArrayList<String> maGiaoVienDangLaChuNhiemKhoa) {
         this.jComboBox.removeAllItems();
         comboboxTruongKhoa.removeAllItems();
         comboboxNamThanhLapKhoa.removeAllItems();
-
+        
         for (String maGiaoVien : danhSachMaGiaoVien) {
             this.jComboBox.addItem(maGiaoVien);
             comboboxTruongKhoa.addItem(maGiaoVien);
@@ -166,15 +169,15 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         this.xacThucNgayThangNam();
         tableKhoa.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox));
     }
-
+    
     public void batSuKienNgayThangNam(ItemListener aListener) {
         comboboxThangThanhLapKhoa.addItemListener(aListener);
     }
-
+    
     public JComboBox getJcombobox() {
         return this.comboboxThangThanhLapKhoa;
     }
-
+    
     public void xacThucNgayThangNam() {
         comboboxNgayThanhLapKhoa.removeAllItems();
         switch (comboboxThangThanhLapKhoa.getSelectedIndex()) {
@@ -202,22 +205,22 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             default -> {
             }
         }
-
+        
     }
-
+    
     public void renderNamThanhLapKhoa(KeyAdapter listener) {
         comboboxNamThanhLapKhoa.addKeyListener(listener);
     }
-
+    
     public void tangThemNamThanhLapKhoa() {
         this.namThanhLapKhoa--;
         comboboxNamThanhLapKhoa.addItem(String.valueOf(this.namThanhLapKhoa));
     }
-
+    
     public void batSuKienChoJpanel(MouseAdapter lisAdapter) {
         jPanelKhoa.addMouseListener(lisAdapter);
     }
-
+    
     public void resetComboBoxNamThanhLapKhoa() {
         comboboxNamThanhLapKhoa.removeAllItems();
         this.namThanhLapKhoa = 2000;
@@ -225,11 +228,11 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             comboboxNamThanhLapKhoa.addItem(String.valueOf(i));
         }
     }
-
+    
     public void themKhoa(ActionListener listener) {
         btnThemKhoa.addActionListener(listener);
     }
-
+    
     public ArrayList<Object> getInputKhoa() {
         ArrayList<Object> inputKhoa = new ArrayList<>();
         inputKhoa.add(textMaKhoa.getText());
@@ -240,32 +243,32 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         inputKhoa.add(comboboxTruongKhoa.getSelectedItem());
         return inputKhoa;
     }
-
+    
     public void capNhapGiaoVienTrenBangKhoa(ActionListener listener) {
         btnCapNhapSoLuongGiaoVien.addActionListener(listener);
     }
-
+    
     public void xoaKhoa(ActionListener listener) {
         btnXoaKhoa.addActionListener(listener);
     }
-
+    
     public void batSuKienEnterTrenBangKhoa(KeyAdapter keyAdapter) {
         tableKhoa.addKeyListener(keyAdapter);
     }
-
+    
     public void xuLiSuKienTungDongTrenBangKhoa(ListSelectionListener listSelectionListener) {
         ListSelectionModel listSelectionModel = tableKhoa.getSelectionModel();
         listSelectionModel.addListSelectionListener(listSelectionListener);
     }
-
+    
     public int getRowTableKhoa() {
         return tableKhoa.getSelectedRow();
     }
-
+    
     public void hienThiBangKhoaBangAbstractTableModel(AbstractTableModel abStractTableModel) {
         tableKhoa.setModel(abStractTableModel);
     }
-
+    
     public void locMaGiaoVienDeLamTruongKhoa(ArrayList<Khoa> danhSachKhoa, ArrayList<GiaoVien> danhSachGiaoVien, int row) {
         this.jComboBox.removeAllItems();
         for (GiaoVien giaoVien : danhSachGiaoVien) {
@@ -273,17 +276,17 @@ public final class TruongHoc2View extends javax.swing.JFrame {
                 this.jComboBox.addItem(giaoVien.getMaGv());
             }
         }
-
+        
     }
-
+    
     public void batSuKienJcomboBoxTrongBangKhoa(ActionListener listener) {
         this.jComboBox.addActionListener(listener);
     }
-
+    
     public void showThongTinKhoaTrenInput(int row) {
         textMaKhoa.setText((String) tableKhoa.getValueAt(row, 0));
         this.textTenKhoa.setText((String) tableKhoa.getValueAt(row, 1));
-
+        
     }
 
     //ket qua thi
@@ -291,7 +294,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         DefaultTableModel defaultTableModel = new DefaultTableModel(data, column);
         this.tableKetQuaThi.setModel(defaultTableModel);
     }
-
+    
     public void loadKetQuaThi(ActionListener listener) {
         this.btnLoadKetQuaThi.addActionListener(listener);
     }
@@ -303,31 +306,102 @@ public final class TruongHoc2View extends javax.swing.JFrame {
             comboBoxMaHocVienBangKetQuaThi.addItem(hocVien.getMaHocVien());
         }
     }
-
+    
     private void showComboBoxMaMonHocTrenBangKetQuaThi(ArrayList<String> danhSachMaMonHoc) {
         comboBoxMaMonHoc.removeAllItems();
         for (String maMonHoc : danhSachMaMonHoc) {
             comboBoxMaMonHoc.addItem(maMonHoc);
         }
     }
-
+    
     public void hienThiBangKetQuaThiBangAbstractModel(AbstractTableModel abstractTableModel) {
         tableKetQuaThi.setModel(abstractTableModel);
     }
-
+    
     public void capNhapMaHocVienTheoKhoa(ActionListener listener) {
         btnCapNhapMaHocVienTheoKhoa.addActionListener(listener);
     }
-
+    
     public void timKetQuaThi(ActionListener listener) {
         btnTimKetQuaThi.addActionListener(listener);
     }
-
+    
     public ArrayList<Object> getInputBangKetQuaThi() {
         ArrayList<Object> ketQuaInput = new ArrayList<>();
         ketQuaInput.add(this.comboBoxMaHocVienBangKetQuaThi.getSelectedItem());
         ketQuaInput.add(this.comboBoxMaMonHoc.getSelectedItem());
         return ketQuaInput;
+    }
+    
+    public void themKetQuaThi(ActionListener listener) {
+        btnThemKetQuaThi.addActionListener(listener);
+    }
+    
+    public void showLanThi() {
+        for (int i = 1; i <= 3; i++) {
+            comboBoxLanThi.addItem(String.valueOf(i));
+        }
+    }
+    
+    public void showDiemThi() {
+        for (float i = 0; i <= 10; i += 0.25) {
+            this.comboBoxDiemThi.addItem(String.valueOf(i));
+        }
+    }
+    
+    public void showNgayThangNamKetQuaThi() {
+        for (int i = 1; i <= 31; i++) {
+            this.comboBoxNgayThi.addItem(String.valueOf(i));
+        }
+        for (int i = 1; i <= 12; i++) {
+            this.comboBoxThangThi.addItem(String.valueOf(i));
+        }
+        for (int i = 2024; 2000 <= i; i--) {
+            this.comboBoxNamThi.addItem(String.valueOf(i));
+        }
+    }
+    
+    public ArrayList<Object> getInputKetQuaThiDeThem() {
+        ArrayList<Object> ketQuaInputKetQuaThiDeThemVao = new ArrayList<>();
+        String ngay = (String) this.comboBoxNgayThi.getSelectedItem();
+        String thang = (String) this.comboBoxThangThi.getSelectedItem();
+        String nam = (String) this.comboBoxNamThi.getSelectedItem();
+        String ngayThangNam = ngay + "/" + thang + "/" + nam;
+        ketQuaInputKetQuaThiDeThemVao.add(this.comboBoxMaHocVienBangKetQuaThi.getSelectedItem());
+        ketQuaInputKetQuaThiDeThemVao.add(this.comboBoxMaMonHoc.getSelectedItem());
+        ketQuaInputKetQuaThiDeThemVao.add(this.comboBoxLanThi.getSelectedItem());
+        ketQuaInputKetQuaThiDeThemVao.add(ngayThangNam);
+        ketQuaInputKetQuaThiDeThemVao.add(this.comboBoxDiemThi.getSelectedItem());
+        return ketQuaInputKetQuaThiDeThemVao;
+    }
+    
+    public void xuLiSuKienKhiClickTungDongBangKetQuaThi(ListSelectionListener listSelectionListener) {
+        ListSelectionModel listSelectionModel = tableKetQuaThi.getSelectionModel();
+        listSelectionModel.addListSelectionListener(listSelectionListener);
+    }
+    
+    public void xoaKetQuaThi(ActionListener listener) {
+        btnXoaKetQuaThi.addActionListener(listener);
+    }
+    
+    public int[] getNhieuChiSoDongBangKetQuaThi() {
+        return tableKetQuaThi.getSelectedRows();
+    }
+    
+    public void xoaHetKetQuaThi(ActionListener listener) {
+        btnXoaHetKetQuaThi.addActionListener(listener);
+    }
+    
+    public int getDoDaiBangKetQuaThi() {
+        return tableKetQuaThi.getRowCount();
+    }
+    
+    public void capNhapKetQuaTrenBangKetQuaThi(ActionListener listener) {
+        btnCapNhapKetQuaBangKetQuaThi.addActionListener(listener);
+    }
+
+    public void tinhDiemTrungBinhKetQuaThi(ActionListener listener) {
+        btnTinhDiemTrungBinhKetQuaThi.addActionListener(listener);
     }
 
     /**
@@ -341,6 +415,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
+        comboBoxThangThi1 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -387,6 +462,18 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         comboBoxMaMonHoc = new javax.swing.JComboBox<>();
         btnCapNhapMaHocVienTheoKhoa = new javax.swing.JButton();
         btnTimKetQuaThi = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        comboBoxLanThi = new javax.swing.JComboBox<>();
+        comboBoxNgayThi = new javax.swing.JComboBox<>();
+        comboBoxThangThi = new javax.swing.JComboBox<>();
+        comboBoxNamThi = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        comboBoxDiemThi = new javax.swing.JComboBox<>();
+        btnXoaKetQuaThi = new javax.swing.JButton();
+        btnXoaHetKetQuaThi = new javax.swing.JButton();
+        btnCapNhapKetQuaBangKetQuaThi = new javax.swing.JButton();
+        btnTinhDiemTrungBinhKetQuaThi = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -468,9 +555,9 @@ public final class TruongHoc2View extends javax.swing.JFrame {
                                 .addComponent(btnCapNhapSiSoLopHoc)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSuaLopHoc)))
-                        .addGap(28, 28, Short.MAX_VALUE))
+                        .addGap(32, 32, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -570,7 +657,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
                                         .addComponent(btnCapNhapSoLuongGiaoVien)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnXoaKhoa)))
-                                .addGap(0, 69, Short.MAX_VALUE))
+                                .addGap(0, 73, Short.MAX_VALUE))
                             .addGroup(jPanelKhoaLayout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addComponent(jLabel5)
@@ -644,36 +731,86 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         btnTimKetQuaThi.setText("Tìm");
 
+        jLabel11.setText("Ngày tháng năm");
+
+        jLabel12.setText("Lần thi");
+
+        jLabel13.setText("Điểm");
+
+        btnXoaKetQuaThi.setText("Xóa");
+
+        btnXoaHetKetQuaThi.setText("Xóa hết");
+
+        btnCapNhapKetQuaBangKetQuaThi.setText("Cập nhập kết quả");
+
+        btnTinhDiemTrungBinhKetQuaThi.setText("Tính điểm trung bình");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(comboBoxMaHocVienBangKetQuaThi, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboBoxMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addGap(7, 7, 7)
-                                    .addComponent(jLabel9)
-                                    .addGap(54, 54, 54)
-                                    .addComponent(jLabel10)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(comboBoxMaHocVienBangKetQuaThi, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboBoxMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel9)
+                                .addGap(54, 54, 54)
+                                .addComponent(jLabel10)))
+                        .addGap(48, 48, 48)
+                        .addComponent(comboBoxLanThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxNgayThi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboBoxThangThi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxNamThi, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCapNhapKetQuaBangKetQuaThi)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnLoadKetQuaThi)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCapNhapMaHocVienTheoKhoa)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnTimKetQuaThi)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(btnTimKetQuaThi))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
-                                .addComponent(btnThemKetQuaThi)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(btnThemKetQuaThi)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnXoaKetQuaThi))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTinhDiemTrungBinhKetQuaThi)))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(56, 56, 56))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(comboBoxDiemThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnXoaHetKetQuaThi)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -681,17 +818,31 @@ public final class TruongHoc2View extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBoxMaHocVienBangKetQuaThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                    .addComponent(comboBoxMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxLanThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxNgayThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxThangThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxNamThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxDiemThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCapNhapKetQuaBangKetQuaThi)
+                    .addComponent(btnTinhDiemTrungBinhKetQuaThi))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLoadKetQuaThi)
                     .addComponent(btnThemKetQuaThi)
                     .addComponent(btnCapNhapMaHocVienTheoKhoa)
-                    .addComponent(btnTimKetQuaThi))
+                    .addComponent(btnTimKetQuaThi)
+                    .addComponent(btnXoaKetQuaThi)
+                    .addComponent(btnXoaHetKetQuaThi))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -722,6 +873,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCapNhapKetQuaBangKetQuaThi;
     private javax.swing.JButton btnCapNhapLopTruong;
     private javax.swing.JButton btnCapNhapMaHocVienTheoKhoa;
     private javax.swing.JButton btnCapNhapSiSoLopHoc;
@@ -734,10 +886,19 @@ public final class TruongHoc2View extends javax.swing.JFrame {
     private javax.swing.JButton btnThemKetQuaThi;
     private javax.swing.JButton btnThemKhoa;
     private javax.swing.JButton btnTimKetQuaThi;
+    private javax.swing.JButton btnTinhDiemTrungBinhKetQuaThi;
+    private javax.swing.JButton btnXoaHetKetQuaThi;
+    private javax.swing.JButton btnXoaKetQuaThi;
     private javax.swing.JButton btnXoaKhoa;
     private javax.swing.JButton btnXoaLopHoc;
+    private javax.swing.JComboBox<String> comboBoxDiemThi;
+    private javax.swing.JComboBox<String> comboBoxLanThi;
     private javax.swing.JComboBox<String> comboBoxMaHocVienBangKetQuaThi;
     private javax.swing.JComboBox<String> comboBoxMaMonHoc;
+    private javax.swing.JComboBox<String> comboBoxNamThi;
+    private javax.swing.JComboBox<String> comboBoxNgayThi;
+    private javax.swing.JComboBox<String> comboBoxThangThi;
+    private javax.swing.JComboBox<String> comboBoxThangThi1;
     private javax.swing.JComboBox<String> comboboxLopTruongLopHoc;
     private javax.swing.JComboBox<String> comboboxNamThanhLapKhoa;
     private javax.swing.JComboBox<String> comboboxNgayThanhLapKhoa;
@@ -746,6 +907,9 @@ public final class TruongHoc2View extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboboxmaGiaoVienChuNhiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

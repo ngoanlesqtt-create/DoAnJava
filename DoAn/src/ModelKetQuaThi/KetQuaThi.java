@@ -81,4 +81,13 @@ public class KetQuaThi {
         return data;
     }
 
+    public String capNhapKetQua() {
+        if (this.diem < 5) {
+            this.ketQua = "Khong dat";
+        } else {
+            this.ketQua = "Dat";
+        }
+        return this.ketQua;
+    }
+
 }
