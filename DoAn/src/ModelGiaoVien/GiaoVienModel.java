@@ -128,7 +128,6 @@ public class GiaoVienModel extends AbstractTableModel {
             case 5 -> {
                 try {
                     giaoVien.setHeSo(Float.parseFloat((String) aValue));
-                    System.out.println("Hello dong 131 GiaoVienModel,rowIndex: " + rowIndex);
                     this.dataGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVien, rowIndex);
                 } catch (SQLException ex) {
                 }

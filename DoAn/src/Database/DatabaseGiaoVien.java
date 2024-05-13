@@ -8,6 +8,7 @@ import ModelGiaoVien.CuNhan;
 import ModelGiaoVien.GiaoVien;
 import ModelGiaoVien.ThacSy;
 import ModelGiaoVien.TienSy;
+import ModelKhoa.Khoa;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.CallableStatement;
@@ -141,7 +142,9 @@ public class DatabaseGiaoVien {
         ds.setServerName("localhost");
         ds.setPortNumber(Integer.parseInt("1433"));
         ds.setDatabaseName("BAITAP2");
-
+        for (Object object : thongTinInputGiaoVien) {
+            System.out.println("Object:" + object);
+        }
         try {
             Connection con = ds.getConnection();
             CallableStatement cstmt = con.prepareCall("INSERT INTO GIAOVIEN VALUES('"
@@ -153,11 +156,12 @@ public class DatabaseGiaoVien {
                     + thongTinInputGiaoVien.get(4) + "/"
                     + thongTinInputGiaoVien.get(6) + "','"
                     + thongTinInputGiaoVien.get(7) + "','"
-                    + thongTinInputGiaoVien.get(8) + "','"
-                    + "0','"
+                    + thongTinInputGiaoVien.get(8) + "',"
+                    + 0 + ",'"
                     + thongTinInputGiaoVien.get(9) + "')"
                     + "select * from GIAOVIEN"
             );
+            System.out.println("test dong 164 DataGiaoVien");
             ResultSet rs = cstmt.executeQuery();
             while (rs.next()) {
                 if (rs.getString("HOCVI").equalsIgnoreCase("CN")) {
@@ -642,5 +646,110 @@ public class DatabaseGiaoVien {
             System.out.println("Loi:" + ex);
         }
         return null;
+    }
+
+    public ArrayList getDanhSachKhoa() throws SQLException {
+        ArrayList<Khoa> danhSachKhoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("select * from KHOA");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                danhSachKhoa.add(new Khoa(rs.getString("MAKHOA"), rs.getString("TENKHOA"), rs.getDate("NGTLAP"), rs.getInt("SOLUONGGIAOVIEN"), rs.getString("TRGKHOA")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 42 DatabaseLopHoc:" + ex);
+        }
+        return danhSachKhoa;
+    }
+
+    public ArrayList getGiaTriDeSuaChuaBangGiaoVien() throws SQLException {
+        ArrayList<Object> data = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            System.out.println("test dong 241 DatabaseLopHoc:");
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("select * from CacGiaTriDeCapNhapBangHocVien");
+
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                data.add(rs.getInt("dong"));
+                data.add(rs.getString("maLopHocBanDau"));
+                data.add(rs.getString("maLopHocDeSua"));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 282 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return data;
+    }
+
+    public ArrayList<GiaoVien> suaMaKhoaCuaGiaoVienKhiThayDoiKhoa(String maKhoaCanSua, String maKhoaBanDau) throws SQLException {
+        ArrayList<GiaoVien> giaoVienDuocCapNhapMaKhoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update GIAOVIEN  set MAKHOA='" + maKhoaCanSua + "'" + " where MAKHOA='" + maKhoaBanDau + "'" + "select * from GIAOVIEN");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("HOCVI").equalsIgnoreCase("CN")) {
+                    giaoVienDuocCapNhapMaKhoa.add(new CuNhan(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+
+                } else if (rs.getString("HOCVI").equalsIgnoreCase("Ths")) {
+                    giaoVienDuocCapNhapMaKhoa.add(new ThacSy(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+
+                } else if (rs.getString("HOCVI").equalsIgnoreCase("TS")) {
+                    giaoVienDuocCapNhapMaKhoa.add(new TienSy(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+
+                }
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 42 DatabaseLopHoc:" + ex);
+        }
+        return giaoVienDuocCapNhapMaKhoa;
     }
 }

@@ -73,7 +73,7 @@ public class GiaoVien implements InterfaceGiaoVien {
         return this.luong;
     }
 
-    public Object getMaKhoa() {
+    public String getMaKhoa() {
         return this.maKhoa;
     }
 

@@ -23,7 +23,7 @@ public class Khoa {
         this.tenKhoa = tenKhoa;
         this.ngayThanhLap = ngayThanhLap;
         this.truongKhoa = truongKhoa;
-        this.soLuongGiangVien = 0;
+        this.soLuongGiangVien = soLuongGiangVien;
     }
 
     public String getMaKhoa() {

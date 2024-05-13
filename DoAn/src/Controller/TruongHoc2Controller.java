@@ -5,16 +5,23 @@
 package Controller;
 
 import InputThongTin.InputThongTin;
+import ModelGiaoVien.GiaoVien;
 import ModelHocVien.HocVien;
+import ModelKetQuaThi.KetQuaThiModel;
+import ModelKhoa.Khoa;
 import ModelKhoa.KhoaModel;
 import ModelLop.LopHocModel;
 import View.TruongHoc2View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,18 +35,22 @@ import javax.swing.event.ListSelectionListener;
 public class TruongHoc2Controller extends TruongHoc1Controller {
 
     private final LopHocModel modelLopHoc;
+    private final KhoaModel modelKhoa;
+    private final KetQuaThiModel modelKetQuaThi;
     private final TruongHoc2View view2;
     private ArrayList<Object> inputLopHoc;
-    private KhoaModel modelKhoa;
     private ArrayList<String> maGiaoVienDangLaChuNhiemKhoa;
+    private ArrayList<Object> inputKhoa;
+    private int rowTableKhoa;
 
     public TruongHoc2Controller() throws SQLException {
-        //Khoa
+        this.modelKetQuaThi = new KetQuaThiModel();
         this.modelKhoa = new KhoaModel();
         this.inputLopHoc = new ArrayList<>();
         this.modelLopHoc = new LopHocModel();
         this.maGiaoVienDangLaChuNhiemKhoa = this.modelKhoa.getMaGiaoVienDangLaChuNhiemKhoa();
-        this.view2 = new TruongHoc2View(this.modelHocVien.getDanhSachHocVien(), this.dataGiaoVien.getDataGiaoVien(), this.modelKhoa.getMaGiaoVien(), maGiaoVienDangLaChuNhiemKhoa);
+        this.view2 = new TruongHoc2View(this.modelHocVien.getDanhSachHocVien(), this.dataGiaoVien.getDataGiaoVien(),
+                this.modelKhoa.getMaGiaoVien(), maGiaoVienDangLaChuNhiemKhoa, this.modelKetQuaThi.getMaMonHoc());
         this.dongDuocChonTrenBangLopHoc = -1;
         view2.setVisible(true);
         view.setVisible(false);
@@ -53,6 +64,18 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         //Khoa
         view2.loadKhoa(new KhoaDuocLoad());
         view2.renderNamThanhLapKhoa(new ComboBoxNam());
+        view2.batSuKienChoJpanel(new JpanelKhoa());
+        view2.batSuKienNgayThangNam(new NgayThangNam());
+        view2.themKhoa(new KhoaDuocThem());
+        view2.capNhapGiaoVienTrenBangKhoa(new KhoaDuocCapNhapSiSoGiaoVien());
+        view2.xoaKhoa(new KhoaDuocXoa());
+        view2.xuLiSuKienTungDongTrenBangKhoa(new DongTrenBangKhoa());
+        view2.batSuKienEnterTrenBangKhoa(new KhoaDuocBatSuKienEnter());
+        this.rowTableKhoa = -1;
+        //KetQuaThi
+        view2.loadKetQuaThi(new KetQuaThiDuocLoad());
+        view2.capNhapMaHocVienTheoKhoa(new KetQuaThiCapNhapMaHocVienTheoKhoa());
+        view2.timKetQuaThi(new KetQuaThiDuocTim());
     }
 
     private class LopHocDuocLoad implements ActionListener {
@@ -137,7 +160,6 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("dongDuocChonTrenBangLopHoc:" + dongDuocChonTrenBangLopHoc);
             if (dongDuocChonTrenBangLopHoc == -1) {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn lớp để xóa");
             } else {
@@ -161,9 +183,8 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[][] data;
             try {
-                data = modelLopHoc.capNhapLopSiSoLopHoc();
+                Object[][] data = modelLopHoc.capNhapLopSiSoLopHoc();
                 view2.hienThiLopHocTrenTable(data, modelLopHoc.getColumnLopHoc());
             } catch (SQLException ex) {
             }
@@ -203,15 +224,23 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
     }
 
     //Khoa 
+    private void capNhapComboBoxKhoa() throws SQLException {
+        maGiaoVienDangLaChuNhiemKhoa = modelKhoa.getMaGiaoVienDangLaChuNhiemKhoa();
+        ArrayList<String> danhSachMaGiaoVien = modelKhoa.getMaGiaoVien();
+        view2.setComboBoxChoBangKhoa(danhSachMaGiaoVien, maGiaoVienDangLaChuNhiemKhoa);
+        view2.resetComboBoxNamThanhLapKhoa();
+
+    }
+
     private class KhoaDuocLoad implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[][] data = modelKhoa.loadData();
             try {
-                ArrayList<String> danhSachMaGiaoVien = modelKhoa.getMaGiaoVien();
+                Object[][] data = modelKhoa.loadData();
                 view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
-                view2.setComboBoxChoBangKhoa(danhSachMaGiaoVien, maGiaoVienDangLaChuNhiemKhoa);
+                view2.hienThiBangKhoaBangAbstractTableModel(modelKhoa);
+                capNhapComboBoxKhoa();
             } catch (SQLException ex) {
             }
 
@@ -219,12 +248,190 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
     }
 
-    private class ComboBoxNam extends MouseAdapter {
+    private class ComboBoxNam extends KeyAdapter {
 
- 
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                view2.tangThemNamThanhLapKhoa();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                view2.tangThemNamThanhLapKhoa();
+            }
+        }
+
+    }
+
+    private class JpanelKhoa extends MouseAdapter {
+
         @Override
         public void mouseReleased(MouseEvent e) {
-            System.out.println("Hello");
+            view2.resetComboBoxNamThanhLapKhoa();
+        }
+
+    }
+
+    private class NgayThangNam implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getSource() == view2.getJcombobox()) {
+                view2.xacThucNgayThangNam();
+            }
+
+        }
+    }
+
+    private class KhoaDuocThem implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            inputKhoa = view2.getInputKhoa();
+            if (!InputThongTin.kiemTraInputRong(inputKhoa)) {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập thiếu thông tin");
+            } else {
+                try {
+                    Object[][] data = modelKhoa.themKhoa(inputKhoa);
+                    if (data != null) {
+                        view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
+                        capNhapComboBoxKhoa();
+                    } else {
+                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai thông tin");
+                    }
+                } catch (SQLException | ParseException ex) {
+                }
+
+            }
+        }
+
+    }
+
+    private class KhoaDuocCapNhapSiSoGiaoVien implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Object[][] data = modelKhoa.capNhapSiSoGiaoVienKhoa();
+                view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
+                capNhapComboBoxKhoa();
+            } catch (SQLException ex) {
+            }
+        }
+    }
+
+    private class DongTrenBangKhoa implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+            try {
+                rowTableKhoa = view2.getRowTableKhoa();
+                if (rowTableKhoa != -1) {
+                    ArrayList<Khoa> danhSachKhoa = modelKhoa.getDanhSachKhoa();
+                    ArrayList<GiaoVien> danhSachGiaoVien = modelKhoa.getDanhSachGiaoVien();
+                    view2.locMaGiaoVienDeLamTruongKhoa(danhSachKhoa, danhSachGiaoVien, rowTableKhoa);
+                    view2.showThongTinKhoaTrenInput(rowTableKhoa);
+                }
+            } catch (SQLException ex) {
+            }
+
+        }
+
+    }
+
+    private class KhoaDuocXoa implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (rowTableKhoa == -1) {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn khoa nào để xóa");
+            } else {
+                try {
+                    Object[][] data = modelKhoa.xoaKhoa(rowTableKhoa);
+                    if (data != null) {
+                        view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
+                    } else {
+                        view.hienThiThongBaoChuaNhapThongTinHocVien("Vẫn còn giáo viên nên bạn không thể xóa được");
+                    }
+                    rowTableKhoa = -1;
+                } catch (SQLException ex) {
+                }
+            }
+        }
+
+    }
+
+    private class KhoaDuocBatSuKienEnter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            try {
+                ArrayList<Khoa> danhSachKhoa = modelKhoa.getDanhSachKhoa();
+                if (danhSachKhoa.get(rowTableKhoa).getTruongKhoa() == null) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã chọn sai mã trưởng khoa");
+                } else {
+                    capNhapComboBoxKhoa();
+                }
+            } catch (SQLException ex) {
+            }
+
+        }
+
+    }
+
+    //KetQuaThi
+    private class KetQuaThiDuocLoad implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                state = false;
+                Object[][] data = modelKetQuaThi.loadDataketQuaThi();
+                view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                view2.hienThiBangKetQuaThiBangAbstractModel(modelKetQuaThi);
+                view2.showComboBoxMaHocVienTrenBangKetQuaThi(modelHocVien.getHocVien());
+            } catch (SQLException ex) {
+            }
+        }
+
+    }
+
+    private class KetQuaThiCapNhapMaHocVienTheoKhoa implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object[][] data;
+            try {
+                data = modelKetQuaThi.suaMaHocVienTheoBangKhoa();
+                view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                view2.showComboBoxMaHocVienTrenBangKetQuaThi(modelHocVien.getHocVien());
+                view2.hienThiBangKetQuaThiBangAbstractModel(modelKetQuaThi);
+            } catch (SQLException ex) {
+            }
+
+        }
+
+    }
+
+    private class KetQuaThiDuocTim implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Object> inputBangKetQuaThi = view2.getInputBangKetQuaThi();
+            Object[][] data = modelKetQuaThi.ketQuaThiDuocTimKiem(inputBangKetQuaThi);
+            if (data == null) {
+                view.hienThiThongBaoChuaNhapThongTinHocVien("Không tìm thấy học viên");
+            } else {
+                view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
+                state = true;
+            }
+
         }
 
     }

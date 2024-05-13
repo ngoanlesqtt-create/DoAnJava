@@ -149,7 +149,6 @@ public class LopHocModel {
             }
             this.danhSachLop = this.databaseLopHoc.capNhapSiSoLop(lopHoc.getMaLop(), count);
         }
-
         Object[][] data = this.loadDanhSachLopHoc();
         return data;
     }

@@ -4,7 +4,6 @@
  */
 package InputThongTin;
 
-import ModelLop.LopHoc;
 import java.util.ArrayList;
 
 /**
@@ -19,11 +18,7 @@ public class InputThongTin {
                 return false;
             }
         }
-//        int i = 0;
-//        for (Object input : cacInput) {
-//            System.out.println("intput[" + i + "]=" + input);
-//            i++;
-//        }
+
         return true;
     }
 

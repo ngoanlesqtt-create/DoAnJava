@@ -32,7 +32,7 @@ public class TruongHoc1Controller {
     protected final String[] columnHocVien = {"Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"};
     private final String[] columnGiaoVien = {"Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"};
     private int[] nhieuChiSoTable;
-    private boolean state;
+    protected boolean state;
     private boolean stateSuaThongtin;
     private final GiaoVienModel modelGiaoVien;
     protected final DataGiaoVien dataGiaoVien;
@@ -43,11 +43,11 @@ public class TruongHoc1Controller {
     protected int dongDuocChonTrenBangLopHoc;
 
     public TruongHoc1Controller() throws SQLException {
-        this.view = new TruongHoc1View();
+        this.dataGiaoVien = new DataGiaoVien();
+        this.view = new TruongHoc1View(dataGiaoVien.getDanhSachMaKhoa());
         this.state = false;
         this.stateSuaThongtin = false;
         //them giao vien
-        this.dataGiaoVien = new DataGiaoVien();
         this.modelGiaoVien = new GiaoVienModel(this.dataGiaoVien.getDataGiaoVien());
         view.loadGiaoVienBangClickButton(new DataGiaoVienDuocLoad());
         view.themGiaoVien(new GiaoVienDuocThem());
@@ -60,6 +60,7 @@ public class TruongHoc1Controller {
         this.giaoVienDuocTimThay = new ArrayList<>();
         view.tinhLuongGiaoVien(new GiaoVienDuocTinhLuong());
         view.dieuHuong(new TrangDieuHuong());
+        view.capNhapMaKhoaCuaGiaoVien(new GiaoVienDuocCapNhapMaKhoa());
         //Thêm học viên
         modelHocVien = new HocVienModel();
         view.loadHocVien(new LoadedHocVien());//load học viên bằng bấm nút load
@@ -75,19 +76,22 @@ public class TruongHoc1Controller {
         view.capNhapDuLieuTungO(new DuLieuDuocThayDoi());//bat su kien khi bam nut enter
         view.capNhapHocVienKhiSuaTrenLopHoc(new HocVienDuocCapNhapKhiSuaTrenLopHoc());
         view.setVisible(true);
-
     }
 
     private class DataGiaoVienDuocLoad implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
-            view.hienThiTableGiaoVien(data, columnGiaoVien);
-            modelGiaoVien.setDanhSachGiaoVien(dataGiaoVien.getDataGiaoVien());
-            view.loadGiaoVien(modelGiaoVien);
-            state = false;
-            view.xoaInputTableGiaoVien();
+            try {
+                Object[][] data = dataGiaoVien.capNhapDanhSachGiaoVien();
+                view.hienThiTableGiaoVien(data, columnGiaoVien);
+                modelGiaoVien.setDanhSachGiaoVien(dataGiaoVien.getDataGiaoVien());
+                view.loadGiaoVien(modelGiaoVien);
+                state = false;
+                view.xoaInputTableGiaoVien();
+                view.showMaKhoaGiaoVien(dataGiaoVien.getDanhSachMaKhoa());
+            } catch (SQLException ex) {
+            }
 
         }
     }
@@ -105,7 +109,6 @@ public class TruongHoc1Controller {
                 } else {
                     try {
                         ArrayList<GiaoVien> giaoVienDuocThemVao = dataGiaoVien.themGiaoVien(thongTinInputGiaoVien);
-                        System.out.println("test dong 102 TruongHocController");
                         if (giaoVienDuocThemVao == null) {
                             view.hienThiThongBaoChuaNhapThongTinHocVien("Ban nhap trung ma giao vien");
                         } else {
@@ -335,6 +338,19 @@ public class TruongHoc1Controller {
         }
 
     }
+
+    private class GiaoVienDuocCapNhapMaKhoa implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ArrayList<Object> maKhoaCuaGiaoVienDuocCapNhap = dataGiaoVien.getThongTinCanSua();
+                dataGiaoVien.setMaKhoaCuaGiaoVien((String) maKhoaCuaGiaoVienDuocCapNhap.get(1), (String) maKhoaCuaGiaoVienDuocCapNhap.get(2));
+            } catch (SQLException ex) {
+            }
+        }
+
+    }
 //Học viên
 
     private class LoadedHocVienBangEnter extends KeyAdapter {
@@ -466,7 +482,11 @@ public class TruongHoc1Controller {
                     Object[][] cacHocVienDuocTimThay = modelHocVien.timHocVienTheoThongTin(view.getThongTinVienMuonTim());
                     if (cacHocVienDuocTimThay != null) {
                         Object[][] cacHocVienDuocXoaKhiTimThay = modelHocVien.xoaCacHocVienDuocTimThay(nhieuChiSoTable, view.getThongTinVienMuonTim());
-                        view.hienThiTrenTable(cacHocVienDuocXoaKhiTimThay, columnHocVien);
+                        if (cacHocVienDuocXoaKhiTimThay == null) {
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa học viên này vì chưa xóa trên bảng kết quả thi");
+                        } else {
+                            view.hienThiTrenTable(cacHocVienDuocXoaKhiTimThay, columnHocVien);
+                        }
                     } else {
                         view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết học viên để xóa");
                     }
@@ -475,7 +495,11 @@ public class TruongHoc1Controller {
                     if (modelHocVien.getDataHocVien().length != 0) {
                         if (nhieuChiSoTable != null) {
                             Object[][] data = modelHocVien.xoaHocVien(nhieuChiSoTable);
-                            view.hienThiTrenTable(data, columnHocVien);
+                            if (data == null) {
+                                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa hết học viên vì chưa xóa trên bảng kết quả thi");
+                            } else {
+                                view.hienThiTrenTable(data, columnHocVien);
+                            }
                         } else {
                             view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua chon hoc vien can xoa");
                         }
@@ -499,10 +523,26 @@ public class TruongHoc1Controller {
                 for (int i = 0; i <= doDaiBang - 1; i++) {
                     nhieuChiSoTable[i] = i;
                 }
-                try {
-                    Object[][] data = modelHocVien.xoaHocVien(nhieuChiSoTable);
-                    view.hienThiTrenTable(data, columnHocVien);
-                } catch (SQLException ex) {
+                if (!state) {//xoa het khi dang o bang chinh
+                    try {
+                        Object[][] data = modelHocVien.xoaHocVien(nhieuChiSoTable);
+                        if (data == null) {
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa học viên này vì chưa xóa trên bảng kết quả thi");
+                        } else {
+                            view.hienThiTrenTable(data, columnHocVien);
+                        }
+                    } catch (SQLException ex) {
+                    }
+                } else {
+                    try {
+                        Object[][] data = modelHocVien.xoaHocVienTheoThongTin(nhieuChiSoTable, view.getThongTinVienMuonTim());
+                        if (data == null) {
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa học viên này vì chưa xóa trên bảng kết quả thi");
+                        } else {
+                            view.hienThiTrenTable(data, columnHocVien);
+                        }
+                    } catch (SQLException ex) {
+                    }
                 }
             } else {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Đã hết học viên để xóa");
@@ -548,7 +588,7 @@ public class TruongHoc1Controller {
                     int hang = view.getRow();
                     int cot = view.getColumn();
                     HocVien hocVienDuocChon = view.getHocVien();
-                    if (view.getThongTinVienMuonTim() == null) {
+                    if (view.getThongTinVienMuonTim() == null) {//Sửa HocVien trực tiếp trên bảng chính
                         switch (cot) {
                             //((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")
                             case 0 -> {
@@ -559,6 +599,7 @@ public class TruongHoc1Controller {
                                     view.setGiaTriTungO(hocVienDuocChon.getMaHocVien(), hang, 0);
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn phải sửa mã lớp trước");
                                 } else {
+                                    modelHocVien.setGiaTriDeCapNhapLaiBangKetQuaThi(hocVienDuocChon.getMaHocVien(), hang, (String) view.getGiaTriTungO(hang, 0));
                                     hocVienDuocChon.setMaHocVien((String) view.getGiaTriTungO(hang, 0));
                                     hocVienDuocChon.setMaLop((String) view.getGiaTriTungO(hang, 6));
                                     Object[][] hocVienSauKhiDuocSuaBangEnter = modelHocVien.suaThongTinHocVien(hocVienDuocChon, nhieuChiSoTable[0]);
@@ -597,7 +638,6 @@ public class TruongHoc1Controller {
                                 view.setLaiGiaTriInput();
                                 break;
                             }
-                            //((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K13")
                             case 6 -> {
                                 if (!modelHocVien.kiemTraMaLopKhiThemHocVien1(((String) view.getGiaTriTungO(hang, 6)))) {
                                     view.setGiaTriTungO(hocVienDuocChon.getMaLop(), hang, 6);
@@ -610,9 +650,7 @@ public class TruongHoc1Controller {
                             }
                         }
                     } else {
-                        System.out.println("Hello dong 125 controller");
                         switch (cot) {
-//!((String) view.getGiaTriTungO(hang, 0)).contains("K11") && !((String) view.getGiaTriTungO(hang, 0)).contains("K12") && !((String) view.getGiaTriTungO(hang, 0)).contains("K13")
                             case 0 -> {
                                 if (!modelHocVien.kiemTraMaLopKhiThemHocVien2(((String) view.getGiaTriTungO(hang, 0)))) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai mã lớp");
@@ -659,7 +697,6 @@ public class TruongHoc1Controller {
                                 view.setLaiGiaTriInput();
                                 break;
                             }
-                            //((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K11") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("K12") && !((String) view.getGiaTriTungO(hang, 6)).equalsIgnoreCase("k13")
                             case 6 -> {
                                 if (!modelHocVien.kiemTraMaLopKhiThemHocVien1(((String) view.getGiaTriTungO(hang, 6)))) {
                                     view.hienThiThongBaoChuaNhapThongTinHocVien("Lớp học bạn sửa không tồn tại");
@@ -694,6 +731,5 @@ public class TruongHoc1Controller {
             } catch (SQLException ex) {
             }
         }
-
     }
 }

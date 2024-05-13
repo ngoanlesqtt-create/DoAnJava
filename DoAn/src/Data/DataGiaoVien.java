@@ -6,6 +6,8 @@ package Data;
 
 import Database.DatabaseGiaoVien;
 import ModelGiaoVien.GiaoVien;
+import ModelHocVien.HocVien;
+import ModelKhoa.Khoa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -71,12 +73,8 @@ public class DataGiaoVien {
     }
 
     public ArrayList<GiaoVien> suaThongTinGiaoVienTrucTiepTrenBang(GiaoVien giaoVienDuocTimThay, int rowIndex) throws SQLException {
-        System.out.println("test dong 74 dataGiaoVien, ma giao vien duoc tim thay:" + giaoVienDuocTimThay.getMaGiaoVien());
-        System.out.println("this.danhSachGiaoVien.get(rowIndex).getMaGv():" + this.danhSachGiaoVien.get(rowIndex).getMaGv());
         for (GiaoVien giaoVien : this.danhSachGiaoVien) {
             if (giaoVien.getMaGiaoVien().equalsIgnoreCase(giaoVienDuocTimThay.getMaGiaoVien())) {
-                System.out.println("test dong 74 dataGiaoVien, ma giao vien duoc tim thay:" + giaoVienDuocTimThay.getMaGiaoVien());
-                System.out.println("this.danhSachGiaoVien.get(rowIndex).getMaGv():" + giaoVien.getMaGv());
                 this.danhSachGiaoVien = this.databaseGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay, giaoVien.getMaGv());
             }
 
@@ -87,8 +85,6 @@ public class DataGiaoVien {
     public ArrayList<GiaoVien> suaThongTinGiaoVienKhiTimKiemBangInput(ArrayList<Object> thongTinInputGiaoVien, String maGiaoVien) throws SQLException {
         ArrayList<GiaoVien> danhSachGiaoVienDuocSua = new ArrayList<>();
         this.danhSachGiaoVien = this.databaseGiaoVien.suaThongTinGiaoVienDuocTimKiemBangInput(thongTinInputGiaoVien, maGiaoVien);
-        System.out.println("Thong tin ma giao vien khi duoc sua:" + (String) thongTinInputGiaoVien.get(0));
-        System.out.println("Thong tin ma giao vien khi chua duoc sua:" + maGiaoVien);
         for (GiaoVien giaoVien : this.danhSachGiaoVien) {
             if (giaoVien.getMaGiaoVien().equalsIgnoreCase((String) thongTinInputGiaoVien.get(0))) {
                 danhSachGiaoVienDuocSua.add(giaoVien);
@@ -104,9 +100,8 @@ public class DataGiaoVien {
 
     public ArrayList suaThongTinGiaoVienTrucTiepTrenBang(GiaoVien giaoVienDuocTimThay) throws SQLException {
         ArrayList<GiaoVien> danhSachGiaoVienDuocSua = new ArrayList<>();
-  
+
         for (GiaoVien giaoVien : this.danhSachGiaoVien) {
-            System.out.println("test dong 102 DataGiaoVien");
             if ((giaoVien.getMaGiaoVien()).equalsIgnoreCase(giaoVienDuocTimThay.getMaGiaoVien())) {
                 danhSachGiaoVienDuocSua = this.databaseGiaoVien.suaThongTinGiaoVienTrucTiepTrenBang(giaoVienDuocTimThay, giaoVien.getMaGiaoVien());
             }
@@ -129,10 +124,22 @@ public class DataGiaoVien {
         for (GiaoVien giaoVien : this.danhSachGiaoVien) {
             cacGiaoVienDuocTinhLuong.add(this.databaseGiaoVien.capNhapLuongGiaoVien(giaoVien.getMaGv(), giaoVien.getLuong()));
         }
-        System.out.println("Luong cua giao vien dau tien:" + cacGiaoVienDuocTinhLuong.get(0).getLuong());
         this.danhSachGiaoVien = cacGiaoVienDuocTinhLuong;
         Object[][] data = this.capNhapDanhSachGiaoVien();
         return data;
     }
 
+    public ArrayList getDanhSachMaKhoa() throws SQLException {
+        ArrayList<Khoa> danhSachKhoa = this.databaseGiaoVien.getDanhSachKhoa();
+        return danhSachKhoa;
+    }
+
+    public ArrayList<Object> getThongTinCanSua() throws SQLException {
+        ArrayList<Object> thongTinCanSua = this.databaseGiaoVien.getGiaTriDeSuaChuaBangGiaoVien();
+        return thongTinCanSua;
+    }
+
+    public void setMaKhoaCuaGiaoVien(String maKhoaBanDau, String maKhoaCanSua) throws SQLException {
+        this.danhSachGiaoVien = this.databaseGiaoVien.suaMaKhoaCuaGiaoVienKhiThayDoiKhoa(maKhoaCanSua, maKhoaBanDau);
+    }
 }
