@@ -193,8 +193,8 @@ public class KetQuaThiModel extends AbstractTableModel {
         return danhSachMaMonHoc;
     }
 
-    public Object[][] tinhDiemTrungbinh() {
-        ArrayList<HocVien> danhSachHocVien = this.modelHocVien.getDanhSachHocVien();
+    public Object[][] tinhDiemTrungbinh() throws SQLException {
+        ArrayList<HocVien> danhSachHocVien = this.modelHocVien.getHocVien();
         ArrayList<ArrayList> ketQuaTongThe = new ArrayList<>();
         String ketQuaXepLoai = null;
         for (HocVien hocVien : danhSachHocVien) {

@@ -60,8 +60,8 @@ public class InputThongTin {
             }
         }
         int namSinhDuocEpKieu = Integer.parseInt(namSinh);
-        int ngaySinh = (int) cacInput.get(4);
-        int thangSinh = (int) cacInput.get(5);
+        int ngaySinh = Integer.parseInt((String) cacInput.get(4));
+        int thangSinh = Integer.parseInt((String) cacInput.get(5));
         if (namSinhDuocEpKieu >= 0) {
             if (ngaySinh == 31 && (thangSinh == 2 || thangSinh == 4 || thangSinh == 6 || thangSinh == 9 || thangSinh == 11)) {
                 return false;
