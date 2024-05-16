@@ -8,10 +8,12 @@ import Database.DatabaseKetQuaThi;
 import ModelHocVien.HocVien;
 import ModelHocVien.HocVienModel;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -209,8 +211,9 @@ public class KetQuaThiModel extends AbstractTableModel {
             }
             if (count != 0) {
                 float diemTrungBinh = tong / count;
-                double scale = Math.pow(10, 1);
-                double result = Math.ceil(diemTrungBinh * scale) / scale;
+                String pattern = "###,###.#";
+                DecimalFormat decimalFormat = new DecimalFormat(pattern);
+                String result = decimalFormat.format(diemTrungBinh);
                 if (diemTrungBinh >= 8) {
                     ketQuaXepLoai = "Gioi";
                 } else if (diemTrungBinh >= 7.0) {

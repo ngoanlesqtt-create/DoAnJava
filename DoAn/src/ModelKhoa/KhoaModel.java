@@ -63,6 +63,9 @@ public class KhoaModel extends AbstractTableModel {
 
     public Object[][] themKhoa(ArrayList<Object> inputKhoa) throws SQLException, ParseException {
         this.danhSachKhoa = this.databaseKhoa.themKhoa(inputKhoa);
+        if (danhSachKhoa == null) {
+            return null;
+        }
         Object[][] data = this.loadData();
         return data;
     }
@@ -83,9 +86,13 @@ public class KhoaModel extends AbstractTableModel {
     }
 
     public Object[][] xoaKhoa(int row) throws SQLException {
+        if (this.danhSachKhoa == null) {
+            this.danhSachKhoa = this.databaseKhoa.getDanhSachKhoa();
+        }
         if (this.danhSachKhoa.get(row).getSoLuongGiangVien() != 0) {
             return null;
         }
+
         this.danhSachKhoa = this.databaseKhoa.xoaKhoa(this.danhSachKhoa.get(row).getMaKhoa());
         Object[][] data = this.loadData();
         return data;

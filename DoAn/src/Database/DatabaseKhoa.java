@@ -118,10 +118,14 @@ public class DatabaseKhoa {
         ds.setPortNumber(Integer.parseInt("1433"));
         ds.setDatabaseName("BAITAP2");
         try {
-            String ngay = (String) inputKhoa.get(2);
-            String thang = (String) inputKhoa.get(3);
-            String nam = (String) inputKhoa.get(4);
-            String ngayThangNam = ngay + '/' + thang + '/' + nam;
+            System.out.println("inputKhoa.get(2):" + inputKhoa.get(2));
+            System.out.println("inputKhoa.get(3):" + inputKhoa.get(3));
+            System.out.println("inputKhoa.get(4):" + inputKhoa.get(4));
+            String ngay = String.valueOf(inputKhoa.get(2));
+            String thang = String.valueOf(inputKhoa.get(3));
+            String nam = String.valueOf(inputKhoa.get(4));
+            String ngayThangNam = thang + '/' + ngay + '/' + nam;
+            System.out.println("ngayThangNam:" + ngayThangNam);
             Connection con = ds.getConnection();
             CallableStatement cstmt = con.prepareCall("INSERT INTO KHOA VALUES('" + inputKhoa.get(0) + "','" + inputKhoa.get(1) + "','" + ngayThangNam + "','" + "'," + 0 + ")" + "select * from KHOA");
             ResultSet rs = cstmt.executeQuery();
@@ -129,7 +133,7 @@ public class DatabaseKhoa {
                 khoaDuocThemVao.add(new Khoa(rs.getString("MAKHOA"), rs.getString("TENKHOA"), rs.getDate("NGTLAP"), rs.getInt("SOLUONGGIAOVIEN"), rs.getString("TRGKHOA")));
             }
         } catch (SQLServerException ex) {
-            System.out.println("Loi dong 60 DatabaseLopHoc:" + ex);
+            System.out.println("Loi dong 136 DatabaseLopHoc:" + ex);
             return null;
         }
         return khoaDuocThemVao;

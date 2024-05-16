@@ -4,30 +4,22 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelKetQuaThi/KetQuaThiModel.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/DangNhapController.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/InputThongTin/InputThongTin.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/TruongHoc2Controller.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelGiaoVien/GiaoVienModel.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/TruongHoc1View.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseKetQuaThi.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseLopHoc.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelKhoa/KhoaModel.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelKhoa/Khoa.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelHocVien/HocVien.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/DangNhapController.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseHocVien.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseGiaoVien.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Interface/InterfaceGiaoVien.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelLop/LopHocModel.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelGiaoVien/GiaoVien.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Data/DataGiaoVien.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelHocVien/HocVienModel.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/TruongHoc2Controller.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelKetQuaThi/SubKetQuaThiModel.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/TruongHoc1View.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseKhoa.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelHocVien/HocVienModel.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/DangNhapView.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelKetQuaThi/KetQuaThi.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseKetQuaThi.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/View/TruongHoc2View.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Controller/TruongHoc1Controller.java</file>
-            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/ModelLop/LopHoc.java</file>
             <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Main/Main.java</file>
+            <file>file:/D:/BaiTapJava/DoAnJava/DoAn/src/Database/DatabaseLopHoc.java</file>
         </group>
     </open-files>
 </project-private>

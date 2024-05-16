@@ -84,18 +84,21 @@ public class DangNhapView extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         textTenDangNhap = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         textMatKhau = new javax.swing.JPasswordField();
         jPanel16 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
+        jPanel19 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         textXacNhanMatKhau = new javax.swing.JPasswordField();
@@ -135,10 +138,27 @@ public class DangNhapView extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-        flowLayout1.setAlignOnBaseline(true);
-        jPanel5.setLayout(flowLayout1);
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setMaximumSize(new java.awt.Dimension(65, 32767));
+        jPanel15.setPreferredSize(new java.awt.Dimension(10, 10));
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        jPanel5.add(jPanel15);
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Tên đăng nhập");
         jPanel5.add(jLabel1);
 
@@ -161,7 +181,25 @@ public class DangNhapView extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.GridLayout(1, 2));
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.setMaximumSize(new java.awt.Dimension(65, 32767));
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        jPanel9.add(jPanel18);
+
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Mật khẩu");
         jPanel9.add(jLabel4);
 
@@ -182,7 +220,25 @@ public class DangNhapView extends javax.swing.JFrame {
         jPanel4.setLayout(new java.awt.GridLayout(1, 2));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setLayout(new javax.swing.BoxLayout(jPanel13, javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setMaximumSize(new java.awt.Dimension(65, 32767));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        jPanel13.add(jPanel19);
+
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Xác nhận mật khẩu");
         jPanel13.add(jLabel5);
 
@@ -250,8 +306,11 @@ public class DangNhapView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
