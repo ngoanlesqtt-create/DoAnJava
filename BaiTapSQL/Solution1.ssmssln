@@ -8,12 +8,12 @@ Global
 		Default|Default = Default|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF7E5F61-CFB1-437B-86B3-7BA8136384F6}.Default|Default.ActiveCfg = Default
+		{4229DA2E-7C68-401B-A7EB-06D11C6FFC80}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BBBDC6E2-58ED-4052-B1AF-D1D31F07A620}
+		SolutionGuid = {9F55023C-DC63-43ED-80F4-4B90C4CFE8F0}
 	EndGlobalSection
 EndGlobal

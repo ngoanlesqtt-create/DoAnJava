@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,6 +44,15 @@ public final class TruongHoc1View extends javax.swing.JFrame {
         buttonGroupGioiTinh.add(radioButtonNu);
         buttonGroupGioiTinh.add(radioButtonNam);
         dialogThongBaoChuaNhapThongTinHocVien.setLocationRelativeTo(null);
+    }
+
+    public int xacNhanXoaHocVien() {
+        int x = JOptionPane.showConfirmDialog(this, "Bạn đã chắc chắn muốn xóa?", "Xác nhận", JOptionPane.DEFAULT_OPTION);
+        if (x == JOptionPane.YES_OPTION) {
+            return 0;
+        }
+ 
+        return 1;
     }
 
     public void loadHocVien(ActionListener listen) {

@@ -6,7 +6,6 @@ package View;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -59,10 +58,18 @@ public class DangNhapView extends javax.swing.JFrame {
             textXacNhanMatKhau.setBackground(Color.white);
         }
         if (stringBuilder.length() > 0) {
-            JOptionPane.showMessageDialog(this, stringBuilder.toString());
+            int x = JOptionPane.showConfirmDialog(this, stringBuilder.toString(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            if (x == JOptionPane.YES_OPTION) {
+                textTenDangNhap.setText("");
+                textMatKhau.setText("");
+                textXacNhanMatKhau.setText("");
+                textMatKhau.setBackground(Color.white);
+                textXacNhanMatKhau.setBackground(Color.white);
+                textTenDangNhap.requestFocus();
+            }
             return false;
         }
-        JOptionPane.showConfirmDialog(this, "Bạn đã đăng nhập thành công");
+        JOptionPane.showMessageDialog(this, "Bạn đã đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
         return true;
     }

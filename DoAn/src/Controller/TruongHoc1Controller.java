@@ -513,12 +513,16 @@ public class TruongHoc1Controller {
                 if (!state) {//Nếu đang ở vị trí bảng chính
                     if (modelHocVien.getDataHocVien().length != 0) {
                         if (nhieuChiSoTable != null) {
-                            Object[][] data = modelHocVien.xoaHocVien(nhieuChiSoTable);
-                            if (data == null) {
-                                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa hết học viên vì chưa xóa trên bảng kết quả thi");
-                            } else {
-                                view.hienThiTrenTable(data, columnHocVien);
+                            int x = view.xacNhanXoaHocVien();
+                            if (x == 0) {
+                                Object[][] data = modelHocVien.xoaHocVien(nhieuChiSoTable);
+                                if (data == null) {
+                                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn không thể xóa hết học viên vì chưa xóa trên bảng kết quả thi");
+                                } else {
+                                    view.hienThiTrenTable(data, columnHocVien);
+                                }
                             }
+
                         } else {
                             view.hienThiThongBaoChuaNhapThongTinHocVien("Ban chua chon hoc vien can xoa");
                         }
