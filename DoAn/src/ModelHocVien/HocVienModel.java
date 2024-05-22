@@ -63,6 +63,7 @@ public class HocVienModel {
     }
 
     public Object[][] getDataHocVien() throws SQLException {
+        this.setDanhSachHocVien();
         Object[][] data = new Object[this.danhSachHocVien.size()][7];
         capNhatData(data);
         return data;
@@ -215,7 +216,6 @@ public class HocVienModel {
         ArrayList<HocVien> danhSachHocVienDuocTimThayTheoThongTin = new ArrayList<>();
         capNhapCacHocVienDuocTimThay(danhSachHocVienDuocTimThayTheoThongTin, thongTinVienMuonTim);
         ArrayList<String> maHocVienCoTrenBangKetQuaThi = this.ds.getMaHocVienTrenBangKetQuaThi();
-        System.out.println("So luong cac hoc vien duoc tim thay:" + danhSachHocVienDuocTimThayTheoThongTin.size());
         if (danhSachHocVienDuocTimThayTheoThongTin.size() >= 1) {
             for (HocVien hocVien : danhSachHocVienDuocTimThayTheoThongTin) {
                 int count = 0;
@@ -246,6 +246,7 @@ public class HocVienModel {
     }
 
     public Object[][] suaThongTinHocVien(HocVien hocVienDuocSua, int chiSoBang) throws SQLException, ParseException {
+        this.setDanhSachHocVien();
         if (!hocVienDuocSua.getMaHocVien().contains(hocVienDuocSua.getMaLop())) {
             return null;
         }
@@ -344,5 +345,12 @@ public class HocVienModel {
 
     public void setGiaTriDeCapNhapLaiBangKetQuaThi(String maHocVienCanSua, int row, String maHocVienBanDau) throws SQLException {
         this.ds.setGiaTriDeSuaChuabangHocVien(maHocVienCanSua, row, maHocVienBanDau);
+    }
+
+    public void setDanhSachHocVien() throws SQLException {
+        if (this.danhSachHocVien == null) {
+            System.out.println("test dong 352 HocVienModel");
+            this.danhSachHocVien = this.ds.getHocVien();
+        }
     }
 }

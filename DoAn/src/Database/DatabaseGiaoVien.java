@@ -748,8 +748,66 @@ public class DatabaseGiaoVien {
                 }
             }
         } catch (SQLServerException ex) {
-            System.out.println("Loi dong 42 DatabaseLopHoc:" + ex);
+            System.out.println("Loi dong 751 DatabaseLopHoc:" + ex);
+            return null;
         }
         return giaoVienDuocCapNhapMaKhoa;
+    }
+
+    public ArrayList<GiaoVien> getDanhSachGiaoVien() throws SQLException {
+        ArrayList<GiaoVien> danhSachGiaoVien = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("select * from GIAOVIEN");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("HOCVI").equalsIgnoreCase("CN")) {
+                    danhSachGiaoVien.add(new CuNhan(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+                } else if (rs.getString("HOCVI").equalsIgnoreCase("Ths")) {
+                    danhSachGiaoVien.add(new ThacSy(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+                } else if (rs.getString("HOCVI").equalsIgnoreCase("TS")) {
+                    danhSachGiaoVien.add(new TienSy(
+                            rs.getString("MAGV"),
+                            rs.getString("HOTEN"),
+                            rs.getString("HOCVI"),
+                            rs.getString("GIOITINh"),
+                            rs.getDate("NGSINH"),
+                            rs.getFloat("HESO"),
+                            rs.getFloat("LuongCB"),
+                            rs.getFloat("MUCLUONG"),
+                            rs.getString("MAKHOA")));
+                }
+
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Hello dong 806 DatabaseGiaoVien");
+            System.out.println("loi:" + ex);
+            return null;
+        }
+        return danhSachGiaoVien;
     }
 }

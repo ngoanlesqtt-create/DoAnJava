@@ -45,10 +45,11 @@ public class DangNhapController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.kiemTraDangNhap();
 
             try {
-                truongHocController1 = new TruongHoc1Controller();
+                if (view.kiemTraDangNhap()) {
+                    truongHocController1 = new TruongHoc1Controller();
+                }
             } catch (SQLException ex) {
             }
         }

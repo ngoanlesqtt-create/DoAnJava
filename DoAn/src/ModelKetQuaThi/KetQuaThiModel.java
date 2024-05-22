@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -31,6 +30,12 @@ public class KetQuaThiModel extends AbstractTableModel {
         this.danhSachKetQuaThi = new ArrayList<>();
         this.databaseKetQuaThi = new DatabaseKetQuaThi();
         this.modelHocVien = new HocVienModel();
+    }
+
+    public void setDanhSachKetQuaThi() throws SQLException {
+        if (this.danhSachKetQuaThi == null) {
+            this.danhSachKetQuaThi = this.databaseKetQuaThi.loadDataKetQuaThi();
+        }
     }
 
     private Object[][] capNhapDataKetQuaThi() {
@@ -196,6 +201,7 @@ public class KetQuaThiModel extends AbstractTableModel {
     }
 
     public Object[][] tinhDiemTrungbinh() throws SQLException {
+        this.setDanhSachKetQuaThi();
         ArrayList<HocVien> danhSachHocVien = this.modelHocVien.getHocVien();
         ArrayList<ArrayList> ketQuaTongThe = new ArrayList<>();
         String ketQuaXepLoai = null;
@@ -247,8 +253,11 @@ public class KetQuaThiModel extends AbstractTableModel {
 
     public Object[][] themKetQuaThi(ArrayList<Object> ketQuaInputDeThemKetQuaThi) throws SQLException {
         this.danhSachKetQuaThi = this.databaseKetQuaThi.themKetQuaThi(ketQuaInputDeThemKetQuaThi);
-        Object[][] data = this.capNhapDataKetQuaThi();
-        return data;
+        if (this.danhSachKetQuaThi != null) {
+            Object[][] data = this.capNhapDataKetQuaThi();
+            return data;
+        }
+        return null;
     }
 
     @Override
@@ -319,6 +328,7 @@ public class KetQuaThiModel extends AbstractTableModel {
             }
         }
         try {
+            this.setDanhSachKetQuaThi();
             this.danhSachKetQuaThi = this.databaseKetQuaThi.suaThongTinKetQuaThi(ketQuaThi, this.danhSachKetQuaThi.get(rowIndex).getMaHocVien(), this.danhSachKetQuaThi.get(rowIndex).getMaMonHoc());
         } catch (SQLException ex) {
         }

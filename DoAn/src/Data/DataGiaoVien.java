@@ -6,7 +6,6 @@ package Data;
 
 import Database.DatabaseGiaoVien;
 import ModelGiaoVien.GiaoVien;
-import ModelHocVien.HocVien;
 import ModelKhoa.Khoa;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,14 +37,20 @@ public class DataGiaoVien {
         return this.danhSachGiaoVien;
     }
 
-    public Object[][] capNhapDanhSachGiaoVien() {
+    public void setDanhSachGiaoVien() throws SQLException {
+        if (this.danhSachGiaoVien == null) {
+            this.danhSachGiaoVien = this.databaseGiaoVien.getDanhSachGiaoVien();
+        }
+    }
+
+    public Object[][] capNhapDanhSachGiaoVien() throws SQLException {
+        this.setDanhSachGiaoVien();
         Object[][] data = new Object[this.danhSachGiaoVien.size()][9];
         for (int i = 0; i <= this.danhSachGiaoVien.size() - 1; i++) {
             for (int j = 0; j <= 8; j++) {
                 data[i][j] = this.danhSachGiaoVien.get(i).getData()[j];
             }
         }
-
         return data;
     }
 
@@ -61,6 +66,7 @@ public class DataGiaoVien {
     }
 
     public ArrayList<GiaoVien> xoaGiaoVien(int[] cacChiSoBangGiaoVienDuocChon) throws SQLException {
+        this.setDanhSachGiaoVien();
         for (int i = cacChiSoBangGiaoVienDuocChon.length - 1; 0 <= i; i--) {
             this.danhSachGiaoVien = this.databaseGiaoVien.xoaGiaoVien(this.danhSachGiaoVien.get(cacChiSoBangGiaoVienDuocChon[i]));
         }

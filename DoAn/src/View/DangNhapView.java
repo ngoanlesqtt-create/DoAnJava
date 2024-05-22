@@ -30,7 +30,7 @@ public class DangNhapView extends javax.swing.JFrame {
         btnDangNhap.addActionListener(listener);
     }
 
-    public void kiemTraDangNhap() {
+    public boolean kiemTraDangNhap() {
         System.out.println(("Hello"));
         StringBuilder stringBuilder = new StringBuilder();
         if (textTenDangNhap.getText().equals("")) {
@@ -60,10 +60,11 @@ public class DangNhapView extends javax.swing.JFrame {
         }
         if (stringBuilder.length() > 0) {
             JOptionPane.showMessageDialog(this, stringBuilder.toString());
-            return;
+            return false;
         }
         JOptionPane.showConfirmDialog(this, "Bạn đã đăng nhập thành công");
         this.setVisible(false);
+        return true;
     }
 
     /**

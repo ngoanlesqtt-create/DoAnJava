@@ -68,14 +68,14 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         //Khoa
         view2.loadKhoa(new KhoaDuocLoad());
         view2.renderNamThanhLapKhoa(new ComboBoxNam());
-       // view2.batSuKienChoJpanel(new JpanelKhoa());
+        // view2.batSuKienChoJpanel(new JpanelKhoa());
         view2.batSuKienThangThanhLapKhoa(new ThangThanhLapKhoa());
         view2.batSuKienNamThanhLapKhoa(new NamThanhLapKhoa());
-        // view2.batSuKienNamThanhLapKhoa(new NamThanhLapKhoa());
         view2.themKhoa(new KhoaDuocThem());
         view2.capNhapGiaoVienTrenBangKhoa(new KhoaDuocCapNhapSiSoGiaoVien());
         view2.xoaKhoa(new KhoaDuocXoa());
         view2.xuLiSuKienTungDongTrenBangKhoa(new DongTrenBangKhoa());
+        view2.batSuKienJcomboBoxTrongBangKhoa(new JcomboboxTrongBangKhoa());
         view2.batSuKienEnterTrenBangKhoa(new KhoaDuocBatSuKienEnter());
         this.rowTableKhoa = -1;
         //KetQuaThi
@@ -139,6 +139,7 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
             }
             dongDuocChonTrenBangLopHoc = view2.getRowLopHoc();
             view2.setInputKhiDuocChonVaoTrenBangLopHoc(dongDuocChonTrenBangLopHoc);
+
         }
 
     }
@@ -207,6 +208,10 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                modelLopHoc.setDanhSachLopHoc();
+            } catch (SQLException ex) {
+            }
             if (dongDuocChonTrenBangLopHoc == -1) {
                 view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn lớp để sửa");
             } else {
@@ -277,15 +282,6 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
     }
 
-//    private class JpanelKhoa extends MouseAdapter {
-//
-//        @Override
-//        public void mouseReleased(MouseEvent e) {
-//            view2.resetComboBoxNamThanhLapKhoa();
-//        }
-//
-//    }
-
     private class ThangThanhLapKhoa implements ItemListener {
 
         @Override
@@ -302,7 +298,6 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getSource() == view2.getJcomboboxNamThanhLapKhoa()) {
-                System.out.println("test dong 307 TruongHoc2Controller");
                 view2.xacThucNgayThangNam();
             }
         }
@@ -313,22 +308,27 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            inputKhoa = view2.getInputKhoa();
-            if (!InputThongTin.kiemTraInputRong(inputKhoa)) {
-                view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập thiếu thông tin");
-            } else {
-                try {
-                    Object[][] data = modelKhoa.themKhoa(inputKhoa);
-                    if (data != null) {
-                        view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
-                        capNhapComboBoxKhoa();
-                    } else {
-                        view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai thông tin");
+            try {
+                modelKhoa.setDanhSachKhoa();
+                inputKhoa = view2.getInputKhoa();
+                if (!InputThongTin.kiemTraInputRong(inputKhoa)) {
+                    view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập thiếu thông tin");
+                } else {
+                    try {
+                        Object[][] data = modelKhoa.themKhoa(inputKhoa);
+                        if (data != null) {
+                            view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
+                            capNhapComboBoxKhoa();
+                        } else {
+                            view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn đã nhập sai thông tin");
+                        }
+                    } catch (SQLException | ParseException ex) {
                     }
-                } catch (SQLException | ParseException ex) {
-                }
 
+                }
+            } catch (SQLException ex) {
             }
+
         }
 
     }
@@ -338,12 +338,40 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+
+                modelKhoa.setDanhSachKhoa();
                 Object[][] data = modelKhoa.capNhapSiSoGiaoVienKhoa();
                 view2.hienThiTrenTableKhoa(data, modelKhoa.getColumn());
                 capNhapComboBoxKhoa();
+                ArrayList<Khoa> danhSachKhoa = modelKhoa.getDanhSachKhoaTuDatabase();
+                for (Khoa khoa : danhSachKhoa) {
+                    if (khoa.getSoLuongGiangVien() == 0) {
+                        view2.setJComboBoxTruongKhoa(khoa);
+                        modelKhoa.setMaTruongKhoa(khoa);
+                    }
+                }
             } catch (SQLException ex) {
             }
         }
+    }
+
+    private class JcomboboxTrongBangKhoa implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getSource() == view2.getJcomboboxTruongKhoaTrongBang()) {
+                rowTableKhoa = view2.getRowTableKhoa();
+                if (rowTableKhoa != -1) {
+                    try {
+                        modelKhoa.suaMaTruongKhoaKhiThayDoiBangGiaoVien(view2.getSelectRowjComboBox(), rowTableKhoa);
+                    } catch (SQLException ex) {
+                    }
+                }
+
+            }
+
+        }
+
     }
 
     private class DongTrenBangKhoa implements ListSelectionListener {
@@ -359,6 +387,7 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
                     ArrayList<Khoa> danhSachKhoa = modelKhoa.getDanhSachKhoa();
                     ArrayList<GiaoVien> danhSachGiaoVien = modelKhoa.getDanhSachGiaoVien();
                     view2.locMaGiaoVienDeLamTruongKhoa(danhSachKhoa, danhSachGiaoVien, rowTableKhoa);
+
                     view2.showThongTinKhoaTrenInput(rowTableKhoa);
                 }
             } catch (SQLException ex) {
@@ -498,7 +527,11 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            rows = view2.getNhieuChiSoDongBangKetQuaThi();
+            try {
+                modelKetQuaThi.setDanhSachKetQuaThi();
+                rows = view2.getNhieuChiSoDongBangKetQuaThi();
+            } catch (SQLException ex) {
+            }
         }
 
     }
@@ -510,6 +543,7 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
             if (rows.length >= 1) {
                 if (!state) {
                     try {
+                        modelKetQuaThi.setDanhSachKetQuaThi();
                         Object[][] data = modelKetQuaThi.xoaKetQuaThi(rows);
                         view2.hienThiBangKetQuaThi(data, modelKetQuaThi.getColumn());
                     } catch (SQLException ex) {
@@ -572,9 +606,8 @@ public class TruongHoc2Controller extends TruongHoc1Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             String[] columnTinhDiemTrungBinh = {"Mã học viên", "Điểm trung bình", "Xếp loại"};
-            Object[][] data;
             try {
-                data = modelKetQuaThi.tinhDiemTrungbinh();
+                Object[][] data = modelKetQuaThi.tinhDiemTrungbinh();
                 view2.hienThiBangKetQuaThi(data, columnTinhDiemTrungBinh);
             } catch (SQLException ex) {
             }

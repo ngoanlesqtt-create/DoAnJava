@@ -25,7 +25,6 @@ public class KhoaModel extends AbstractTableModel {
     public KhoaModel() throws SQLException {
         this.danhSachKhoa = new ArrayList<>();
         this.databaseKhoa = new DatabaseKhoa(this.danhSachKhoa);
-
     }
 
     public Object[][] loadData() {
@@ -42,7 +41,22 @@ public class KhoaModel extends AbstractTableModel {
         return danhSachKhoa;
     }
 
+    public ArrayList<Khoa> getDanhSachKhoaTuDatabase() throws SQLException {
+        return this.databaseKhoa.getDanhSachKhoa();
+    }
+
+    public void setDanhSachKhoa() throws SQLException {
+        if (this.danhSachKhoa == null) {
+            this.danhSachKhoa = this.databaseKhoa.getDanhSachKhoa();
+        }
+    }
+
+    public void setMaTruongKhoa(Khoa khoa) {
+        this.danhSachKhoa = this.databaseKhoa.capNhapMaTruongKhoa(khoa);
+    }
+
     public ArrayList<GiaoVien> getDanhSachGiaoVien() throws SQLException {
+        this.setDanhSachKhoa();
         ArrayList<GiaoVien> danhSachGiaoVien = this.databaseKhoa.getDanhSachGiaoVien();
         return danhSachGiaoVien;
     }
@@ -98,8 +112,17 @@ public class KhoaModel extends AbstractTableModel {
         return data;
     }
 
+    public void setMaTruongKhoa(String maTruongKhoa, int rowIndex) throws SQLException {
+        Khoa khoaDuocLayTuDatabase = this.databaseKhoa.getDanhSachKhoa().get(rowIndex);
+        khoaDuocLayTuDatabase.setTruongKhoa(maTruongKhoa);
+    }
+
     @Override
     public int getRowCount() {
+        try {
+            this.setDanhSachKhoa();
+        } catch (SQLException ex) {
+        }
         return this.danhSachKhoa.size();
     }
 
@@ -158,12 +181,21 @@ public class KhoaModel extends AbstractTableModel {
             }
         }
         try {
+            System.out.println("test dong 175 KhoaModel, rowIndex:" + rowIndex);
             Khoa khoaDuocLayTuDatabase = this.databaseKhoa.getDanhSachKhoa().get(rowIndex);
             this.danhSachKhoa = this.databaseKhoa.suaThongTinKhoaTrucTiepTrenBang(khoa, khoaDuocLayTuDatabase.getMaKhoa());
             this.databaseKhoa.setGiaTriDeSuaChuaBangHocVien(khoa.getMaKhoa(), rowIndex, khoaDuocLayTuDatabase.getMaKhoa());
 
         } catch (SQLException ex) {
         }
+    }
+
+    public void suaMaTruongKhoaKhiThayDoiBangGiaoVien(String maTruongKhoaMoi, int rowIndex) throws SQLException {
+        Khoa khoa = this.databaseKhoa.getDanhSachKhoa().get(rowIndex);
+        khoa.setTruongKhoa(maTruongKhoaMoi);
+        Khoa khoaDuocLayTuDatabase = this.databaseKhoa.getDanhSachKhoa().get(rowIndex);
+        this.danhSachKhoa = this.databaseKhoa.suaThongTinKhoaTrucTiepTrenBang(khoa, khoaDuocLayTuDatabase.getMaKhoa());
+        this.databaseKhoa.setGiaTriDeSuaChuaBangHocVien(khoa.getMaKhoa(), rowIndex, khoaDuocLayTuDatabase.getMaKhoa());
     }
 
     @Override

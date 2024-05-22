@@ -300,4 +300,33 @@ public class DatabaseKhoa {
         }
         return data;
     }
+
+    public ArrayList<Khoa> capNhapMaTruongKhoa(Khoa khoa) throws SQLException {
+        ArrayList<Khoa> khoaDuocCapNhapMaTruongKhoa = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+        try {
+
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("update KHOA set MAKHOA='" + khoa.getMaKhoa()
+                    + "',TENKHOA='" + khoa.getTenKhoa()
+                    + "',NGTLAP='" + khoa.getNgayThanhLap()
+                    + "',TRGKHOA='"
+                    + "',SOLUONGGIAOVIEN='" + khoa.getSoLuongGiangVien() + "'"
+                    + " where MAKHOA='" + khoa.getMaKhoa() + "'"
+                    + "select * from KHOA");
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                khoaDuocCapNhapMaTruongKhoa.add(new Khoa(rs.getString("MAKHOA"), rs.getString("TENKHOA"), rs.getDate("NGTLAP"), rs.getInt("SOLUONGGIAOVIEN"), rs.getString("TRGKHOA")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 60 DatabaseLopHoc:" + ex);
+            return null;
+        }
+        return khoaDuocCapNhapMaTruongKhoa;
+    }
 }

@@ -18,6 +18,8 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -133,8 +135,16 @@ public class TruongHoc1Controller {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            cacChiSoBangGiaoVienDuocChon = view.getRowsGiaoVien();
-            view.setLaiGiaTriInputGiaoVien();
+            try {
+                if (view.getRowCountGiaoVien() >= 5) {
+                    dataGiaoVien.setDanhSachGiaoVien();
+                    cacChiSoBangGiaoVienDuocChon = view.getRowsGiaoVien();
+                    view.setLaiGiaTriInputGiaoVien();
+                }
+
+            } catch (SQLException ex) {
+            }
+
         }
     }
 
@@ -142,6 +152,11 @@ public class TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                dataGiaoVien.setDanhSachGiaoVien();
+            } catch (SQLException ex) {
+            }
+
             if (!dataGiaoVien.getDataGiaoVien().isEmpty()) {
                 if (cacChiSoBangGiaoVienDuocChon == null) {
                     view.hienThiThongBaoChuaNhapThongTinHocVien("Bạn chưa chọn giáo viên để xóa");
@@ -470,7 +485,9 @@ public class TruongHoc1Controller {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            nhieuChiSoTable = view.layNhieuChiSoMang();
+            if (view.getRowHocVien() > 4) {
+                nhieuChiSoTable = view.layNhieuChiSoMang();
+            }
 
         }
     }
@@ -518,11 +535,11 @@ public class TruongHoc1Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int doDaiBang = view.getDoDaiBang();
-            if (doDaiBang >= 1) {
+            int rowHocVien = view.getRowHocVien();
+            if (rowHocVien >= 1) {
                 //khởi tạo giá trị cho mảng nhieuChiSoTable
-                nhieuChiSoTable = new int[doDaiBang];
-                for (int i = 0; i <= doDaiBang - 1; i++) {
+                nhieuChiSoTable = new int[rowHocVien];
+                for (int i = 0; i <= rowHocVien - 1; i++) {
                     nhieuChiSoTable[i] = i;
                 }
                 if (!state) {//xoa het khi dang o bang chinh

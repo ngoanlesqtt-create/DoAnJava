@@ -45,6 +45,12 @@ public class LopHocModel {
         return this.column;
     }
 
+    public void setDanhSachLopHoc() throws SQLException {
+        if (this.danhSachLop == null) {
+            this.danhSachLop = this.databaseLopHoc.getDanhSachLopHoc();
+        }
+    }
+
     public Object[][] loadDanhSachLopHoc() {
         Object[][] data = new Object[this.danhSachLop.size()][5];
         for (int i = 0; i <= this.danhSachLop.size() - 1; i++) {
@@ -163,8 +169,6 @@ public class LopHocModel {
     }
 
     public String thayTheMaLopTruong(String maLopHocString, int row) {
-        System.out.println("test dong 167 LopHocModel ,maLopHocString:" + maLopHocString);
-        System.out.println("test dong 168 LopHocModel, row:" + row);
         String ketQua = this.danhSachLop.get(row).getTruongLop().replaceFirst(this.danhSachLop.get(row).getMaLop(), maLopHocString);
         return ketQua;
     }

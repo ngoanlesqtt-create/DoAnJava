@@ -239,7 +239,6 @@ public class DatabaseLopHoc {
         ds.setDatabaseName("BAITAP2");
 
         try {
-            System.out.println("test dong 241 DatabaseLopHoc:");
             Connection con = ds.getConnection();
             CallableStatement cstmt = con.prepareCall("update LOP set MALOP='"
                     + inputLopHoc.get(0)
@@ -288,5 +287,28 @@ public class DatabaseLopHoc {
             return null;
         }
         return data;
+    }
+
+    public ArrayList<LopHoc> getDanhSachLopHoc() throws SQLException {
+        ArrayList<LopHoc> danhSachLopHoc = new ArrayList<>();
+        ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setServerName("localhost");
+        ds.setPortNumber(Integer.parseInt("1433"));
+        ds.setDatabaseName("BAITAP2");
+
+        try {
+            Connection con = ds.getConnection();
+            CallableStatement cstmt = con.prepareCall("select * from Lop");
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                danhSachLopHoc.add(new LopHoc(rs.getString("MALOP"), rs.getString("TENLOP"), rs.getString("TRGLOP"), rs.getInt("SISO"), rs.getString("MAGVCN")));
+            }
+        } catch (SQLServerException ex) {
+            System.out.println("Loi dong 42 DatabaseLopHoc:" + ex);
+        }
+        return danhSachLopHoc;
     }
 }

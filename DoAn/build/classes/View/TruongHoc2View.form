@@ -276,11 +276,12 @@
                 <Component class="javax.swing.JTable" name="tableLopHoc">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                      <Table columnCount="5" rowCount="0">
+                        <Column editable="true" title="M&#xe3; l&#x1edb;p" type="java.lang.Object"/>
+                        <Column editable="true" title="T&#xea;n l&#x1edb;p" type="java.lang.Object"/>
+                        <Column editable="true" title="L&#x1edb;p tr&#x1b0;&#x1edf;ng" type="java.lang.Object"/>
+                        <Column editable="true" title="S&#x129; s&#x1ed1;" type="java.lang.Object"/>
+                        <Column editable="true" title="M&#xe3; gi&#xe1;o vi&#xea;n ch&#x1ee7; nhi&#x1ec7;m" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -546,12 +547,12 @@
                 <Component class="javax.swing.JTable" name="tableKhoa">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="false" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 5" type="java.lang.Object"/>
+                      <Table columnCount="5" rowCount="0">
+                        <Column editable="true" title="M&#xe3; khoa" type="java.lang.Object"/>
+                        <Column editable="true" title="T&#xea;n khoa" type="java.lang.Object"/>
+                        <Column editable="true" title="Ng&#xe0;y th&#xe0;nh l&#x1ead;p" type="java.lang.Object"/>
+                        <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng gi&#xe1;o vi&#xea;n" type="java.lang.Object"/>
+                        <Column editable="true" title="Tr&#x1b0;&#x1edf;ng khoa" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -942,7 +943,7 @@
                 <Component class="javax.swing.JTable" name="tableKetQuaThi">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="10">
+                      <Table columnCount="6" rowCount="0">
                         <Column editable="true" title="M&#xe3; h&#x1ecd;c vi&#xea;n" type="java.lang.Object"/>
                         <Column editable="true" title="M&#xe3; m&#xf4;n h&#x1ecd;c" type="java.lang.Object"/>
                         <Column editable="true" title="L&#x1ea7;n thi" type="java.lang.Object"/>

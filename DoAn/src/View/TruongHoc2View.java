@@ -116,6 +116,10 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         return tableLopHoc.getSelectedRow();
     }
 
+    public int getRowCountLopHoc() {
+        return this.tableLopHoc.getRowCount();
+    }
+
     public void setInputKhiDuocChonVaoTrenBangLopHoc(int row) {
         if (row != -1) {
             textMaLopHoc.setText((String) tableLopHoc.getValueAt(row, 0));
@@ -172,6 +176,10 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         tableKhoa.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox));
     }
 
+    public void batSuKienjComboBox(ItemListener aliItemListener) {
+        jComboBox.addItemListener(aliItemListener);
+    }
+
     public void batSuKienThangThanhLapKhoa(ItemListener aListener) {
         comboboxThangThanhLapKhoa.addItemListener(aListener);
     }
@@ -186,6 +194,10 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
     public JComboBox getJcomboboxNamThanhLapKhoa() {
         return this.comboboxNamThanhLapKhoa;
+    }
+
+    public JComboBox getJcomboboxTruongKhoaTrongBang() {
+        return this.jComboBox;
     }
 
     public void xacThucNgayThangNam() {
@@ -267,8 +279,8 @@ public final class TruongHoc2View extends javax.swing.JFrame {
         tableKhoa.addKeyListener(keyAdapter);
     }
 
-    public void xuLiSuKienTungDongTrenBangKhoa(ListSelectionListener listSelectionListener) {
-        ListSelectionModel listSelectionModel = tableKhoa.getSelectionModel();
+    public void xuLiSuKienTungDongTrenBangKhoa(ListSelectionListener listSelectionListener) { 
+       ListSelectionModel listSelectionModel = tableKhoa.getSelectionModel();
         listSelectionModel.addListSelectionListener(listSelectionListener);
     }
 
@@ -282,16 +294,33 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
     public void locMaGiaoVienDeLamTruongKhoa(ArrayList<Khoa> danhSachKhoa, ArrayList<GiaoVien> danhSachGiaoVien, int row) {
         this.jComboBox.removeAllItems();
+        int count = 0;
         for (GiaoVien giaoVien : danhSachGiaoVien) {
             if (danhSachKhoa.get(row).getMaKhoa().contains(giaoVien.getMaKhoa())) {
                 this.jComboBox.addItem(giaoVien.getMaGv());
+                count++;
             }
+        }
+        if (count == 0) {
+            this.jComboBox.addItem((""));
         }
 
     }
 
-    public void batSuKienJcomboBoxTrongBangKhoa(ActionListener listener) {
-        this.jComboBox.addActionListener(listener);
+    public void setJComboBoxTruongKhoa(Khoa khoa) {
+        for (int i = 0; i <= this.tableKhoa.getRowCount() - 1; i++) {
+            if (((String) this.tableKhoa.getValueAt(i, 0)).contains(khoa.getMaKhoa())) {
+                this.tableKhoa.setValueAt("", i, 4);
+            }
+        }
+    }
+
+    public String getSelectRowjComboBox() {
+        return (String) this.jComboBox.getSelectedItem();
+    }
+
+    public void batSuKienJcomboBoxTrongBangKhoa(ItemListener listener) {
+        this.jComboBox.addItemListener(listener);
     }
 
     public void showThongTinKhoaTrenInput(int row) {
@@ -309,7 +338,6 @@ public final class TruongHoc2View extends javax.swing.JFrame {
     public void loadKetQuaThi(ActionListener listener) {
         this.btnLoadKetQuaThi.addActionListener(listener);
     }
-//KetQuaThi
 
     public void showComboBoxMaHocVienTrenBangKetQuaThi(ArrayList<HocVien> danhSachHocVien) {
         this.comboBoxMaHocVienBangKetQuaThi.removeAllItems();
@@ -610,13 +638,10 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         tableLopHoc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã lớp", "Tên lớp", "Lớp trưởng", "Sĩ số", "Mã giáo viên chủ nhiệm"
             }
         ));
         jScrollPane4.setViewportView(tableLopHoc);
@@ -731,23 +756,12 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         tableKhoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Mã khoa", "Tên khoa", "Ngày thành lập", "Số lượng giáo viên", "Trưởng khoa"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, false, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         tableKhoa.setMaximumSize(new java.awt.Dimension(100, 100));
         tableKhoa.setPreferredSize(new java.awt.Dimension(300, 100));
         jScrollPane1.setViewportView(tableKhoa);
@@ -760,7 +774,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhập thông tin", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 204, 0))); // NOI18N
         jPanel15.setPreferredSize(new java.awt.Dimension(675, 100));
-        jPanel15.setLayout(new java.awt.GridLayout());
+        jPanel15.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel17.setMaximumSize(new java.awt.Dimension(120, 32767));
         jPanel17.setMinimumSize(new java.awt.Dimension(120, 32));
@@ -887,16 +901,7 @@ public final class TruongHoc2View extends javax.swing.JFrame {
 
         tableKetQuaThi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã học viên", "Mã môn học", "Lần thi", "Ngày thi", "Điểm", "Kết quả"

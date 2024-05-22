@@ -176,7 +176,7 @@ public final class TruongHoc1View extends javax.swing.JFrame {
         btnXoaHetDuLieuBang.addActionListener(listener);
     }
 
-    public int getDoDaiBang() {
+    public int getRowHocVien() {
         return tableHocVien.getRowCount();
     }
 
@@ -404,6 +404,10 @@ public final class TruongHoc1View extends javax.swing.JFrame {
 
     public Object getVualueTableGiaoVien(int column) {
         return tableGiaoVien.getValueAt(0, column);
+    }
+
+    public int getRowCountGiaoVien() {
+        return this.tableGiaoVien.getRowCount();
     }
 
     public void xoaInputTableGiaoVien() {
@@ -701,9 +705,7 @@ public final class TruongHoc1View extends javax.swing.JFrame {
         dialogThongBaoChuaNhapThongTinHocVien.getContentPane().add(jPanel40);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1020, 900));
         setMinimumSize(new java.awt.Dimension(0, 540));
-        setPreferredSize(new java.awt.Dimension(1020, 540));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 
@@ -722,13 +724,10 @@ public final class TruongHoc1View extends javax.swing.JFrame {
 
         tableHocVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã học viên", "Họ", "Tên", "Ngày sinh", "Giới tính", "Nơi sinh", "Mã lớp"
             }
         ));
         tableHocVien.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -857,7 +856,7 @@ public final class TruongHoc1View extends javax.swing.JFrame {
         jPanel73.setPreferredSize(new java.awt.Dimension(322, 30));
         jPanel73.setLayout(new javax.swing.BoxLayout(jPanel73, javax.swing.BoxLayout.Y_AXIS));
 
-        textMaLop.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textMaLop.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         textMaLop.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         jPanel73.add(textMaLop);
 
@@ -1512,7 +1511,7 @@ public final class TruongHoc1View extends javax.swing.JFrame {
         jPanel38Layout.setHorizontalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel38Layout.createSequentialGroup()
-                .addComponent(jPanel77, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jPanel77, javax.swing.GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
                 .addGap(0, 239, Short.MAX_VALUE)
@@ -1549,13 +1548,10 @@ public final class TruongHoc1View extends javax.swing.JFrame {
 
         tableGiaoVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã giáo viên", "Họ tên", "Học vị", "Giới tính", "Ngày sinh", "Hệ số", "Lương cơ bản", "Lương", "Khoa"
             }
         ));
         tableGiaoVien.setMaximumSize(new java.awt.Dimension(2147483647, 300));
